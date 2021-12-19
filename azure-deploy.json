@@ -232,11 +232,13 @@
     }
   },
   "variables": {
-    "artifactsBlacksmith": "https://raw.githubusercontent.com/OTRF/Blacksmith/master/",
-    "artifactsMicrosoftSentinel2Go": "https://raw.githubusercontent.com/OTRF/Microsoft-Sentinel2Go/master/",
-    "sysmonWindowsParserPackTemplate": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Monitoring/SysmonFullDeployment.json",
+    "uri_sysmonWindowsParserPackTemplate": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Monitoring/SysmonFullDeployment.json",
     "uri_deployMSSentinel2Go": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Sentinel2Go/azuredeploy.json",
-    "uri_collectWinDataSources": null,
+    "uri_collectWinDataSources": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Sentinel2Go/templates/winDataSources.json",
+    "uri_azure_win10_ad": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Win10-AD/azuredeploy.json",
+    "uri_azure_c2": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/C2/azuredeploy.json",
+    "uri_azure_monitoragents": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/MonitorAgents/windows.json",
+    "uri_dcrassociation": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/AssociateDCR/association.json",
     "dataCollectionRuleName": "WindowsDCR"
   },
   "resources": [
@@ -248,7 +250,7 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "[uri(variables('artifactsMicrosoftSentinel2Go'),'microsoft-sentinel/azuredeploy.json')]",
+          "uri": "[variables('uri_deployMSSentinel2Go')]",
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
@@ -347,7 +349,7 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "[uri(variables('artifactsMicrosoftSentinel2Go'),'microsoft-sentinel/linkedtemplates/log-analytics/winDataSources.json')]",
+          "uri": "[variables('uri_collectWinDataSources')]",
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
@@ -374,7 +376,7 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "[variables('sysmonWindowsParserPackTemplate')]",
+          "uri": "[variables('uri_sysmonWindowsParserPackTemplate')]",
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
@@ -397,7 +399,7 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "[uri(variables('artifactsBlacksmith'), 'templates/azure/Win10-AD/azuredeploy.json')]",
+          "uri": "[variables('uri_azure_win10_ad')]",
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
@@ -460,7 +462,7 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "[uri(variables('artifactsBlacksmith'), 'templates/azure/Azure-Monitor-Agents/windows.json')]",
+          "uri": "[variables('uri_azure_monitoragents')]",
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
@@ -484,7 +486,7 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "[uri(variables('artifactsMicrosoftSentinel2Go'), 'microsoft-sentinel/linkedtemplates/data-collection-rules/association.json')]",
+          "uri": "[variables('uri_dcrassociation')]",
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
@@ -508,7 +510,7 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "[uri(variables('artifactsBlacksmith'), 'templates/azure/C2/azuredeploy.json')]",
+          "uri": "[variables('uri_azure_c2')]",
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
