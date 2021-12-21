@@ -155,17 +155,13 @@
 								"filterPlaceholder": "Filter items ...",
 								"multiselect": false,
 								"selectAll": false,
-								"defaultValue": "21h2-pro",
+								"defaultValue": "21h1-pro",
 								"toolTip": "The Windows version for the Desktop VM. This will pick a fully patched image of this given Windows version.",
 								"constraints": {
 									"allowedValues": [
 										{
 											"label": "19h2-pro",
 											"value": "19h2-pro"
-										},
-										{
-											"label": "21h2-pro",
-											"value": "21h2-pro"
 										},
 										{
 											"label": "21h1-pro",
