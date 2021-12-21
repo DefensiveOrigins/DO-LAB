@@ -153,6 +153,8 @@
       "allowedValues": [
         "19h1-pro",
         "19h2-pro",
+        "21h2-pro",
+        "21h1-pro",
         "rs4-pro",
         "rs5-pro"
       ],

@@ -65,7 +65,7 @@
     },
     "windowsDesktopSKU": {
       "type": "string",
-      "defaultValue": "19h2-pro",
+      "defaultValue": "21h2-pro",
       "allowedValues": [
         "19h2-pro",
         "21h1-pro",
