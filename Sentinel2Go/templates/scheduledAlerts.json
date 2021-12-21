@@ -90,7 +90,7 @@
         "forceUpdateTag": "1",
         "azPowerShellVersion": "3.0",
         "arguments": "[variables('alertArguments')]",
-        "primaryScriptUri": "https://raw.githubusercontent.com/OTRF/Microsoft-Sentinel2Go/master/microsoft-sentinel/scripts/Enable-ScheduledAlerts.ps1",
+        "primaryScriptUri": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Monitoring/scripts/Enable-ScheduledAlerts.ps1",
         "supportingScriptUris": [],
         "timeout": "PT30M",
         "cleanupPreference": "OnSuccess",

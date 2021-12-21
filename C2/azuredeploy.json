@@ -214,8 +214,8 @@
       }
     },
 
-    "c2SetupScript": "[uri(parameters('_artifactsLocation'), concat('resources/scripts/bash/Install-C2s.sh', parameters('_artifactsLocationSasToken')))]",
-    "dockerSetupScript": "[uri(parameters('_artifactsLocation'), concat('resources/scripts/bash/Install-Docker.sh', parameters('_artifactsLocationSasToken')))]",
+    "c2SetupScript": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/C2/scripts/Install-C2s.sh",
+    "dockerSetupScript": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/C2/scripts/Install-Docker.sh",
     "vmName": "[parameters('vmName')]"
   },
   "resources": [

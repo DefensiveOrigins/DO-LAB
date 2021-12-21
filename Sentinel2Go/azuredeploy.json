@@ -164,7 +164,7 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "[uri(parameters('_artifactsLocation'), concat('microsoft-sentinel/linkedtemplates/log-analytics/additionalSolutions.json', parameters('_artifactsLocationSasToken')))]",
+          "uri": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Sentinel2Go/templates/additionalSolutions.json",
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
@@ -194,7 +194,7 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "[uri(parameters('_artifactsLocation'), concat('microsoft-sentinel/linkedtemplates/data-connectors/allConnectors.json', parameters('_artifactsLocationSasToken')))]",
+          "uri": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Sentinel2Go/templates/allConnectors.json",
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
@@ -233,7 +233,7 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "[uri(parameters('_artifactsLocation'), concat('microsoft-sentinel/linkedtemplates/log-analytics/functions.json', parameters('_artifactsLocationSasToken')))]",
+          "uri": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Sentinel2Go/templates/functions.json",
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
@@ -258,7 +258,7 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "[uri(parameters('_artifactsLocation'), concat('microsoft-sentinel/linkedtemplates/alerts/scheduledAlerts.json', parameters('_artifactsLocationSasToken')))]",
+          "uri": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Sentinel2Go/templates/scheduledAlerts.json",
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
