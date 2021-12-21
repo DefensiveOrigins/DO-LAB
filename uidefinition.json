@@ -281,14 +281,6 @@
 						"visible": "[if(contains(steps('networkParameters').remoteAccessMethod, 'AllowPublicIP'), true, false)]"
 					}
 				]
-			},
-			{
-				"name": "sectionFeatures",
-				"label": "Features",
-				"elements": [
-					{
-					}
-				]
 			}
 		],
 		"outputs": {
