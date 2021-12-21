@@ -348,7 +348,7 @@
     "setPowerShellLogging": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Win10-AD/scripts/Enable-PowerShell-Logging.ps1",
     "saclModule": "https://raw.githubusercontent.com/OTRF/Set-AuditRule/master/Set-AuditRule.ps1",
     "setSACLScript": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Win10-AD/scripts/Set-SACLs.ps1",
-    "setWallPaperScript": "[uri(parameters('_artifactsLocation'), concat('resources/scripts/powershell/misc/Set-WallPaper.ps1', parameters('_artifactsLocationSasToken')))]",
+    "setWallPaperScript": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Win10-AD/scripts/Set-WallPaper.ps1",
 
     // Powershell DSC Scripts
     "dscModules": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Win10-AD/scripts/Install-DSC-Modules.ps1",
