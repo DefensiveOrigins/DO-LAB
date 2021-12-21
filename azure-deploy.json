@@ -152,6 +152,10 @@
     "doenableaadconnect": {
       "type": "bool",
       "defaultValue": false
+    },
+    "dowscount": {
+      "type": "int",
+      "defaultValue": 1
     }
   },
   "variables": {
@@ -165,7 +169,6 @@
     "dataCollectionRuleName": "WindowsDCR",
     "doadminusername": "doadmin",
     "doadminpassword": "DOLabAdmin1!",
-    "dowscount": "1",
     "donameprefix": "DOLABWS",
     "doWSKU": "",
     "doServerSK": "",
@@ -342,7 +345,7 @@
             "value": "[variables('doadminpassword')]"
           },
           "numberOfWorkstations": {
-            "value": "[variables('dowscount')]"
+            "value": "[parameters('dowscount')]"
           },
           "vmNamePrefix": {
             "value": "[variables('donameprefix')]"
