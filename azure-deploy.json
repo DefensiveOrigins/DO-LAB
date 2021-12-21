@@ -155,6 +155,14 @@
       "metadata": {
         "description": "Location for all resources."
       }
+    },
+    "doenablesysmon": {
+      "type": "boolean",
+      "defaultValue": "true"
+    },
+    "doenableaadconnect": {
+      "type": "boolean",
+      "defaultValue": "false"
     }
   },
   "variables": {
@@ -173,8 +181,6 @@
     "doWSKU": "",
     "doServerSK": "",
     "dofqdn": "dolabs.local",
-    "doenablesysmon": "true",
-    "doenableaadconnect": "false",
     "doc2": "metasploit"
   },
   "resources": [
@@ -302,7 +308,7 @@
       }
     },
     {
-      "condition": "[variables('doenablesysmon')]",
+      "condition": "[parameters('doenablesysmon')]",
       "name": "deploySysmonWindowsParserPack",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2020-10-01",
@@ -376,10 +382,10 @@
             "value": "[parameters('allowedIPAddresses')]"
           },
           "enableSysmon": {
-            "value": "[variables('doenablesysmon')]"
+            "value": "[parameters('doenablesysmon')]"
           },
           "enableAADConnect": {
-            "value": "[variables('doenableaadconnect')]"
+            "value": "[parameters('doenableaadconnect')]"
           },
           "location": {
             "value": "[parameters('location')]"
