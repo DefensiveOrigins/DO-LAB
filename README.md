@@ -1,11 +1,13 @@
 # Defensive Origins Lab Environment
-Defensive Origins Lab  Enviroment is used within the Defensive Origins courses provided by Defensive Origins, AntiSyphon Security, Black Hills Information Security, ISACA, and RedTeamVillage.
+Defensive Origins Lab  Enviroment is used within the Defensive Origins courses provided by Defensive Origins, AntiSyphon Security, and Black Hills Information Security.
 
 For more information on upcoming classes, see our classes at https://www.defensiveorigins.com.
 
-Upcoming Classes: 
-* Applied Purple Teaming: https://www.antisyphontraining.com/applied-purple-teaming-w-kent-ickler-and-jordan-drysdale/
-* Defending The Enterprise: https://www.antisyphontraining.com/defending-the-enterprise-w-kent-ickler-and-jordan-drysdale/
+## Upcoming Classes: 
+* Applied Purple Teaming
+  * https://www.antisyphontraining.com/applied-purple-teaming-w-kent-ickler-and-jordan-drysdale/
+* Defending The Enterprise
+  * https://www.antisyphontraining.com/defending-the-enterprise-w-kent-ickler-and-jordan-drysdale/
 
 
 # Deployment 
