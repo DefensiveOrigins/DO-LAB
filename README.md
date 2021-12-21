@@ -17,6 +17,12 @@ Click below to start the deployment of the Defensive Origins Lab Environment wit
 
 NOTE: Deployment times vary, but expect the full deployment in the Azure cloud to complete within one hour.
 
+## Location
+While the deployment within Azure should be region agnostic, some deployed resources may not be avilable in all regions.
+The following locations have specificaly been tested:
+* US EAST (any)
+* US WEST (any)
+
 # Components
 * Windows Server /w Active Directory.
   * Domain: doazlab.com
