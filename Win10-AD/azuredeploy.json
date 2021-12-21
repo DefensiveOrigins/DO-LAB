@@ -352,10 +352,10 @@
 
     // Powershell DSC Scripts
     "dscModules": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Win10-AD/scripts/Install-DSC-Modules.ps1",
-    "createADForestScript": "[uri(parameters('_artifactsLocation'), concat('resources/scripts/powershell/dsc/active-directory/Create-AD.zip', parameters('_artifactsLocationSasToken')))]",
-    "joinDomainScript": "[uri(parameters('_artifactsLocation'), concat('resources/scripts/powershell/dsc/active-directory/Join-Domain.zip', parameters('_artifactsLocationSasToken')))]",
-    "installSysmonScript": "[uri(parameters('_artifactsLocation'), concat('resources/scripts/powershell/dsc/software/Install-Sysmon.zip', parameters('_artifactsLocationSasToken')))]",
-    "installAADConnectScript": "[uri(parameters('_artifactsLocation'), concat('resources/scripts/powershell/dsc/misc/Install-AADConnect.zip', parameters('_artifactsLocationSasToken')))]",
+    "createADForestScript": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Win10-AD/DesiredStateConfig/Create-AD.zip",
+    "joinDomainScript": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Win10-AD/DesiredStateConfig/Join-Domain.zip",
+    "installSysmonScript": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Win10-AD/DesiredStateConfig/Install-Sysmon.zip",
+    "installAADConnectScript": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Win10-AD/DesiredStateConfig/Install-AADConnect.zip",
 
     // Initial Setup Scripts
     "initialSetUpScripts": [
