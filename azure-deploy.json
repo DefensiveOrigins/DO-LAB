@@ -40,9 +40,9 @@
     },
     "dataRetention": {
       "type": "int",
-      "defaultValue": 7,
+      "defaultValue": 30,
       "minValue": 7,
-      "maxValue": 7,
+      "maxValue": 30,
       "metadata": {
         "description": "Number of days of retention. Workspaces in the legacy Free pricing tier can only have 7 days."
       }
@@ -53,21 +53,6 @@
       "metadata": {
         "description": "If set to true when changing retention to 30 days, older data will be immediately deleted. Use this with extreme caution. This only applies when retention is being set to 30 days."
       }
-    },
-    "adminUsername": {
-      "type": "string",
-      "defaultValue": "doadmin",
-      "metadata": {
-        "description": "Admin username for all virtual machines."
-      }
-    },
-    "adminPassword": {
-      "type": "securestring",
-      "defaultValue": "DPAdmin2022!",
-      "metadata": {
-        "description": "Password for the all Virtual machines. The password must be at least 8 characters in length and must contain at least one digit, one non-alphanumeric character, and one upper or lower case letter"
-      },
-      "minLength": 8
     },
     "remoteAccessMode": {
       "type": "string",
@@ -85,28 +70,13 @@
         "description": "The sourceAddressPrefixes allowed to connect to this deployment"
       }
     },
-    "numberOfWorkstations": {
-      "type": "int",
-      "defaultValue": 1,
-      "minValue": 1,
-      "maxValue": 1,
-      "metadata": {
-        "description": "Number of Windows 10 virtual machines to deploy"
-      }
-    },
-    "vmNamePrefix": {
-      "defaultValue": "DOLABWS",
-      "metadata": {
-        "description": "Prefix for the name of your virtual machine. Template will add a number starting from 5."
-      },
-      "type": "string"
-    },
     "windowsDesktopSKU": {
       "type": "string",
       "defaultValue": "19h2-pro",
       "allowedValues": [
         "19h2-pro",
-        "21h1-pro"
+        "21h1-pro",
+        "21h2-pro"
       ],
       "metadata": {
         "description": "The Sku for the Desktop VM."
@@ -126,19 +96,6 @@
       "type": "string",
       "defaultValue": "latest",
       "allowedValues": [
-        "17763.1282.2006061952",
-        "17763.1339.2007101755",
-        "17763.1397.2008070242",
-        "17763.1457.2009030514",
-        "17763.1518.2010132039",
-        "17763.1577.2011031610",
-        "17763.1579.2011180054",
-        "17763.1637.2012040632",
-        "17763.1697.2101090203",
-        "17763.1757.2102060435",
-        "17763.1817.2103030313",
-        "17763.1879.2104091832",
-        "17763.1935.2105080716",
         "17763.1999.2106060321",
         "latest"
       ],
@@ -161,13 +118,6 @@
         "description": "Size of the virtual machine. Reference: https://docs.microsoft.com/en-us/azure/virtual-machines/sizes-general"
       }
     },
-    "domainFQDN": {
-      "type": "string",
-      "metadata": {
-        "description": "The FQDN of the Active Directory Domain to be created"
-      },
-      "defaultValue": "dolabs.local"
-    },
     "collectWinEventProviders": {
       "type": "array",
       "metadata": {
@@ -188,16 +138,6 @@
         "Microsoft-Windows-TaskScheduler/Operational"
       ]
     },
-    "c2Framework": {
-      "type": "string",
-      "defaultValue": "metasploit",
-      "allowedValues": [
-        "metasploit"
-      ],
-      "metadata": {
-        "description": "C2 framework to deploy"
-      }
-    },
     "ubuntuSKU": {
       "type": "string",
       "defaultValue": "18.04-LTS",
@@ -208,20 +148,6 @@
       "metadata": {
         "description": "The Ubuntu version for the VM. This will pick a fully patched image of this given Ubuntu version."
       }
-    },
-    "enableSysmon": {
-      "type": "bool",
-      "defaultValue": true,
-      "metadata": {
-        "description": "Do you want to install Sysmon on the endpoint?"
-      }
-    },
-    "enableAADConnect": {
-      "type": "bool",
-      "metadata": {
-        "description": "Do you want to want download the AADConnect installer and get it ready to set up after the deployment?"
-      },
-      "defaultValue": false
     },
     "location": {
       "type": "string",
@@ -239,7 +165,17 @@
     "uri_azure_c2": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/C2/azuredeploy.json",
     "uri_azure_monitoragents": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/MonitorAgents/windows.json",
     "uri_dcrassociation": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/AssociateDCR/association.json",
-    "dataCollectionRuleName": "WindowsDCR"
+    "dataCollectionRuleName": "WindowsDCR",
+    "doadminusername": "doadmin",
+    "doadminpassword": "DOLabAdmin1!",
+    "dowscount": "1",
+    "donameprefix": "DOLABWS",
+    "doWSKU": "",
+    "doServerSK": "",
+    "dofqdn": "dolabs.local",
+    "doenablesysmon": "true",
+    "doenableaadconnect": "false",
+    "doc2": "metasploit"
   },
   "resources": [
     {
@@ -366,7 +302,7 @@
       }
     },
     {
-      "condition": "[parameters('enableSysmon')]",
+      "condition": "[variables('doenablesysmon')]",
       "name": "deploySysmonWindowsParserPack",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2020-10-01",
@@ -404,16 +340,16 @@
         },
         "parameters": {
           "adminUsername": {
-            "value": "[parameters('adminUsername')]"
+            "value": "[variables('doadminusername')]"
           },
           "adminPassword": {
-            "value": "[parameters('adminPassword')]"
+            "value": "[variables('doadminpassword')]"
           },
           "numberOfWorkstations": {
-            "value": "[parameters('numberOfWorkstations')]"
+            "value": "[variables('dowscount')]"
           },
           "vmNamePrefix": {
-            "value": "[parameters('vmNamePrefix')]"
+            "value": "[variables('donameprefix')]"
           },
           "windowsDesktopSKU": {
             "value": "[parameters('windowsDesktopSKU')]"
@@ -428,7 +364,7 @@
             "value": "[parameters('windowsServerVersion')]"
           },
           "domainFQDN": {
-            "value": "[parameters('domainFQDN')]"
+            "value": "[variables('dofqdn')]"
           },
           "identityType": {
             "value": "SystemAssigned"
@@ -440,10 +376,10 @@
             "value": "[parameters('allowedIPAddresses')]"
           },
           "enableSysmon": {
-            "value": "[parameters('enableSysmon')]"
+            "value": "[variables('doenablesysmon')]"
           },
           "enableAADConnect": {
-            "value": "[parameters('enableAADConnect')]"
+            "value": "[variables('doenableaadconnect')]"
           },
           "location": {
             "value": "[parameters('location')]"
@@ -503,7 +439,7 @@
       }
     },
     {
-      "condition": "[not(equals(parameters('c2Framework'), 'None'))]",
+      "condition": "[not(equals(variables('doc2'), 'None'))]",
       "name": "deployC2",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2020-10-01",
@@ -515,16 +451,16 @@
         },
         "parameters": {
           "adminUsername": {
-            "value": "[parameters('adminUsername')]"
+            "value": "[variables('doadminusername')]"
           },
           "authenticationType": {
             "value": "password"
           },
           "adminPasswordOrKey": {
-            "value": "[parameters('adminPassword')]"
+            "value": "[variables('doadminpassword')]"
           },
           "vmName": {
-            "value": "C2001"
+            "value": "DOC2001"
           },
           "ubuntuSKU": {
             "value": "[parameters('ubuntuSKU')]"
@@ -536,13 +472,13 @@
             "value": "[parameters('allowedIPAddresses')]"
           },
           "c2Framework": {
-            "value": "[parameters('c2Framework')]"
+            "value": "[variables('doc2')]"
           }
         }
       }
     },
     {
-      "condition": "[not(equals(parameters('c2Framework'), 'None'))]",
+      "condition": "[not(equals(variables('doc2'), 'None'))]",
       "name": "vnet-c2/peering-to-remote-vnet-win",
       "type": "Microsoft.Network/virtualNetworks/virtualNetworkPeerings",
       "apiVersion": "2019-11-01",
@@ -562,7 +498,7 @@
       }
     },
     {
-      "condition": "[not(equals(parameters('c2Framework'), 'None'))]",
+      "condition": "[not(equals(variables('doc2'), 'None'))]",
       "name": "vnet-win/peering-to-remote-vnet-c2",
       "type": "Microsoft.Network/virtualNetworks/virtualNetworkPeerings",
       "apiVersion": "2019-11-01",
@@ -577,7 +513,7 @@
         "allowGatewayTransit": false,
         "useRemoteGateways": false,
         "remoteVirtualNetwork": {
-          "id": "[if(not(equals(parameters('c2Framework'), 'None')), reference('deployC2').outputs.virtualNetworkId.value, 'Resource not deployed')]"
+          "id": "[if(not(equals(variables('doc2'), 'None')), reference('deployC2').outputs.virtualNetworkId.value, 'Resource not deployed')]"
         }
       }
     }
