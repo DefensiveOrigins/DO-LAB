@@ -157,11 +157,11 @@
       }
     },
     "doenablesysmon": {
-      "type": "boolean",
+      "type": "bool",
       "defaultValue": "true"
     },
     "doenableaadconnect": {
-      "type": "boolean",
+      "type": "bool",
       "defaultValue": "false"
     }
   },
