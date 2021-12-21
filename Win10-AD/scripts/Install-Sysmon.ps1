@@ -2,7 +2,7 @@
  configuration Install-Sysmon {
     param 
     ( 
-        [string]$SysmonConfigUrl = "https://raw.githubusercontent.com/OTRF/Blacksmith/master/resources/configs/sysmon/sysmon.xml"
+        [string]$SysmonConfigUrl = "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Monitoring/sysmon.xml"
     )
 
     Import-DscResource -ModuleName xPSDesiredStateConfiguration
