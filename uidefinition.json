@@ -197,8 +197,7 @@
 											"label": "21h1-pro",
 											"value": "21h1-pro"
 										}
-									],
-									"required": true
+									]
 								},
 								"visible": true
 							}
