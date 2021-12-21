@@ -293,7 +293,7 @@
 			"windowsServerVersion": "[steps('vmParameters').serverSection.windowsServerVersion]",
 			"vmSize": "[steps('vmParameters').vmSection.vmSize]",
 			"remoteAccessMode": "[steps('networkParameters').remoteAccessMethod]",
-			"allowedIPAddresses": "[if(equals(steps('networkParameters').remoteAccessMethod, 'AzureBastionHost'), '*', steps('networkParameters').allowedIPAddresses)]",
+			"allowedIPAddresses": "[if(equals(steps('networkParameters').remoteAccessMethod, 'AzureBastionHost'), '*', steps('networkParameters').allowedIPAddresses)]"
 		}
 	}
 }
