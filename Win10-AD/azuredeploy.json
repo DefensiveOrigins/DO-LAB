@@ -352,10 +352,10 @@
 
     // Powershell DSC Scripts
     "dscModules": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Win10-AD/scripts/Install-DSC-Modules.ps1",
-    "createADForestScript": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Win10-AD/DesiredStateConfig/Create-AD.zip",
-    "joinDomainScript": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Win10-AD/DesiredStateConfig/Join-Domain.zip",
-    "installSysmonScript": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Win10-AD/DesiredStateConfig/Install-Sysmon.zip",
-    "installAADConnectScript": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Win10-AD/DesiredStateConfig/Install-AADConnect.zip",
+    "createADForestScript": "https://github.com/DefensiveOrigins/DO-LAB/raw/main/Win10-AD/DesiredSateConfig/Create-AD.zip",
+    "joinDomainScript": "https://github.com/DefensiveOrigins/DO-LAB/raw/main/Win10-AD/DesiredSateConfig/Join-Domain.zip",
+    "installSysmonScript": "https://github.com/DefensiveOrigins/DO-LAB/raw/main/Win10-AD/DesiredSateConfig/Install-Sysmon.zip",
+    "installAADConnectScript": "https://github.com/DefensiveOrigins/DO-LAB/raw/main/Win10-AD/DesiredSateConfig/Install-AADConnect.zip",
 
     // Initial Setup Scripts
     "initialSetUpScripts": [
