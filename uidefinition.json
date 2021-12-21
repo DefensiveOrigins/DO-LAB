@@ -66,32 +66,6 @@
 				"visible": "[bool(steps('basics').newWorkspace)]"
 			},
 			{
-				"name": "dataRetention",
-				"type": "Microsoft.Common.Slider",
-				"min": 30,
-				"max": 30,
-				"label": "Data retention",
-				"subLabel": "days",
-				"defaultValue": 30,
-				"toolTip": "Number of days of retention. Workspaces in the legacy Free pricing tier can only have 7 days.",
-				"constraints": {
-					"required": true
-				},
-				"visible": "[bool(steps('basics').newWorkspace)]"
-			},
-			{
-				"name": "immediatePurgeDataOn30Days",
-				"type": "Microsoft.Common.CheckBox",
-				"label": "Immediate Purge Data On 30 Days",
-				"toolTip": "If set to true when changing retention to 30 days, older data will be immediately deleted. Use this with extreme caution. This only applies when retention is being set to 30 days.",
-				"constraints": {
-					"required": true,
-					"validationMessage": "Please select"
-				},
-				"defaultValue": true,
-				"visible": "[bool(steps('basics').newWorkspace)]"
-			},
-			{
 				"name": "workspaceId",
 				"type": "Microsoft.Common.TextBox",
 				"label": "Workspace ID",
@@ -281,8 +255,6 @@
 			"workspaceName": "[if(equals(steps('basics').newWorkspace, true), steps('basics').workspaceName, steps('basics').workspaceSelector.name)]",
 			"workspaceId": "[steps('basics').workspaceId]",
 			"workspaceKey": "[steps('basics').workspaceKey]",
-			"dataRetention": "[steps('basics').dataRetention]",
-			"immediatePurgeDataOn30Days": "[steps('basics').immediatePurgeDataOn30Days]",
 			"windowsDesktopSKU": "[steps('vmParameters').windowsSection.windowsDesktopSKU]",
 			"windowsServerVersion": "[steps('vmParameters').serverSection.windowsServerVersion]",
 			"vmSize": "[steps('vmParameters').vmSection.vmSize]",
