@@ -254,10 +254,6 @@
 								{
 									"label": "Public IP",
 									"value": "AllowPublicIP"
-								},
-								{
-									"label": "Azure Bastion Host",
-									"value": "AzureBastionHost"
 								}
 							],
 							"required": true
@@ -269,7 +265,7 @@
 						"type": "Microsoft.Common.TextBox",
 						"label": "Allowed IP Addresses",
 						"placeholder": "0.0.0.0/0",
-						"defaultValue": "",
+						"defaultValue": "0.0.0.0/0",
 						"toolTip": "The sourceAddressPrefixes allowed to connect to this deployment.",
 						"constraints": {
 							"required": true,
