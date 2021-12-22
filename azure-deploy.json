@@ -170,7 +170,7 @@
     "doServerSK": "",
     "dofqdn": "doazlab.com",
     "doc2": "metasploit",
-    "doc2ubuntusku": "18.04-LTS"
+    "doc2ubuntusku": "20_04-LTS"
   },
   "resources": [
     {
