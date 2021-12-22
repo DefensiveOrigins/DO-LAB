@@ -150,14 +150,6 @@
     "windowsDesktopSKU": {
       "type": "string",
       "defaultValue": "19h2-pro",
-      "allowedValues": [
-        "19h1-pro",
-        "19h2-pro",
-        "21h2-pro",
-        "21h1-pro",
-        "rs4-pro",
-        "rs5-pro"
-      ],
       "metadata": {
         "description": "The Windows version for the Desktop VM. This will pick a fully patched image of this given Windows version."
       }
@@ -169,20 +161,13 @@
     "windowsServerSKU": {
       "type": "string",
       "defaultValue": "2019-Datacenter",
-      "allowedValues": [
-        "2019-Datacenter"
-      ],
       "metadata": {
         "description": "The Windows version for the Server VM. This will pick a fully patched image of this given Windows version."
       }
     },
     "windowsServerVersion": {
       "type": "string",
-      "defaultValue": "17763.3125.2112070401",
-      "allowedValues": [
-        "17763.3125.2112070401",
-        "latest"
-      ]
+      "defaultValue": "17763.3125.2112070401"
     },
     "vmSize": {
       "type": "string",
