@@ -359,9 +359,9 @@
           },
           "imageReference": {
             "publisher": "Canonical",
-            "offer": "UbuntuServer",
-            "sku": "[parameters('ubuntuSKU')]",
-            "version": "latest"
+            "offer": "0001-com-ubuntu-server-focal",
+            "sku": "20_04-lts",
+            "version": "20.04.202111290"
           }
         },
         "networkProfile": {
