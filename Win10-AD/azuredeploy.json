@@ -178,22 +178,9 @@
     },
     "windowsServerVersion": {
       "type": "string",
-      "defaultValue": "latest",
+      "defaultValue": "17763.3125.2112070401",
       "allowedValues": [
-        "17763.1282.2006061952",
-        "17763.1339.2007101755",
-        "17763.1397.2008070242",
-        "17763.1457.2009030514",
-        "17763.1518.2010132039",
-        "17763.1577.2011031610",
-        "17763.1579.2011180054",
-        "17763.1637.2012040632",
-        "17763.1697.2101090203",
-        "17763.1757.2102060435",
-        "17763.1817.2103030313",
-        "17763.1879.2104091832",
-        "17763.1935.2105080716",
-        "17763.1999.2106060321",
+        "17763.3125.2112070401",
         "latest"
       ]
     },
@@ -385,8 +372,8 @@
           "vmSize": "[parameters('vmSize')]",
           "publisher": "MicrosoftWindowsDesktop",
           "offer": "Windows-10",
-          "sku": "[parameters('windowsDesktopSKU')]",
-          "version": "[parameters('windowsDesktopVersion')]",
+          "sku": "win10-21h2-pro",
+          "version": "19044.1415.2112101107",
           "extensionName": "SetupWinVM"
         }
       }
@@ -401,8 +388,8 @@
         "vmSize": "[parameters('vmSize')]",
         "publisher": "MicrosoftWindowsServer",
         "offer": "WindowsServer",
-        "sku": "[parameters('windowsServerSKU')]",
-        "version": "[parameters('windowsServerVersion')]",
+        "sku": "2019-Datacenter",
+        "version": "17763.3125.2112070401",
         "extensionName": "SetUpDC"
       }
     ],
