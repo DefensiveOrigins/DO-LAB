@@ -84,7 +84,11 @@
       "defaultValue": "18.04-LTS",
       "allowedValues": [
         "18.04-LTS",
-        "19.04"
+        "19.04",
+        "20_04-LTS",
+        "20.04-LTS",
+        "20_04",
+        "20.04"
       ],
       "metadata": {
         "description": "The Ubuntu version for the VM. This will pick a fully patched image of this given Ubuntu version."
