@@ -165,7 +165,7 @@
     "dataCollectionRuleName": "WindowsDCR",
     "doadminusername": "doadmin",
     "doadminpassword": "DOLabAdmin1!",
-    "donameprefix": "DOLABWS",
+    "donameprefix": "WS0",
     "doWSKU": "",
     "doServerSK": "",
     "dofqdn": "doazlab.com",
@@ -455,7 +455,7 @@
             "value": "[variables('doadminpassword')]"
           },
           "vmName": {
-            "value": "DOC2001"
+            "value": "Nux01"
           },
           "ubuntuSKU": {
             "value": "[variables('doc2ubuntusku')]"
