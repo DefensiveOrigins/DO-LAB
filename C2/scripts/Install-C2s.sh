@@ -91,22 +91,19 @@ deactivate
 cd /opt/
 
 
-# BloodHound Graph UI
+# neo4j install
 # this may shank all the things
 echo "deb http://httpredir.debian.org/debian stretch-backports main" | sudo tee -a /etc/apt/sources.list.d/stretch-backports.list
-apt update
 wget -O - https://debian.neo4j.com/neotechnology.gpg.key | sudo apt-key add -
 echo 'deb https://debian.neo4j.com stable 4.0' > /etc/apt/sources.list.d/neo4j.list
-sudo apt update
-apt install apt-transport-https
-apt install neo4j
+apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 0E98404D386FA1D9 648ACFD622F3D138
+apt update
+apt install apt-transport-https -y 
+apt install neo4j -y
 systemctl stop neo4j
 cd /usr/bin
 echo "dbms.default_listen_address=0.0.0.0" >> /etc/neo4j/neo4j.conf
-./neo4j console
-systemctl start neo4j
 
-# probably going to have to labify this
-wget https://github.com/BloodHoundAD/BloodHound/releases/download/4.0.3/BloodHound-linux-x64.zip -O /opt/BloodHound-UI.zip
-unzip /opt/BloodHound-UI.zip /opt/
-# will run via ./BloodHound.bin --no-sandbox
+# don't open the console dave. especially not during bootstrap
+# ./neo4j console
+systemctl start neo4j
