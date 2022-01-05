@@ -6,7 +6,7 @@
 		"config": {
 			"isWizard": true,
 			"basics": {
-				"description": "<img width=450 src=\"https://github.com/DefensiveOrigins/DO-LAB/raw/main/images/APT1.jpg\">\n Defensive Origins Azure Lab Environment",
+				"description": "<img width=450 src=\"https://raw.githubusercontent.com/OTRF/Microsoft-Sentinel2Go/master/resources/images/logo.png\">\n\n**Microsoft Sentinel2Go** is an open source project developed to expedite the deployment of an Microsoft Sentinel lab along with other Azure resources and a data ingestion pipeline to consume pre-recorded datasets for research purposes. It also comes with the option to ingest pre-recorded datasets from the [Security Datasets project](https://securitydatasets.com/) right at deployment time.\n\n**Data Connectors:** 14, **Functions:** 1\n\n[Learn more about Sentinel2Go](https://techcommunity.microsoft.com/t5/microsoft-sentinel/microsoft-sentinel-to-go-part1-a-lab-w-prerecorded-data-amp-a-custom/ba-p/1260191) | [Learn more about Security Datasets](https://securitydatasets.com)",
 				"location": {
 					"label": "Location",
 					"toolTip": "Location for all resources",
@@ -17,6 +17,82 @@
 			}
 		},
 		"basics": [
+			{
+				"name": "newWorkspace",
+				"type": "Microsoft.Common.OptionsGroup",
+				"label": "New Log Analytics workspace",
+				"defaultValue": "No (use existing)",
+				"toolTip": "",
+				"constraints": {
+					"allowedValues": [
+						{
+							"label": "No (use existing)",
+							"value": false
+						},
+						{
+							"label": "Yes",
+							"value": true
+						}
+					],
+					"required": true
+				},
+				"visible": true
+			},
+			{
+				"name": "workspaceSelector",
+				"type": "Microsoft.Solutions.ResourceSelector",
+				"label": "Select an existing workspace",
+				"resourceType": "Microsoft.OperationalInsights/workspaces",
+				"options": {
+					"filter": {
+						"subscription": "onBasics",
+						"location": "onBasics"
+					}
+				},
+				"visible": "[bool(not(steps('basics').newWorkspace))]"
+			},
+			{
+				"name": "workspaceName",
+				"type": "Microsoft.Common.TextBox",
+				"label": "Workspace Name",
+				"placeholder": "",
+				"defaultValue": "",
+				"toolTip": "The workspace name should include 4-63 letters, digits or '-'. The '-' shouldn't be the first or the last symbol.",
+				"constraints": {
+					"required": true,
+					"regex": "^[A-Za-z0-9][A-Za-z0-9-]+[A-Za-z0-9]$",
+					"validationMessage": "Only alphanumeric characters are allowed, and the value must be 1-30 characters long."
+				},
+				"visible": "[bool(steps('basics').newWorkspace)]"
+			},
+			{
+				"name": "workspaceId",
+				"type": "Microsoft.Common.TextBox",
+				"label": "Workspace ID",
+				"placeholder": "Enter the workspaceId",
+				"defaultValue": "",
+				"toolTip": "",
+				"constraints": {
+					"required": true,
+					"regex": "",
+					"validationMessage": "Your own existing log analytics workspace ID. Leave it empty if you are deploying a new Log Analytics workspace."
+				},
+				"visible": "[bool(not(steps('basics').newWorkspace))]"
+			},
+			{
+				"name": "workspaceKey",
+				"type": "Microsoft.Common.TextBox",
+				"label": "Workspace Key",
+				"placeholder": "Enter the workspaceKey",
+				"defaultValue": "",
+				"toolTip": "Your own existing log analytics workspace key. Leave it empty if you are deploying a new LA workspace.",
+				"constraints": {
+					"required": true,
+					"regex": "",
+					"validationMessage": "Your own existing log analytics workspace ID. Leave it empty if you are deploying a new Log Analytics workspace."
+				},
+				"visible": "[bool(not(steps('basics').newWorkspace))]"
+			}
 		],
 		"steps": [
 			{
@@ -58,7 +134,7 @@
 								"imageReference": {
 									"publisher": "MicrosoftWindowsServer",
 									"offer": "WindowsServer",
-									"sku": "2019-Datacenter"
+									"sku": "2012-R2-Datacenter"
 								},
 								"count": 1,
 								"visible": true
@@ -73,6 +149,23 @@
 				"label": "Networking",
 				"elements": [
 					{
+						"name": "remoteAccessMethod",
+						"type": "Microsoft.Common.DropDown",
+						"label": "Select an access method",
+						"defaultValue": "Public IP",
+						"toolTip": "Do you want to restrict access to your environment by a Public IP or set up an Azure Bastion Host. If the former, make sure you add your public IP address to the variable 'allowedIPAddresses'",
+						"constraints": {
+							"allowedValues": [
+								{
+									"label": "Public IP",
+									"value": "AllowPublicIP"
+								}
+							],
+							"required": true
+						},
+						"visible": true
+					},
+					{
 						"name": "allowedIPAddresses",
 						"type": "Microsoft.Common.TextBox",
 						"label": "Allowed IP Addresses",
@@ -84,14 +177,18 @@
 							"regex": "^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(?:\\/(\\d|[12]\\d|3[01]))?$",
 							"validationMessage": "Please enter a valid CIDR."
 						},
-						"visible": true
+						"visible": "[if(contains(steps('networkParameters').remoteAccessMethod, 'AllowPublicIP'), true, false)]"
 					}
 				]
 			}
 		],
 		"outputs": {
+			"workspaceName": "[if(equals(steps('basics').newWorkspace, true), steps('basics').workspaceName, steps('basics').workspaceSelector.name)]",
+			"workspaceId": "[steps('basics').workspaceId]",
+			"workspaceKey": "[steps('basics').workspaceKey]",
 			"vmSize": "[steps('vmParameters').vmSection.vmSize]",
-			"allowedIPAddresses": "[steps('networkParameters').allowedIPAddresses)]"
+			"remoteAccessMode": "[steps('networkParameters').remoteAccessMethod]",
+			"allowedIPAddresses": "[if(equals(steps('networkParameters').remoteAccessMethod, 'AzureBastionHost'), '*', steps('networkParameters').allowedIPAddresses)]"
 		}
 	}
 }
