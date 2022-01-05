@@ -158,7 +158,7 @@
   },
   "variables": {
     "storageAccountName": "[concat(uniquestring(resourceGroup().id, parameters('utcValue')))]",
-
+    "doc2pipname": "[concat('pip-', variables('vmName'))]",
     "virtualNetworkName": "[parameters('virtualNetworkName')]",
     "virtualNetworkAddressRange": "[parameters('virtualNetworkAddressRange')]",
 
@@ -307,7 +307,7 @@
       "condition": "[equals(parameters('remoteAccessMode'),'AllowPublicIP')]",
       "type": "Microsoft.Network/publicIPAddresses",
       "apiVersion": "2018-11-01",
-      "name": "[concat('pip-', variables('vmName'))]",
+      "name": "[variables('doc2pipname')]",
       "location": "[parameters('location')]",
       "properties": {
         "publicIPAllocationMethod": "Dynamic",
@@ -419,6 +419,10 @@
     "virtualNetworkId": {
       "type": "string",
       "value": "[resourceId('Microsoft.Network/virtualNetworks/', parameters('virtualNetworkName'))]"
+    },
+    "C2PublicIP": {
+      "type": "string",
+      "value": "[reference(resourceId('Microsoft.Network/publicIPAddresses',variables('doc2pipname'))).IpAddress]"
     }
   }
 }

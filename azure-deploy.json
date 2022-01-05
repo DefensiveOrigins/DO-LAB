@@ -456,5 +456,10 @@
       }
     }
   ],
-  "outputs": {}
+  "outputs": {
+    "C2PublicIP": {
+      "type": "string",
+      "value": "[reference('deployC2').outputs.C2PublicIP.value]"
+    }
+  }
 }
