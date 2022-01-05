@@ -90,8 +90,8 @@
 			}
 		],
 		"outputs": {
-			"vmSize": "steps('vmParameters').vmSection.vmSize",
-			"allowedIPAddresses": "steps('networkParameters').allowedIPAddresses)"
+			"vmSize": "[steps('vmParameters').vmSection.vmSize]",
+			"allowedIPAddresses": "[steps('networkParameters').allowedIPAddresses)]"
 		}
 	}
 }
