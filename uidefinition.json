@@ -16,6 +16,8 @@
 				}
 			}
 		},
+		"basics": [
+		],
 		"steps": [
 			{
 				"name": "vmParameters",
