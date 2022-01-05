@@ -2,27 +2,6 @@
   "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "workspaceName": {
-      "type": "string",
-      "defaultValue": "MSSen2Go",
-      "metadata": {
-        "description": "Name for the Log Analytics workspace used to aggregate data. If this is a new LA workspace, the template will add a unique string to the name you choose. If you are using an existing LA workspace, the name will not change and will be passed as is to the resources in the template."
-      }
-    },
-    "workspaceId": {
-      "type": "string",
-      "defaultValue": "",
-      "metadata": {
-        "description": "Your own existing log analytics workspace ID. Leave it empty if you are deploying a new LA workspace."
-      }
-    },
-    "workspaceKey": {
-      "type": "string",
-      "defaultValue": "",
-      "metadata": {
-        "description": "Your own existing log analytics workspace key. Leave it empty if you are deploying a new LA workspace."
-      }
-    },
     "pricingTier": {
       "type": "string",
       "allowedValues": [
@@ -40,48 +19,12 @@
     },
     "dataRetention": {
       "type": "int",
-      "defaultValue": 30,
-      "minValue": 7,
-      "maxValue": 30,
-      "metadata": {
-        "description": "Number of days of retention. Workspaces in the legacy Free pricing tier can only have 7 days."
-      }
-    },
-    "remoteAccessMode": {
-      "type": "string",
-      "defaultValue": "AllowPublicIP",
-      "allowedValues": [
-        "AllowPublicIP"
-      ],
-      "metadata": {
-        "description": "Do you want to restrict access to your environment by a Public IP or set up an Azure Bastion Host. If the former, make sure you add your public IP address to the variable 'allowedIPAddresses'"
-      }
+      "defaultValue": 30
     },
     "allowedIPAddresses": {
       "type": "string",
       "metadata": {
         "description": "The sourceAddressPrefixes allowed to connect to this deployment"
-      }
-    },
-    "windowsDesktopSKU": {
-      "type": "string",
-      "defaultValue": "21h1-pro",
-      "allowedValues": [
-        "19h2-pro",
-        "21h1-pro"
-      ],
-      "metadata": {
-        "description": "The Sku for the Desktop VM."
-      }
-    },
-    "windowsServerSKU": {
-      "type": "string",
-      "defaultValue": "2019-Datacenter",
-      "allowedValues": [
-        "2019-Datacenter"
-      ],
-      "metadata": {
-        "description": "The Sku for the Server VM."
       }
     },
     "windowsServerVersion": {
@@ -166,15 +109,17 @@
     "doadminusername": "doadmin",
     "doadminpassword": "DOLabAdmin1!",
     "donameprefix": "WS0",
-    "doWSKU": "",
-    "doServerSK": "",
+    "doWSKU": "21h1-pro",
+    "doServerSKU": "2019-Datacenter",
+    "doServerVer": "latest",
     "dofqdn": "doazlab.com",
     "doc2": "metasploit",
-    "doc2ubuntusku": "20_04-lts"
+    "doc2ubuntusku": "20_04-lts",
+    "doworkspaceprefix": "DO-Sentinel",
+    "doremoteaccessmode": "AllowPublicIP"
   },
   "resources": [
     {
-      "condition": "[and(empty(parameters('workspaceId')),empty(parameters('workspaceKey')))]",
       "name": "deployMSSentinel2Go",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2020-10-01",
@@ -186,7 +131,7 @@
         },
         "parameters": {
           "workspaceName": {
-            "value": "[parameters('workspaceName')]"
+            "value": "[variables('doworkspaceprefix')]"
           },
           "pricingTier": {
             "value": "[parameters('pricingTier')]"
@@ -203,9 +148,7 @@
     {
       "type": "microsoft.insights/dataCollectionRules",
       "apiVersion": "2021-04-01",
-      "dependsOn": [
-        "deployMSSentinel2Go"
-      ],
+      "dependsOn": ["deployMSSentinel2Go"],
       "name": "[variables('dataCollectionRuleName')]",
       "location": "[parameters('location')]",
       "tags": {
@@ -252,8 +195,8 @@
           "logAnalytics": [
             {
               "name": "WindowsEvents",
-              "workspaceId": "[if(empty(parameters('workspaceId')), reference('deployMSSentinel2Go').outputs.workspaceIdOutput.value, parameters('workspaceId'))]",
-              "workspaceResourceId": "[if(empty(parameters('workspaceId')), reference('deployMSSentinel2Go').outputs.workspaceResourceIdOutput.value, parameters('workspaceId'))]"
+              "workspaceId": "[reference('deployMSSentinel2Go').outputs.workspaceIdOutput.value]",
+              "workspaceResourceId": "[reference('deployMSSentinel2Go').outputs.workspaceResourceIdOutput.value]"
             }
           ]
         },
@@ -285,7 +228,7 @@
         },
         "parameters": {
           "workspaceName": {
-            "value": "[if(empty(parameters('workspaceId')), reference('deployMSSentinel2Go').outputs.workspaceName.value, parameters('workspaceName'))]"
+            "value": "[reference('deployMSSentinel2Go').outputs.workspaceName.value]"
           },
           "winEventProviders": {
             "value": "[parameters('collectWinEventProviders')]"
@@ -312,7 +255,7 @@
         },
         "parameters": {
           "workspaceName": {
-            "value": "[if(empty(parameters('workspaceId')), reference('deployMSSentinel2Go').outputs.workspaceName.value, parameters('workspaceName'))]"
+            "value": "[reference('deployMSSentinel2Go').outputs.workspaceName.value]"
           },
           "location": {
             "value": "[parameters('location')]"
@@ -347,10 +290,10 @@
             "value": "[variables('donameprefix')]"
           },
           "windowsDesktopSKU": {
-            "value": "[parameters('windowsDesktopSKU')]"
+            "value": "[variables('doWSKU')]"
           },
           "windowsServerSKU": {
-            "value": "[parameters('windowsServerSKU')]"
+            "value": "[variables('doServerSKU')]"
           },
           "vmSize": {
             "value": "[parameters('vmSize')]"
@@ -365,7 +308,7 @@
             "value": "SystemAssigned"
           },
           "remoteAccessMode": {
-            "value": "[parameters('remoteAccessMode')]"
+            "value": "[variables('doremoteaccessmode')]"
           },
           "allowedIPAddresses": {
             "value": "[parameters('allowedIPAddresses')]"
