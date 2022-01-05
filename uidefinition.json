@@ -106,7 +106,7 @@
 		"outputs": {
 			"workspaceName": "[steps('basics').workspaceName]",
 			"vmSize": "[steps('vmParameters').vmSection.vmSize]",
-			"allowedIPAddresses": "[if(equals(steps('networkParameters').remoteAccessMethod, 'AzureBastionHost'), '*', steps('networkParameters').allowedIPAddresses)]"
+			"allowedIPAddresses": "[steps('networkParameters').allowedIPAddresses)]"
 		}
 	}
 }
