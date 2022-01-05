@@ -17,8 +17,6 @@
 			}
 		},
 		"basics": [
-		],
-		"steps": [
 			{
 				"name": "vmParameters",
 				"label": "VM Parameters",
@@ -90,8 +88,8 @@
 			}
 		],
 		"outputs": {
-			"vmSize": "steps('vmParameters').vmSection.vmSize",
-			"allowedIPAddresses": "steps('networkParameters').allowedIPAddresses)"
+			"vmSize": "basics('vmParameters').vmSection.vmSize",
+			"allowedIPAddresses": "basics('networkParameters').allowedIPAddresses)"
 		}
 	}
 }
