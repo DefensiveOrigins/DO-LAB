@@ -18,80 +18,18 @@
 		},
 		"basics": [
 			{
-				"name": "newWorkspace",
-				"type": "Microsoft.Common.OptionsGroup",
-				"label": "New Log Analytics workspace",
-				"defaultValue": "No (use existing)",
-				"toolTip": "",
-				"constraints": {
-					"allowedValues": [
-						{
-							"label": "No (use existing)",
-							"value": false
-						},
-						{
-							"label": "Yes",
-							"value": true
-						}
-					],
-					"required": true
-				},
-				"visible": true
-			},
-			{
-				"name": "workspaceSelector",
-				"type": "Microsoft.Solutions.ResourceSelector",
-				"label": "Select an existing workspace",
-				"resourceType": "Microsoft.OperationalInsights/workspaces",
-				"options": {
-					"filter": {
-						"subscription": "onBasics",
-						"location": "onBasics"
-					}
-				},
-				"visible": "[bool(not(steps('basics').newWorkspace))]"
-			},
-			{
 				"name": "workspaceName",
 				"type": "Microsoft.Common.TextBox",
 				"label": "Workspace Name",
 				"placeholder": "",
-				"defaultValue": "",
+				"defaultValue": "DO-Sentinel",
 				"toolTip": "The workspace name should include 4-63 letters, digits or '-'. The '-' shouldn't be the first or the last symbol.",
 				"constraints": {
 					"required": true,
 					"regex": "^[A-Za-z0-9][A-Za-z0-9-]+[A-Za-z0-9]$",
 					"validationMessage": "Only alphanumeric characters are allowed, and the value must be 1-30 characters long."
 				},
-				"visible": "[bool(steps('basics').newWorkspace)]"
-			},
-			{
-				"name": "workspaceId",
-				"type": "Microsoft.Common.TextBox",
-				"label": "Workspace ID",
-				"placeholder": "Enter the workspaceId",
-				"defaultValue": "",
-				"toolTip": "",
-				"constraints": {
-					"required": true,
-					"regex": "",
-					"validationMessage": "Your own existing log analytics workspace ID. Leave it empty if you are deploying a new Log Analytics workspace."
-				},
-				"visible": "[bool(not(steps('basics').newWorkspace))]"
-			},
-			{
-				"name": "workspaceKey",
-				"type": "Microsoft.Common.TextBox",
-				"label": "Workspace Key",
-				"placeholder": "Enter the workspaceKey",
-				"defaultValue": "",
-				"toolTip": "Your own existing log analytics workspace key. Leave it empty if you are deploying a new LA workspace.",
-				"constraints": {
-					"required": true,
-					"regex": "",
-					"validationMessage": "Your own existing log analytics workspace ID. Leave it empty if you are deploying a new Log Analytics workspace."
-				},
-				"visible": "[bool(not(steps('basics').newWorkspace))]"
+				"visible": true
 			}
 		],
 		"steps": [
@@ -163,7 +101,7 @@
 							],
 							"required": true
 						},
-						"visible": true
+						"visible": false
 					},
 					{
 						"name": "allowedIPAddresses",
@@ -184,8 +122,6 @@
 		],
 		"outputs": {
 			"workspaceName": "[if(equals(steps('basics').newWorkspace, true), steps('basics').workspaceName, steps('basics').workspaceSelector.name)]",
-			"workspaceId": "[steps('basics').workspaceId]",
-			"workspaceKey": "[steps('basics').workspaceKey]",
 			"vmSize": "[steps('vmParameters').vmSection.vmSize]",
 			"remoteAccessMode": "[steps('networkParameters').remoteAccessMethod]",
 			"allowedIPAddresses": "[if(equals(steps('networkParameters').remoteAccessMethod, 'AzureBastionHost'), '*', steps('networkParameters').allowedIPAddresses)]"
