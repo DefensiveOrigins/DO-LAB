@@ -460,6 +460,14 @@
     "C2PublicIP": {
       "type": "string",
       "value": "[reference('deployC2').outputs.C2PublicIP.value]"
+    },
+    "DCPublicIP": {
+      "type": "string",
+      "value": "[reference('deployWinAD').outputs.DCPublicIP.value]"
+    },
+    "WSPublicIP": {
+      "type": "string",
+      "value": "[reference('deployWinAD').outputs.WSPublicIP.value]"
     }
   }
 }

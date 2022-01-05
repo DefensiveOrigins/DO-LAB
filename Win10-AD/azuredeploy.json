@@ -562,7 +562,7 @@
         "count": "[length(variables('allEndpoints'))]"
       },
       "properties": {
-        "publicIPAllocationMethod": "Dynamic",
+        "publicIPAllocationMethod": "Static",
         "dnsSettings": {
           "domainNameLabel": "[toLower(concat(variables('allEndpoints')[copyIndex('vmPublicIpCopy')].vmName, '-', uniquestring(resourceGroup().id, parameters('utcValue'))))]"
         }
@@ -908,6 +908,14 @@
     "allWinVMsDeployed": {
       "type": "array",
       "value": "[variables('allEndpoints')]"
+    },
+    "DCPublicIP": {
+      "type": "string",
+      "value": "[reference(resourceId('Microsoft.Network/publicIPAddresses','pip-DC01')).IpAddress]"
+    },
+    "WSPublicIP": {
+      "type": "string",
+      "value": "[reference(resourceId('Microsoft.Network/publicIPAddresses','pip-WS05')).IpAddress]"
     }
   }
 }
