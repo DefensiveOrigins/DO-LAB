@@ -99,7 +99,7 @@
   },
   "variables": {
     "uri_sysmonWindowsParserPackTemplate": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Monitoring/SysmonFullDeployment.json",
-    "uri_deployMSSentinel2Go": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Sentinel2Go/azuredeploy.json",
+    "uri_DeploySentinel": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Sentinel2Go/azuredeploy.json",
     "uri_collectWinDataSources": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Sentinel2Go/templates/winDataSources.json",
     "uri_azure_win10_ad": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Win10-AD/azuredeploy.json",
     "uri_azure_c2": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/C2/azuredeploy.json",
@@ -120,13 +120,13 @@
   },
   "resources": [
     {
-      "name": "deployMSSentinel2Go",
+      "name": "DeploySentinel",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2020-10-01",
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "[variables('uri_deployMSSentinel2Go')]",
+          "uri": "[variables('uri_DeploySentinel')]",
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
@@ -148,7 +148,7 @@
     {
       "type": "microsoft.insights/dataCollectionRules",
       "apiVersion": "2021-04-01",
-      "dependsOn": ["deployMSSentinel2Go"],
+      "dependsOn": ["DeploySentinel"],
       "name": "[variables('dataCollectionRuleName')]",
       "location": "[parameters('location')]",
       "tags": {
@@ -195,8 +195,8 @@
           "logAnalytics": [
             {
               "name": "WindowsEvents",
-              "workspaceId": "[reference('deployMSSentinel2Go').outputs.workspaceIdOutput.value]",
-              "workspaceResourceId": "[reference('deployMSSentinel2Go').outputs.workspaceResourceIdOutput.value]"
+              "workspaceId": "[reference('DeploySentinel').outputs.workspaceIdOutput.value]",
+              "workspaceResourceId": "[reference('DeploySentinel').outputs.workspaceResourceIdOutput.value]"
             }
           ]
         },
@@ -218,7 +218,7 @@
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2020-10-01",
       "dependsOn": [
-        "deployMSSentinel2Go"
+        "DeploySentinel"
       ],
       "properties": {
         "mode": "Incremental",
@@ -228,7 +228,7 @@
         },
         "parameters": {
           "workspaceName": {
-            "value": "[reference('deployMSSentinel2Go').outputs.workspaceName.value]"
+            "value": "[reference('DeploySentinel').outputs.workspaceName.value]"
           },
           "winEventProviders": {
             "value": "[parameters('collectWinEventProviders')]"
@@ -245,7 +245,7 @@
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2020-10-01",
       "dependsOn": [
-        "deployMSSentinel2Go"
+        "DeploySentinel"
       ],
       "properties": {
         "mode": "Incremental",
@@ -255,7 +255,7 @@
         },
         "parameters": {
           "workspaceName": {
-            "value": "[reference('deployMSSentinel2Go').outputs.workspaceName.value]"
+            "value": "[reference('DeploySentinel').outputs.workspaceName.value]"
           },
           "location": {
             "value": "[parameters('location')]"
@@ -268,7 +268,7 @@
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2020-10-01",
       "dependsOn": [
-        "deployMSSentinel2Go"
+        "DeploySentinel"
       ],
       "properties": {
         "mode": "Incremental",
@@ -330,7 +330,7 @@
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2020-10-01",
       "dependsOn": [
-        "deployMSSentinel2Go",
+        "DeploySentinel",
         "deployWinAD"
       ],
       "properties": {
