@@ -7,14 +7,18 @@
 
 
 # Run as root, please, it's just easier that way
+# something in apt update/upgrade is breaking things downstream
 # sudo apt update
 # sudo apt upgrade -y
+# sudo reboot
 
-
-# something in apt update/upgrade is breaking things downstream
 
 
 # Use virtual environments to containerize python-based tooling
+# add zip
+# add the pre-reqs for metasploit
+# add nmap
+# add whois
 sudo -s
 apt install python3-pip python3-venv zip build-essential zlib1g zlib1g-dev libpq-dev libpcap-dev libsqlite3-dev ruby ruby-dev nmap whois -y
 
