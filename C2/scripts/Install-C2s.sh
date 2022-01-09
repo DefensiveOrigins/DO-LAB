@@ -13,7 +13,7 @@ apt upgrade -y
 
 
 # Use virtual environments to containerize python-based tooling
-apt install python3-pip python3-venv zip -y
+apt install -y python3-pip python3-venv zip build-essential zlib1g zlib1g-dev libpq-dev libpcap-dev libsqlite3-dev ruby ruby-dev
 
 
 # Add nmap whois
@@ -92,6 +92,15 @@ python3 -m pip install wheel
 python3 -m pip install -r requirements.txt
 deactivate
 cd /opt/
+
+
+# Metasploit
+mkdir /opt/msf /opt/msf/apps
+cd /opt/msf/apps
+git clone https://github.com/rapid7/metasploit-framework.git
+cd metasploit-framework/
+sudo gem install bundler
+bundle install
 
 
 # neo4j install
