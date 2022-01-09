@@ -4,9 +4,14 @@
 # This script is used for building a tooled up Debian install
 # Includes some apt installs, some git clones and pip
 # Script available for wide distribution
+
+
 # Run as root, please, it's just easier that way
-sudo apt update
-sudo apt upgrade -y
+# sudo apt update
+# sudo apt upgrade -y
+
+
+# something in apt update/upgrade is breaking things downstream
 
 
 # Use virtual environments to containerize python-based tooling
