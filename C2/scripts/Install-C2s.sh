@@ -7,17 +7,14 @@
 # Run as root, please, it's just easier that way
 sudo -s
 
+
 # housekeeping
 apt update
 apt upgrade -y
 
 
 # Use virtual environments to containerize python-based tooling
-apt install -y python3-pip python3-venv zip build-essential zlib1g zlib1g-dev libpq-dev libpcap-dev libsqlite3-dev ruby ruby-dev
-
-
-# Add nmap whois
-apt install nmap whois -y
+apt install python3-pip python3-venv zip build-essential zlib1g zlib1g-dev libpq-dev libpcap-dev libsqlite3-dev ruby ruby-dev nmap whois -y
 
 
 # I use /opt/ to house tools
