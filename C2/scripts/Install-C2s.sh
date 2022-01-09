@@ -5,25 +5,18 @@
 # Includes some apt installs, some git clones and pip
 # Script available for wide distribution
 # Run as root, please, it's just easier that way
-sudo -s
-
-
-# housekeeping
-apt update
-apt upgrade -y
+sudo apt update
+sudo apt upgrade -y
 
 
 # Use virtual environments to containerize python-based tooling
+sudo -s
 apt install python3-pip python3-venv zip build-essential zlib1g zlib1g-dev libpq-dev libpcap-dev libsqlite3-dev ruby ruby-dev nmap whois -y
-
-
-# I use /opt/ to house tools
-cd /opt/
 
 
 # First up: impacket
 # clone it, cd to it, add a venv container, activate, add wheel, install tools, deactivate
-
+cd /opt/
 git clone https://github.com/SecureAuthCorp/impacket.git
 cd impacket
 python3 -m venv imp-env
@@ -36,6 +29,7 @@ cd /opt/
 
 # Next up: CrackMapExec
 # clone it, cd to it, add a venv container, activate, add wheel, install tools, deactivate
+
 cd /opt/
 git clone https://github.com/DefensiveOrigins/APT22Things.git
 mv APT22Things CrackMap
@@ -92,12 +86,14 @@ cd /opt/
 
 
 # Metasploit
+cd /opt/
 mkdir /opt/msf /opt/msf/apps
 cd /opt/msf/apps
 git clone https://github.com/rapid7/metasploit-framework.git
 cd metasploit-framework/
 sudo gem install bundler
 bundle install
+cd /opt/
 
 
 # neo4j install
@@ -112,6 +108,7 @@ apt install neo4j -y
 systemctl stop neo4j
 cd /usr/bin
 echo "dbms.default_listen_address=0.0.0.0" >> /etc/neo4j/neo4j.conf
+
 
 # don't open the console dave. especially not during bootstrap
 # ./neo4j console
