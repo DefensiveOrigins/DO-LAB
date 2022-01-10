@@ -3,14 +3,13 @@
 
 # This script is used for building a tooled up Debian install
 # Includes some apt installs, some git clones and pip
-# Script available for wide distribution
+# Script freely available for distribution
 
 
 # Run as root, please, it's just easier that way
 # something in apt update/upgrade is breaking things downstream
-# sudo apt update
-# sudo apt upgrade -y
-# sudo reboot
+sudo apt update
+sudo apt upgrade -y
 
 
 
@@ -20,7 +19,7 @@
 # add nmap
 # add whois
 sudo -s
-apt install python3-pip python3-venv zip build-essential zlib1g zlib1g-dev libpq-dev libpcap-dev libsqlite3-dev ruby ruby-dev nmap whois -y
+apt install python3-venv zip build-essential zlib1g zlib1g-dev libpq-dev libpcap-dev libsqlite3-dev ruby ruby-dev nmap whois -y
 
 
 # First up: impacket
