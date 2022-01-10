@@ -110,3 +110,14 @@ echo "dbms.default_listen_address=0.0.0.0" >> /etc/neo4j/neo4j.conf
 # don't open the console dave. especially not during bootstrap
 # ./neo4j console
 systemctl start neo4j
+
+
+# metasploit. 
+sudo -s
+apt install -y build-essential zlib1g zlib1g-dev libpq-dev libpcap-dev libsqlite3-dev ruby ruby-dev
+mkdir ~/apps
+cd ~/apps
+git clone https://github.com/rapid7/metasploit-framework.git
+cd metasploit-framework/
+sudo gem install bundler
+bundle install
