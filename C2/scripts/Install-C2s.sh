@@ -5,13 +5,19 @@
 # Includes some apt installs, some git clones and pip
 # Script available for wide distribution
 
+sudo -s
+
+# *********** Set Log File ***************
+LOGFILE="/opt/C2s-install.log"
+echoerror() {
+    printf "${RC} * ERROR${EC}: $@\n" 1>&2;
+}
+
 
 # Run as root, please, it's just easier that way
 # something in apt update/upgrade is breaking things downstream
-# sudo apt update
-# sudo apt upgrade -y
-# sudo reboot
-
+sudo apt update >> $LOGFILE 2>&1
+sudo apt upgrade -y >> $LOGFILE 2>&1
 
 
 # Use virtual environments to containerize python-based tooling
@@ -20,36 +26,36 @@
 # add nmap
 # add whois
 sudo -s
-apt install python3-pip python3-venv zip build-essential zlib1g zlib1g-dev libpq-dev libpcap-dev libsqlite3-dev ruby ruby-dev nmap whois -y
+apt install python3-venv zip build-essential zlib1g zlib1g-dev libpq-dev libpcap-dev libsqlite3-dev ruby ruby-dev nmap whois -y  >> $LOGFILE 2>&1
 
 
 # First up: impacket
 # clone it, cd to it, add a venv container, activate, add wheel, install tools, deactivate
 cd /opt/
-git clone https://github.com/SecureAuthCorp/impacket.git
+git clone https://github.com/SecureAuthCorp/impacket.git  >> $LOGFILE 2>&1
 cd impacket
-python3 -m venv imp-env
-source imp-env/bin/activate
-python3 -m pip install wheel
-python3 -m pip install .
-deactivate
-cd /opt/
+python3 -m venv imp-env  >> $LOGFILE 2>&1
+source imp-env/bin/activate  >> $LOGFILE 2>&1
+python3 -m pip install wheel  >> $LOGFILE 2>&1
+python3 -m pip install .  >> $LOGFILE 2>&1
+deactivate  >> $LOGFILE 2>&1
+cd /opt/  >> $LOGFILE 2>&1
 
 
 # Next up: CrackMapExec
 # clone it, cd to it, add a venv container, activate, add wheel, install tools, deactivate
 
 cd /opt/
-git clone https://github.com/DefensiveOrigins/APT22Things.git
-mv APT22Things CrackMap
-cd CrackMap
-python3 -m venv cme-venv
-source cme-venv/bin/activate
-python3 -m pip install wheel
-python3 -m pip install -r requirements.txt
-python3 cme
-deactivate
-cd /opt/
+git clone https://github.com/DefensiveOrigins/APT22Things.git >> $LOGFILE 2>&1
+mv APT22Things CrackMap >> $LOGFILE 2>&1
+cd CrackMap >> $LOGFILE 2>&1
+python3 -m venv cme-venv >> $LOGFILE 2>&1
+source cme-venv/bin/activate >> $LOGFILE 2>&1
+python3 -m pip install wheel >> $LOGFILE 2>&1
+python3 -m pip install -r requirements.txt >> $LOGFILE 2>&1
+python3 cme >> $LOGFILE 2>&1
+deactivate >> $LOGFILE 2>&1
+cd /opt/ >> $LOGFILE 2>&1
 
 
 # PlumHound
