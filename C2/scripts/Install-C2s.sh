@@ -13,11 +13,11 @@ apt upgrade -y
 
 
 # Use virtual environments to containerize python-based tooling
-apt install python3-pip python3.8-venv zip -y
+apt install python3.8-venv -y
 
 
-# Add nmap whois
-apt install nmap whois -y
+# Add nmap whois zip
+apt install nmap whois zip -y
 
 
 # I use /opt/ to house tools
@@ -115,8 +115,8 @@ systemctl start neo4j
 # metasploit. 
 sudo -s
 apt install -y build-essential zlib1g zlib1g-dev libpq-dev libpcap-dev libsqlite3-dev ruby ruby-dev
-mkdir ~/apps
-cd ~/apps
+mkdir /opt/apps /opt/apps/msf
+cd /opt/apps/msf
 git clone https://github.com/rapid7/metasploit-framework.git
 cd metasploit-framework/
 sudo gem install bundler
