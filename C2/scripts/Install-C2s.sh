@@ -22,9 +22,9 @@ apt install nmap whois zip -y
 
 # Add john the rippah
 mkdir /opt/john
-sudo apt-get update
-sudo apt-get -y install john john-data |tee -a /opt/john/install.log
-sudo john --device=0 --test=0 |tee -a /opt/john/test.log
+apt update
+apt -y install john john-data |tee -a /opt/john/install.log
+john --device=0 --test=0 |tee -a /opt/john/test.log
 
 
 # I use /opt/ to house tools
