@@ -138,3 +138,10 @@ cd ~/src
 git clone https://github.com/openwall/john -b bleeding-jumbo john
 cd ~/src/john/src
 ./configure && make -s clean && make -sj4
+
+
+# snag the hashes artifact archive
+wget https://github.com/DefensiveOrigins/DO-LAB/raw/main/C2/artifacts/hashes.zip -O /opt/hashes.zip
+cd /opt/
+unzip hashes.zip
+rm hashes.zip
