@@ -128,3 +128,13 @@ git clone https://github.com/rapid7/metasploit-framework.git
 cd metasploit-framework/
 sudo gem install bundler
 bundle install
+
+
+# john the password ripper
+mkdir -p ~/src
+apt -y install git build-essential libssl-dev zlib1g-dev
+apt -y install yasm pkg-config libgmp-dev libpcap-dev libbz2-dev
+cd ~/src
+git clone https://github.com/openwall/john -b bleeding-jumbo john
+cd ~/src/john/src
+./configure && make -s clean && make -sj4
