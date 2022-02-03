@@ -13,7 +13,7 @@ apt upgrade -y
 
 
 # Use virtual environments to containerize python-based tooling
-apt install python3.8-venv -y
+apt install python3.9-dev python3.9-venv -y
 
 
 # Add nmap whois zip
