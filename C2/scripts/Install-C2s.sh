@@ -28,7 +28,7 @@ python3.9 get-pip.py
 
 
 # Add nmap whois zip
-apt install nmap whois zip -y
+apt install nmap net-tools whois zip -y
 
 
 # First up: impacket
