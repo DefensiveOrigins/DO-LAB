@@ -32,7 +32,7 @@ The following locations have specificaly been tested:
 * Microsoft Sentinel Log Aggregation
 
 # Acknowledgements
-* Open Threat Reserach Forge: https://github.com/DefensiveOrigins/DO-LAB
+* Open Threat Research Forge: https://github.com/DefensiveOrigins/DO-LAB
 * Microsoft Sentinel2Go: https://github.com/OTRF/Microsoft-Sentinel2Go
 * OTRF Blacksmith Components: https://github.com/OTRF/Blacksmith
 * Roberto Rodriguez (@Cyb3rWard0g)
