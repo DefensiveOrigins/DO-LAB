@@ -15,7 +15,7 @@ apt upgrade -y
 
 
 # Install python3.9
-apt install python3.9
+apt install python3.9 -y
 
 
 # Use virtual environments to containerize python-based tooling
