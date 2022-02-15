@@ -93,7 +93,7 @@ cd /opt/
 # clone it, cd to it, add a venv container, activate, add wheel, install tools, deactivate
 
 cd /opt/
-git clone https://github.com/arch4ngel/BruteLoops.git
+git clone https://github.com/DefensiveOrigins/BruteLoops.git
 cd BruteLoops
 python3.9 -m venv bl-env
 source bl-env/bin/activate
