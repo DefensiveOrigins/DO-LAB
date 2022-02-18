@@ -26,6 +26,9 @@ apt install python3.9-dev python3.9-venv -y
 curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
 python3.9 get-pip.py
 
+# install a pre-req for a cffi package req
+apt install libffi-dev
+
 
 # Add nmap whois zip
 apt install nmap net-tools whois zip -y
@@ -132,6 +135,17 @@ git clone https://github.com/rapid7/metasploit-framework.git
 cd metasploit-framework/
 sudo gem install bundler
 bundle install
+
+
+# silenttrinity
+cd /opt/
+git clone https://github.com/DefensiveOrigins/SILENTTRINITY.git
+cd SILENTTRINITY/
+python3.9 -m venv st-env
+source st-env/bin/activate
+python3.9 -m pip install wheel
+python3.9 -m pip install -r requirements.txt
+deactivate
 
 
 # john the password ripper
