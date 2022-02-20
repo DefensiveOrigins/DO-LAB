@@ -27,7 +27,7 @@ curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
 python3.9 get-pip.py
 
 # install a pre-req for a cffi package req
-apt install libffi-dev
+apt install libffi-dev -y
 
 
 # Add nmap whois zip
