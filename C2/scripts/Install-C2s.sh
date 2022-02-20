@@ -15,19 +15,22 @@ apt upgrade -y
 
 
 # Install python3.9
-apt install python3.9 -y
+mkdir /opt/install-logs/
+apt install python3.9 -y | tee -a /opt/install-logs/python3.9.log
 
 
 # Use virtual environments to containerize python-based tooling
-apt install python3.9-dev python3.9-venv -y
+apt install python3.9-dev python3.9-venv -y | tee -a /opt/install-logs/python-devs.log
 
 
 # pip installer for 3.9
 curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
-python3.9 get-pip.py
+python3.9 get-pip.py | tee -a /opt/install-logs/pip.log
+
 
 # install a pre-req for a cffi package req
-apt install libffi-dev -y
+# broke here, everything after is sus
+apt install libffi-dev -y | tee -a /opt/install-logs/libffi.log
 
 
 # Add nmap whois zip
