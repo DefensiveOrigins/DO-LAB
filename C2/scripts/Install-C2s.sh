@@ -17,7 +17,7 @@ apt upgrade -y
 # Install python3.9
 mkdir /opt/install-logs/
 apt install python3.9 -y | tee -a /opt/install-logs/python3.9.log
-apt install libpython3.9-dev | tee -a /opt/install-logs/libpython-dev.log
+apt install libpython3.9-dev -y | tee -a /opt/install-logs/libpython-dev.log
 
 
 # Use virtual environments to containerize python-based tooling
