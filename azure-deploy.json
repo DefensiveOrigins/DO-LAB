@@ -115,7 +115,7 @@
     "dofqdn": "doazlab.com",
     "doc2": "metasploit",
     "doc2ubuntusku": "20_04-lts",
-    "doworkspaceprefix": "DO-Sentinel",
+    "doworkspaceprefix": "LA-workspace",
     "doremoteaccessmode": "AllowPublicIP"
   },
   "resources": [
