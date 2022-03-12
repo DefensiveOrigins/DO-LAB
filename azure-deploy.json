@@ -84,6 +84,10 @@
       "type": "bool",
       "defaultValue": true
     },
+    "doenablesysmonparsers": {
+      "type": "bool",
+      "defaultValue": false
+    },
     "doenableaadconnect": {
       "type": "bool",
       "defaultValue": false
@@ -240,7 +244,7 @@
       }
     },
     {
-      "condition": "[parameters('doenablesysmon')]",
+      "condition": "[parameters('doenablesysmonparsers')]",
       "name": "deploySysmonWindowsParserPack",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2020-10-01",
