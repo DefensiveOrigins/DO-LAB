@@ -110,6 +110,22 @@ deactivate
 cd /opt/
 
 
+# bl-bfg install (replace BruteLoops)
+# couple additional steps here, but seemed ok in testing
+
+cd /opt/
+git clone https://github.com/DefensiveOrigins/bl-bfg.git
+cd bl-bfg
+python3.9 -m venv bfg-env
+source bfg-env/bin/activate
+python3.9 -m pip install wheel
+python3.9 -m pip install .
+python3.9 setup.py install
+python3.9 -m pip install IPython
+deactivate
+cd /opt/
+
+
 # neo4j install
 # this may shank all the things
 
