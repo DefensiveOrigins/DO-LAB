@@ -48,6 +48,7 @@ python3.9 -m venv imp-env
 source imp-env/bin/activate
 python3.9 -m pip install wheel
 python3.9 -m pip install -r requirements.txt
+python3.9 -m pip install .
 deactivate
 cd /opt/
 
