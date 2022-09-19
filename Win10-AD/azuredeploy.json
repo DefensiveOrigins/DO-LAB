@@ -360,7 +360,7 @@
           "publisher": "MicrosoftWindowsDesktop",
           "offer": "Windows-10",
           "sku": "win10-21h2-pro",
-          "version": "19044.1645.220403",
+          "version": "latest",
           "extensionName": "SetupWinVM"
         }
       }
