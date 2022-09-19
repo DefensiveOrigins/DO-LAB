@@ -127,9 +127,6 @@ cd /opt/
 
 
 # neo4j install
-# this may shank all the things
-
-
 echo "deb http://httpredir.debian.org/debian stretch-backports main" | sudo tee -a /etc/apt/sources.list.d/stretch-backports.list
 wget -O - https://debian.neo4j.com/neotechnology.gpg.key | sudo apt-key add -
 echo 'deb https://debian.neo4j.com stable 4.0' > /etc/apt/sources.list.d/neo4j.list
@@ -151,10 +148,9 @@ sudo -s
 apt install -y build-essential zlib1g zlib1g-dev libpq-dev libpcap-dev libsqlite3-dev ruby ruby-dev
 mkdir /opt/apps /opt/apps/msf
 cd /opt/apps/msf
-git clone https://github.com/rapid7/metasploit-framework.git
-cd metasploit-framework/
-sudo gem install bundler
-bundle install
+curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > msfinstall
+chmod 755 msfinstall
+./msfinstall |tee -a msf-install.log
 
 
 # silenttrinity
