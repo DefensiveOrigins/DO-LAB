@@ -325,7 +325,6 @@
     "saclModule": "https://raw.githubusercontent.com/OTRF/Set-AuditRule/master/Set-AuditRule.ps1",
     "setSACLScript": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Win10-AD/scripts/Set-SACLs.ps1",
     "setWallPaperScript": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Win10-AD/scripts/Set-WallPaper.ps1",
-    "adddoazlabgposScript": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Win10-AD/scripts/Add-DoazLabGPOs.ps1",
 
     // Powershell DSC Scripts
     "dscModules": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Win10-AD/scripts/Install-DSC-Modules.ps1",
@@ -343,13 +342,7 @@
       "[variables('setPowerShellLogging')]",
       "[variables('saclModule')]",
       "[variables('setSACLScript')]",
-      "[variables('adddoazlabgposScript')]",
       "[variables('setWallPaperScript')]"
-    ],
-
-    // Post Setup Scripts
-    "DCpostSetUpScripts": [
-      "[variables('adddoazlabgposScript')]"
     ],
 
     // Virtual Machine Properties
@@ -696,27 +689,6 @@
         "settings": {
           "fileUris": "[variables('initialSetUpScripts')]",
           "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File ./Set-Initial-Settings.ps1',' ','-SetupType DC')]"
-        },
-        "protectedSettings": {}
-      }
-    },
-    {
-      "name": "DeployDOAZLab-GPOs",
-      "type": "Microsoft.Compute/virtualMachines/extensions",
-      "apiVersion": "2019-12-01",
-      "location": "[parameters('location')]",
-      "dependsOn": [
-        "[resourceId('Microsoft.Compute/virtualMachines/extensions', variables('domainController')[0].vmName, variables('domainController')[0].extensionName)]",
-        "CreateADForest"
-      ],
-      "properties": {
-        "publisher": "Microsoft.Compute",
-        "type": "CustomScriptExtension",
-        "typeHandlerVersion": "1.8",
-        "autoUpgradeMinorVersion": true,
-        "settings": {
-          "fileUris": "[variables('DCpostSetUpScripts')]",
-          "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File ./Add-DoazLabGPOs.ps1',' ','-SetupType DC')]"
         },
         "protectedSettings": {}
       }
