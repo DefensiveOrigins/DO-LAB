@@ -13,7 +13,7 @@ For more information on upcoming classes, see our classes at https://www.defensi
 # Deployment 
 Click below to start the deployment of the Defensive Origins Lab Environment within your Azure account.
 
-[![Deploy DO-LAB Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https://raw.githubusercontent.com/hjorrip/DO-LAB/tree/patch-1/azure-deploy.json/createUIDefinitionUri/https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/uidefinition.json) 
+[![Deploy DO-LAB Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw%2Egithubusercontent%2Ecom%2Fhjorrip%2FDO%2DLAB%2Fpatch%2D1%2Fazure%2Ddeploy%2Ejson%2FcreateUIDefinitionUri%2Fhttps%3A%2F%2Fraw%2Egithubusercontent%2Ecom%2FDefensiveOrigins%2FDO%2DLAB%2Fmain%2Fuidefinition%2Ejson) 
 
 NOTE: Deployment times vary, but expect the full deployment in the Azure cloud to complete within one hour.
 
