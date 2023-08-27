@@ -167,7 +167,7 @@
     },
     "windowsServerVersion": {
       "type": "string",
-      "defaultValue": "17763.3125.2112070401"
+      "defaultValue": "17763.4737.230802"
     },
     "vmSize": {
       "type": "string",
@@ -376,7 +376,7 @@
         "publisher": "MicrosoftWindowsServer",
         "offer": "WindowsServer",
         "sku": "2019-Datacenter",
-        "version": "17763.3125.2112070401",
+        "version": "17763.4737.230802",
         "extensionName": "SetUpDC"
       }
     ],
