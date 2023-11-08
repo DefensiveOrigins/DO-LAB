@@ -1,5 +1,7 @@
 # We aren't updating this evnvironment 
-We are working on a new project and we will be posting updates soon.  We acknlowege that the current state of this ARM template and lab deployer is broken.  We are not updating it and  we will update links to the new build when it is completed.
+But, we are working on a new project, lab, and ARM template.  We will be posting updates soon.  We acknlowege that the current state of this ARM template and lab deployer is broken.  We are not updating it and  we will update links to the new build when it is completed.
+
+In the mean time, we'd recommend checking out Sentinel2Go: https://github.com/OTRF/Microsoft-Sentinel2Go
 
 ## Defensive Origins Lab Environment
 Defensive Origins Lab  Environment is used within the Defensive Origins courses provided by Defensive Origins, AntiSyphon Security, and Black Hills Information Security.
