@@ -120,7 +120,7 @@
         "doServerVer": "20348.2031.231006",
         "dofqdn": "doazlab.com",
         "doc2": "metasploit",
-        "doc2ubuntusku": "20_04-lts",
+        "doc2ubuntusku": "22.04-lts",
         "doworkspaceprefix": "LA-workspace",
         "doremoteaccessmode": "AllowPublicIP"
     },
