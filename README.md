@@ -1,5 +1,5 @@
-# We aren't updating this evnvironment 
-But, we are working on a new project, lab, and ARM template.  We will be posting updates soon.  We acknlowege that the current state of this ARM template and lab deployer is broken.  We are not updating it and  we will update links to the new build when it is completed.
+# We're working on it
+We are working on an updated lab and ARM template.  We will be posting updates soon.  We acknlowege that the current state of this ARM template and lab deployer is broken.  We are not updating it and  we will update links to the new build when it is completed.
 
 In the mean time, we'd recommend checking out Sentinel2Go: https://github.com/OTRF/Microsoft-Sentinel2Go
 
