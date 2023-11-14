@@ -5,7 +5,7 @@
         [string]$SysmonConfigUrl = "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Monitoring/sysmon.xml"
     )
 
-    Import-DscResource -ModuleName xPSDesiredStateConfiguration
+    Import-DscResource -ModuleName xPSDesiredStateConfiguration, ComputerManagementDsc
     [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
     
     Node localhost
