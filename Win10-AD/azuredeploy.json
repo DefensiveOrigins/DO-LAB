@@ -160,14 +160,14 @@
     },
     "windowsServerSKU": {
       "type": "string",
-      "defaultValue": "2019-Datacenter",
+      "defaultValue": "2022-Datacenter",
       "metadata": {
         "description": "The Windows version for the Server VM. This will pick a fully patched image of this given Windows version."
       }
     },
     "windowsServerVersion": {
       "type": "string",
-      "defaultValue": "17763.3125.2112070401"
+      "defaultValue": "20348.2031.231006"
     },
     "vmSize": {
       "type": "string",
@@ -351,34 +351,34 @@
         "name": "allWinWKS",
         "count": "[parameters('numberOfWorkstations')]",
         "input": {
-          "tag": "workstation",
-          "vmName": "[concat(parameters('vmNamePrefix'),copyIndex('allWinWKS',5))]",
-          "os": "windows",
-          "subnetref": "[variables('subnetRef')]",
-          "ipAddress": "[concat(variables('vmPrivateIPAddresPrefix'),copyIndex('allWinWKS',5))]",
-          "vmSize": "[parameters('vmSize')]",
-          "publisher": "MicrosoftWindowsDesktop",
-          "offer": "Windows-10",
-          "sku": "win10-21h2-pro",
-          "version": "latest",
-          "extensionName": "SetupWinVM"
+            "tag": "workstation",
+            "vmName": "[concat(parameters('vmNamePrefix'),copyIndex('allWinWKS',5))]",
+            "os": "windows",
+            "subnetref": "[variables('subnetRef')]",
+            "ipAddress": "[concat(variables('vmPrivateIPAddresPrefix'),copyIndex('allWinWKS',5))]",
+            "vmSize": "[parameters('vmSize')]",
+            "publisher": "MicrosoftWindowsDesktop",
+            "offer": "Windows-11",
+            "sku": "win11-23h2-pro",
+            "version": "22631.2428.231023",
+            "extensionName": "SetupWinVM"
         }
       }
     ],
     "domainController": [
-      {
-        "tag": "domainController",
-        "vmName": "DC01",
-        "os": "windows",
-        "subnetref": "[variables('subnetRef')]",
-        "ipAddress": "[concat(variables('vmPrivateIPAddresPrefix'),'4')]",
-        "vmSize": "[parameters('vmSize')]",
-        "publisher": "MicrosoftWindowsServer",
-        "offer": "WindowsServer",
-        "sku": "2019-Datacenter",
-        "version": "17763.3125.2112070401",
-        "extensionName": "SetUpDC"
-      }
+        {
+            "tag": "domainController",
+            "vmName": "DC01",
+            "os": "windows",
+            "subnetref": "[variables('subnetRef')]",
+            "ipAddress": "[concat(variables('vmPrivateIPAddresPrefix'),'4')]",
+            "vmSize": "[parameters('vmSize')]",
+            "publisher": "MicrosoftWindowsServer",
+            "offer": "WindowsServer",
+            "sku": "2022-Datacenter",
+            "version": "20348.2031.231006",
+            "extensionName": "SetUpDC"
+        }
     ],
 
     // Additional Variables

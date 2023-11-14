@@ -103,27 +103,27 @@
       "defaultValue": 1
     }
   },
-  "variables": {
-    "uri_sysmonWindowsParserPackTemplate": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Monitoring/SysmonFullDeployment.json",
-    "uri_DeploySentinel": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Sentinel2Go/azuredeploy.json",
-    "uri_collectWinDataSources": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Sentinel2Go/templates/winDataSources.json",
-    "uri_azure_win10_ad": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Win10-AD/azuredeploy.json",
-    "uri_azure_c2": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/C2/azuredeploy.json",
-    "uri_azure_monitoragents": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/MonitorAgents/windows.json",
-    "uri_dcrassociation": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/AssociateDCR/association.json",
-    "dataCollectionRuleName": "WindowsDCR",
-    "doadminusername": "doadmin",
-    "doadminpassword": "DOLabAdmin1!",
-    "donameprefix": "WS0",
-    "doWSKU": "21h1-pro",
-    "doServerSKU": "2019-Datacenter",
-    "doServerVer": "latest",
-    "dofqdn": "doazlab.com",
-    "doc2": "metasploit",
-    "doc2ubuntusku": "20_04-lts",
-    "doworkspaceprefix": "LA-workspace",
-    "doremoteaccessmode": "AllowPublicIP"
-  },
+    "variables": {
+        "uri_sysmonWindowsParserPackTemplate": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Monitoring/SysmonFullDeployment.json",
+        "uri_DeploySentinel": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Sentinel2Go/azuredeploy.json",
+        "uri_collectWinDataSources": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Sentinel2Go/templates/winDataSources.json",
+        "uri_azure_win10_ad": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Win10-AD/azuredeploy.json",
+        "uri_azure_c2": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/C2/azuredeploy.json",
+        "uri_azure_monitoragents": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/MonitorAgents/windows.json",
+        "uri_dcrassociation": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/AssociateDCR/association.json",
+        "dataCollectionRuleName": "WindowsDCR",
+        "doadminusername": "doadmin",
+        "doadminpassword": "DOLabAdmin1!",
+        "donameprefix": "WS0",
+        "doWSKU": "21h1-pro",
+        "doServerSKU": "2022-Datacenter",
+        "doServerVer": "20348.2031.231006",
+        "dofqdn": "doazlab.com",
+        "doc2": "metasploit",
+        "doc2ubuntusku": "20_04-lts",
+        "doworkspaceprefix": "LA-workspace",
+        "doremoteaccessmode": "AllowPublicIP"
+    },
   "resources": [
     {
       "name": "DeploySentinel",
