@@ -125,7 +125,6 @@
         "dofqdn": "doazlab.com",
         "doc2": "metasploit",
         "doc2ubuntusku": "22.04-lts",
-        "doc2ubuntusku": "22.04-lts",
         "doworkspaceprefix": "LA-workspace",
         "doremoteaccessmode": "AllowPublicIP"
     },
