@@ -2,5 +2,4 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
-/.vs/DO-LAB/FileContentIndex
-/.vs/DO-LAB/v17
+/.vs/*
