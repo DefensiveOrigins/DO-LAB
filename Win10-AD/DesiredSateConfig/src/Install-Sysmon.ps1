@@ -102,6 +102,12 @@
             State = "Running"
             DependsOn = '[xScript]InstallSysmon'
         }
+        PendingReboot RebootAfterSysmonInstall
+        { 
+            #added to ensure sysmon is using the updated config, after v 15 it is not easily possible to restart sysmon inside DSC
+            Name = "RebootServer"
+            DependsOn = "[xService]Sysmon"
+        }
 
     }
 }
