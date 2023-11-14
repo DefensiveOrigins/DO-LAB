@@ -224,7 +224,7 @@
     },
     {
       "condition": "[not(empty(parameters('collectWinEventProviders')))]",
-      "name": "collectWinDataSources",
+      "name": "DeployWinDataSources",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2020-10-01",
       "dependsOn": [
@@ -274,7 +274,7 @@
       }
     },
     {
-      "name": "deployWinAD",
+      "name": "Deploy-ActiveDirectoryEnvironment",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2020-10-01",
       "dependsOn": [
@@ -341,7 +341,7 @@
       "apiVersion": "2020-10-01",
       "dependsOn": [
         "DeploySentinel",
-        "deployWinAD"
+        "Deploy-ActiveDirectoryEnvironment"
       ],
       "properties": {
         "mode": "Incremental",
@@ -351,7 +351,7 @@
         },
         "parameters": {
           "virtualMachines": {
-            "value": "[reference('deployWinAD').outputs.allWinVMsDeployed.value]"
+            "value": "[reference('Deploy-ActiveDirectoryEnvironment').outputs.allWinVMsDeployed.value]"
           },
           "monitorAgent": {
             "value": "Azure Monitor Agent"
@@ -375,7 +375,7 @@
         },
         "parameters": {
           "virtualMachines": {
-            "value": "[reference('deployWinAD').outputs.allWinVMsDeployed.value]"
+            "value": "[reference('Deploy-ActiveDirectoryEnvironment').outputs.allWinVMsDeployed.value]"
           },
           "dataCollectionRuleId": {
             "value": "[resourceId('microsoft.insights/dataCollectionRules', variables('dataCollectionRuleName'))]"
@@ -432,7 +432,7 @@
       "apiVersion": "2019-11-01",
       "dependsOn": [
         "deployC2",
-        "deployWinAD"
+        "Deploy-ActiveDirectoryEnvironment"
       ],
       "location": "[parameters('location')]",
       "properties": {
@@ -441,7 +441,7 @@
         "allowGatewayTransit": false,
         "useRemoteGateways": false,
         "remoteVirtualNetwork": {
-          "id": "[reference('deployWinAD').outputs.virtualNetworkId.value]"
+          "id": "[reference('Deploy-ActiveDirectoryEnvironment').outputs.virtualNetworkId.value]"
         }
       }
     },
@@ -452,7 +452,7 @@
       "apiVersion": "2019-11-01",
       "dependsOn": [
         "deployC2",
-        "deployWinAD"
+        "Deploy-ActiveDirectoryEnvironment"
       ],
       "location": "[parameters('location')]",
       "properties": {
@@ -473,11 +473,11 @@
     },
     "DCPublicIP": {
       "type": "string",
-      "value": "[reference('deployWinAD').outputs.DCPublicIP.value]"
+      "value": "[reference('Deploy-ActiveDirectoryEnvironment').outputs.DCPublicIP.value]"
     },
     "WSPublicIP": {
       "type": "string",
-      "value": "[reference('deployWinAD').outputs.WSPublicIP.value]"
+      "value": "[reference('Deploy-ActiveDirectoryEnvironment').outputs.WSPublicIP.value]"
     }
   }
 }
