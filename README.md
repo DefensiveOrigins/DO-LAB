@@ -31,10 +31,10 @@ The following locations have specifically been tested:
 * US WEST (any)
 
 # Components
-* Windows Server /w Active Directory.
+* Windows Server 2022 /w Active Directory.
   * Domain: doazlab.com
-* Windows Workstation 21h1-pro
-* Ubuntu 18.04LTS C2 with Metasploit
+* Windows Workstation 23h2-pro
+* Ubuntu 22.04LTS C2 with Metasploit
 * Sysmon Installation on Server and Workstation
 * Microsoft Sentinel Log Aggregation
 
