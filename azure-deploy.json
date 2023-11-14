@@ -224,7 +224,7 @@
     },
     {
       "condition": "[not(empty(parameters('collectWinEventProviders')))]",
-      "name": "DeployWinDataSources",
+      "name": "Deploy-WinDataSources",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2020-10-01",
       "dependsOn": [
