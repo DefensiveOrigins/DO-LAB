@@ -125,6 +125,7 @@
         "dofqdn": "doazlab.com",
         "doc2": "metasploit",
         "doc2ubuntusku": "22.04-lts",
+        "doc2ubuntusku": "22.04-lts",
         "doworkspaceprefix": "LA-workspace",
         "doremoteaccessmode": "AllowPublicIP"
     },
@@ -387,8 +388,7 @@
       }
     },
     {
-      "condition": "[not(equals(variables('doc2'), 'None'))]",
-      "name": "deployC2",
+      "name": "Deploy-Linux",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2020-10-01",
       "properties": {
@@ -426,12 +426,11 @@
       }
     },
     {
-      "condition": "[not(equals(variables('doc2'), 'None'))]",
       "name": "vnet-c2/peering-to-remote-vnet-win",
       "type": "Microsoft.Network/virtualNetworks/virtualNetworkPeerings",
       "apiVersion": "2019-11-01",
       "dependsOn": [
-        "deployC2",
+        "Deploy-Linux",
         "Deploy-ActiveDirectoryEnvironment"
       ],
       "location": "[parameters('location')]",
@@ -446,12 +445,11 @@
       }
     },
     {
-      "condition": "[not(equals(variables('doc2'), 'None'))]",
       "name": "vnet-win/peering-to-remote-vnet-c2",
       "type": "Microsoft.Network/virtualNetworks/virtualNetworkPeerings",
       "apiVersion": "2019-11-01",
       "dependsOn": [
-        "deployC2",
+        "Deploy-Linux",
         "Deploy-ActiveDirectoryEnvironment"
       ],
       "location": "[parameters('location')]",
@@ -461,7 +459,7 @@
         "allowGatewayTransit": false,
         "useRemoteGateways": false,
         "remoteVirtualNetwork": {
-          "id": "[if(not(equals(variables('doc2'), 'None')), reference('deployC2').outputs.virtualNetworkId.value, 'Resource not deployed')]"
+          "id": "[if(not(equals(variables('doc2'), 'None')), reference('Deploy-Linux').outputs.virtualNetworkId.value, 'Resource not deployed')]"
         }
       }
     }
@@ -469,7 +467,7 @@
   "outputs": {
     "C2PublicIP": {
       "type": "string",
-      "value": "[reference('deployC2').outputs.C2PublicIP.value]"
+      "value": "[reference('Deploy-Linux').outputs.C2PublicIP.value]"
     },
     "DCPublicIP": {
       "type": "string",
