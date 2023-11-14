@@ -365,7 +365,7 @@
       "apiVersion": "2020-10-01",
       "dependsOn": [
         "[resourceId('microsoft.insights/dataCollectionRules', variables('dataCollectionRuleName'))]",
-        "Deploy-AzureMonitorAgentDeploy-AzureMonitorAgent"
+        "Deploy-AzureMonitorAgent"
       ],
       "properties": {
         "mode": "Incremental",
