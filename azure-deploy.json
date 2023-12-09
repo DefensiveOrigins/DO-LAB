@@ -175,6 +175,7 @@
               ],
               "xPathQueries": [
                 "Security!*[System[(EventID=5136 or EventID=5139)]]",
+                "Security!*[System[(EventID=4103 or EventID=4104 or EventID=4105)]]",
                 "Security!*[System[(EventID=5137)]]",
                 "Security!*[System[(EventID=5141)]]",
                 "Security!*[System[(EventID=4662 or EventID=4661)]]",
