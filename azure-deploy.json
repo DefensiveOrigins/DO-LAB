@@ -175,7 +175,6 @@
               ],
               "xPathQueries": [
                 "Security!*[System[(EventID=5136 or EventID=5139)]]",
-                "Security!*[System[(EventID=4103 or EventID=4104 or EventID=4105)]]",
                 "Security!*[System[(EventID=5137)]]",
                 "Security!*[System[(EventID=5141)]]",
                 "Security!*[System[(EventID=4662 or EventID=4661)]]",
@@ -199,7 +198,8 @@
                 "Security!*[System[(EventID=4670 or EventID=4657)]]",
                 "Security!(*[System[EventID=4656]] and ((*[EventData[Data[@Name='ObjectType']='Key']]))) or (*[System[EventID=4663]] and ((*[EventData[Data[@Name='ObjectType']='Key']])))",
                 "Security!*[System[(EventID=5058 or EventID=5061)]]",
-                "Microsoft-Windows-Sysmon!*[Operational]"
+                "PowerShell!*[Operational(EventID=4103 or EventID=4104 or EventID=4105)]",
+                "Microsoft-Windows-Sysmon!*[Operational(EventID >= 1 and <= 300)]"
               ]
             }
           ]
