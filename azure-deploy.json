@@ -92,7 +92,7 @@
     },
     "doenablesysmonparsers": {
       "type": "bool",
-      "defaultValue": false
+      "defaultValue": true
     },
     "doenableaadconnect": {
       "type": "bool",
@@ -156,7 +156,7 @@
       }
     },
     {
-      "type": "microsoft.insights/dataCollectionRules",
+      "type": "Microsoft.Insights/dataCollectionRules",
       "apiVersion": "2021-04-01",
       "dependsOn": ["Deploy-Sentinel"],
       "name": "[variables('dataCollectionRuleName')]",
@@ -171,8 +171,8 @@
               "name": "eventLogsDataSource",
               "scheduledTransferPeriod": "PT5M",
               "streams": [
-                "Microsoft-SecurityEvent"
-              ],
+                "Microsoft-WindowsEvent"
+            ],
               "xPathQueries": [
                 "Security!*[System[(EventID=5136 or EventID=5139)]]",
                 "Security!*[System[(EventID=5137)]]",
@@ -216,7 +216,7 @@
         "dataFlows": [
           {
             "streams": [
-              "Microsoft-SecurityEvent"
+              "Microsoft-WindowsEvent"
             ],
             "destinations": [
               "WindowsEvents"
