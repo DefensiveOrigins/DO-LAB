@@ -9,6 +9,9 @@
 sudo -s
 
 
+# update from first boot
+apt update
+apt upgrade -y
 
 
 # Install python3.9

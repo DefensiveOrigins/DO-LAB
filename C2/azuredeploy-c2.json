@@ -180,8 +180,6 @@
         },
 
         "c2SetupScript": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/C2/scripts/Install-C2s.sh",
-        "c2UpdateRebootScript": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/C2/scripts/Update-C2.sh",
-        "dockerSetupScript": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/C2/scripts/Install-Docker.sh",
         "vmName": "[parameters('vmName')]"
     },
     "resources": [
@@ -330,10 +328,8 @@
                 "autoUpgradeMinorVersion": true,
                 "settings": {},
                 "protectedSettings": {
-                    "commandToExecute": "[concat('bash Install-C2s.sh -r', ' ', parameters('c2Framework'))]",
+                    "commandToExecute": "bash Install-C2s.sh",
                     "fileUris": [
-                        "[variables('c2UpdateRebootScript')]",
-                        "[variables('dockerSetupScript')]",
                         "[variables('c2SetupScript')]"
                     ]
                 }
