@@ -28,6 +28,7 @@ touch /etc/DOAZLAB/RunInstallToolsAtNextReboot
 
 # Get updatd APT Pacakges and Upgrade
 echo "Time: $(date). Updating Packages and Upgrading" >> /etc/DOAZLAB/DOAZLABLog 
+export DEBIAN_FRONTEND=noninteractive
 apt-get update
 apt-get upgrade -y
 
