@@ -1,451 +1,430 @@
 {
-  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
-  "contentVersion": "1.0.0.0",
-  "parameters": {
-    "utcValue": {
-      "type": "string",
-      "defaultValue": "[utcNow()]",
-      "metadata": {
-        "description": "Returns the current (UTC) datetime value in the specified format. If no format is provided, the ISO 8601 (yyyyMMddTHHmmssZ) format is used"
-      }
-    },
-    "adminUsername": {
-      "type": "string",
-      "metadata": {
-        "description": "Username for the Virtual Machine."
-      }
-    },
-    "authenticationType": {
-      "type": "string",
-      "defaultValue": "password",
-      "allowedValues": [
-        "sshPublicKey",
-        "password"
-      ],
-      "metadata": {
-        "description": "Type of authentication to use on the Virtual Machine. SSH key is recommended."
-      }
-    },
-    "adminPasswordOrKey": {
-      "type": "securestring",
-      "metadata": {
-        "description": "SSH Key or password for the Virtual Machine. SSH key is recommended."
-      }
-    },
-    "remoteAccessMode": {
-      "type": "string",
-      "defaultValue": "AllowPublicIP",
-      "allowedValues": [
-        "AllowPublicIP",
-        "AzureBastionHost"
-      ],
-      "metadata": {
-        "description": "Do you want to restrict access to your environment by a Public IP or set up an Azure Bastion Host. If the former, make sure you add your public IP address to the variable 'allowedIPAddresses'"
-      }
-    },
-    "allowedIPAddresses": {
-      "type": "string",
-      "metadata": {
-        "description": "The sourceAddressPrefixes allowed to connect to this deployment"
-      },
-      "defaultValue": "*"
-    },
-    "azureBastionHostName": {
-      "type": "string",
-      "metadata": {
-        "description": "Name of Azure Bastion Host assigned to the Virtual network in this template"
-      },
-      "defaultValue": "LinuxBastionHost"
-    },
-    "vmName": {
-      "type": "string",
-      "defaultValue": "C2001",
-      "metadata": {
-        "description": "Name of the virtual machine"
-      }
-    },
-    "vmSize": {
-      "type": "string",
-      "defaultValue": "Standard_B2s",
-        "allowedValues": [
-            "Standard_B2s",
-            "Standard_B2ms",
-            "Standard_B2s_v2",
-            "Standard_B2ls_v2",
-            "Standard_B2ts_v2",
-            "Standard_B2als_v2",
-            "Standard_B2as_v2",
-            "Standard_DS2",
-            "Standard_DS11",
-            "Standard_D2s_v3",
-            "Standard_D2s_v4",
-            "Standard_D2s_v5"
-        ],
-      "metadata": {
-        "description": "Size of the virtual machine. Reference: https://docs.microsoft.com/en-us/azure/virtual-machines/sizes-general"
-      }
-    },
-    "ubuntuSKU": {
-      "type": "string",
-      "defaultValue": "22.04-LTS",
-      "allowedValues": [
-        "22.04",
-        "22.04-lts"
-      ],
-      "metadata": {
-        "description": "The Ubuntu version for the VM. This will pick a fully patched image of this given Ubuntu version."
-      }
-    },
-    "virtualNetworkName": {
-      "type": "string",
-      "metadata": {
-        "description": "Name of the Virtual Network"
-      },
-      "defaultValue": "vnet-c2"
-    },
-    "virtualNetworkAddressRange": {
-      "type": "string",
-      "metadata": {
-        "description": "Virtual Network address range"
-      },
-      "defaultValue": "10.0.0.0/16"
-    },
-    "subnetRange": {
-      "type": "string",
-      "metadata": {
-        "description": "subnet range"
-      },
-      "defaultValue": "10.0.0.0/24"
-    },
-    "VMPrivateIPAddress": {
-      "type": "string",
-      "metadata": {
-        "description": "Private IP for the C2 VM"
-      },
-      "defaultValue": "10.0.0.8"
-    },
-    "subnetName": {
-      "type": "string",
-      "metadata": {
-        "description": "Name of the subnet"
-      },
-      "defaultValue": "snet-c2"
-    },
-    "azureBastionSubnetRange": {
-      "type": "string",
-      "metadata": {
-        "description": "Address Range of the Azure Bastion service"
-      },
-      "defaultValue": "192.168.3.0/27"
-    },
-    "c2Framework": {
-      "type": "string",
-      "defaultValue": "metasploit",
-      "allowedValues": [
-        "empire",
-        "covenant",
-        "metasploit"
-      ],
-      "metadata": {
-        "description": "C2 framework to deploy"
-      }
-    },
-    "location": {
-      "type": "string",
-      "defaultValue": "[resourceGroup().location]",
-      "metadata": {
-        "description": "Location for all resources."
-      }
-    }
-  },
-  "variables": {
-    "storageAccountName": "[concat(uniquestring(resourceGroup().id, parameters('utcValue')))]",
-    "doc2pipname": "[concat('pip-', variables('vmName'))]",
-    "virtualNetworkName": "[parameters('virtualNetworkName')]",
-    "virtualNetworkAddressRange": "[parameters('virtualNetworkAddressRange')]",
-
-    "subnetName": "[parameters('subnetName')]",
-    "subnetRange": "[parameters('subnetRange')]",
-    "vmPrivateIPPrefixArray": "[take(split(variables('subnetRange'),'.'),3)]",
-    "vmPrivateIPAddresPrefix": "[format('{0}.{1}.{2}.',variables('vmPrivateIPPrefixArray')[0], variables('vmPrivateIPPrefixArray')[1], variables('vmPrivateIPPrefixArray')[2])]",
-    "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('subnetName'))]",
-
-    "bastionSubnetName": "AzureBastionSubnet",
-
-    "nsg-id": { "id": "[resourceId('Microsoft.Network/networkSecurityGroups', 'nsg-ssh-allow')]" },
-    "networkSecurityGroup": "[if(equals(parameters('remoteAccessMode'), 'AllowPublicIP'), variables('nsg-id'), json('null'))]",
-
-    "subnets": [
-      {
-        "name": "[variables('subnetName')]",
-        "properties": {
-          "addressPrefix": "[variables('subnetRange')]",
-          "networkSecurityGroup": "[variables('networkSecurityGroup')]"
-        }
-      }
-    ],
-    "azureBastionSubnet": [
-      {
-        "name": "[variables('bastionSubnetName')]",
-        "properties": {
-          "addressPrefix": "[parameters('azureBastionSubnetRange')]"
-        }
-      }
-    ],
-    "allSubnets": "[if(equals(parameters('remoteAccessMode'),'AzureBastionHost'), concat(variables('subnets'), variables('azureBastionSubnet')), variables('subnets'))]",
-
-    "linuxConfiguration": {
-      "disablePasswordAuthentication": true,
-      "ssh": {
-        "publicKeys": [
-          {
-            "path": "[concat('/home/', parameters('adminUsername'), '/.ssh/authorized_keys')]",
-            "keyData": "[parameters('adminPasswordOrKey')]"
-          }
-        ]
-      }
-    },
-
-    "c2SetupScript": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/C2/scripts/Install-C2s.sh",
-    "c2updaterebootscript": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/C2/scripts/reboot-c2.sh",
-    "dockerSetupScript": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/C2/scripts/Install-Docker.sh",
-    "vmName": "[parameters('vmName')]"
-  },
-  "resources": [
-    {
-      "type": "Microsoft.Storage/storageAccounts",
-      "apiVersion": "2018-11-01",
-      "name": "[variables('storageAccountName')]",
-      "location": "[parameters('location')]",
-      "sku": {
-        "name": "Standard_LRS"
-      },
-      "kind": "Storage",
-      "properties": {
-      }
-    },
-    {
-      "condition": "[equals(parameters('remoteAccessMode'), 'AllowPublicIP')]",
-      "name": "nsg-ssh-allow",
-      "comments": "Default Network Security Group for Linux endpoints",
-      "type": "Microsoft.Network/networkSecurityGroups",
-      "apiVersion": "2019-08-01",
-      "location": "[parameters('location')]",
-      "properties": {
-        "securityRules": [
-          {
-            "name": "default-allow-22",
-            "properties": {
-              "priority": 100,
-              "access": "Allow",
-              "direction": "Inbound",
-              "destinationPortRange": "22",
-              "protocol": "Tcp",
-              "sourcePortRange": "*",
-              "sourceAddressPrefix": "[parameters('allowedIPAddresses')]",
-              "destinationAddressPrefix": "*"
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "utcValue": {
+            "type": "string",
+            "defaultValue": "[utcNow()]",
+            "metadata": {
+                "description": "Returns the current (UTC) datetime value in the specified format. If no format is provided, the ISO 8601 (yyyyMMddTHHmmssZ) format is used"
             }
-          }
-        ]
-      }
-    },
-    {
-      "type": "Microsoft.Network/virtualNetworks",
-      "apiVersion": "2019-02-01",
-      "name": "[parameters('virtualNetworkName')]",
-      "location": "[parameters('location')]",
-      "dependsOn": [
-        "[resourceId('Microsoft.Network/networkSecurityGroups', 'nsg-ssh-allow')]"
-      ],
-      "properties": {
-        "addressSpace": {
-          "addressPrefixes": [
-            "[variables('virtualNetworkAddressRange')]"
-          ]
         },
-        "subnets": "[variables('allSubnets')]"
-      }
-    },
-    {
-      "condition": "[equals(parameters('remoteAccessMode'),'AzureBastionHost')]",
-      "type": "Microsoft.Network/publicIPAddresses",
-      "apiVersion": "2018-11-01",
-      "name": "[concat('pip-', parameters('azureBastionHostName'))]",
-      "location": "[parameters('location')]",
-      "sku": {
-        "name": "Standard"
-      },
-      "properties": {
-        "publicIPAllocationMethod": "Static"
-      }
-    },
-    {
-      "condition": "[equals(parameters('remoteAccessMode'),'AzureBastionHost')]",
-      "type": "Microsoft.Network/bastionHosts",
-      "apiVersion": "2020-05-01",
-      "name": "[parameters('azureBastionHostName')]",
-      "location": "[parameters('location')]",
-      "dependsOn": [
-        "[resourceId('Microsoft.Network/publicIPAddresses/', concat('pip-', parameters('azureBastionHostName')))]",
-        "[resourceId('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]"
-      ],
-      "properties": {
-        "ipConfigurations": [
-          {
-            "name": "IpConf",
-            "properties": {
-              "privateIPAllocationMethod": "Dynamic",
-              "publicIPAddress": {
-                "id": "[resourceId('Microsoft.Network/publicIPAddresses/', concat('pip-', parameters('azureBastionHostName')))]"
-              },
-              "subnet": {
-                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets',parameters('virtualNetworkName'), variables('bastionSubnetName'))]"
-              }
+        "adminUsername": {
+            "type": "string",
+            "metadata": {
+                "description": "Username for the Virtual Machine."
             }
-          }
-        ]
-      }
-    },
-    {
-      "condition": "[equals(parameters('remoteAccessMode'),'AllowPublicIP')]",
-      "type": "Microsoft.Network/publicIPAddresses",
-      "apiVersion": "2018-11-01",
-      "name": "[variables('doc2pipname')]",
-      "location": "[parameters('location')]",
-      "properties": {
-        "publicIPAllocationMethod": "Static",
-        "dnsSettings": {
-          "domainNameLabel": "[toLower(concat(variables('vmName'), '-', uniquestring(resourceGroup().id, parameters('utcValue'))))]"
+        },
+        "authenticationType": {
+            "type": "string",
+            "defaultValue": "password",
+            "allowedValues": [
+                "sshPublicKey",
+                "password"
+            ],
+            "metadata": {
+                "description": "Type of authentication to use on the Virtual Machine. SSH key is recommended."
+            }
+        },
+        "adminPasswordOrKey": {
+            "type": "securestring",
+            "metadata": {
+                "description": "SSH Key or password for the Virtual Machine. SSH key is recommended."
+            }
+        },
+        "remoteAccessMode": {
+            "type": "string",
+            "defaultValue": "AllowPublicIP",
+            "allowedValues": [
+                "AllowPublicIP",
+                "AzureBastionHost"
+            ],
+            "metadata": {
+                "description": "Do you want to restrict access to your environment by a Public IP or set up an Azure Bastion Host. If the former, make sure you add your public IP address to the variable 'allowedIPAddresses'"
+            }
+        },
+        "allowedIPAddresses": {
+            "type": "string",
+            "metadata": {
+                "description": "The sourceAddressPrefixes allowed to connect to this deployment"
+            },
+            "defaultValue": "*"
+        },
+        "azureBastionHostName": {
+            "type": "string",
+            "metadata": {
+                "description": "Name of Azure Bastion Host assigned to the Virtual network in this template"
+            },
+            "defaultValue": "LinuxBastionHost"
+        },
+        "vmName": {
+            "type": "string",
+            "defaultValue": "C2001",
+            "metadata": {
+                "description": "Name of the virtual machine"
+            }
+        },
+        "vmSize": {
+            "type": "string",
+            "defaultValue": "Standard_B2s",
+            "allowedValues": [
+                "Standard_B2s",
+                "Standard_B2ms",
+                "Standard_B2s_v2",
+                "Standard_B2ls_v2",
+                "Standard_B2ts_v2",
+                "Standard_B2als_v2",
+                "Standard_B2as_v2",
+                "Standard_DS2",
+                "Standard_DS11",
+                "Standard_D2s_v3",
+                "Standard_D2s_v4",
+                "Standard_D2s_v5"
+            ],
+            "metadata": {
+                "description": "Size of the virtual machine. Reference: https://docs.microsoft.com/en-us/azure/virtual-machines/sizes-general"
+            }
+        },
+        "ubuntuSKU": {
+            "type": "string",
+            "defaultValue": "22.04-LTS",
+            "allowedValues": [
+                "22.04",
+                "22.04-lts"
+            ],
+            "metadata": {
+                "description": "The Ubuntu version for the VM. This will pick a fully patched image of this given Ubuntu version."
+            }
+        },
+        "virtualNetworkName": {
+            "type": "string",
+            "metadata": {
+                "description": "Name of the Virtual Network"
+            },
+            "defaultValue": "vnet-c2"
+        },
+        "virtualNetworkAddressRange": {
+            "type": "string",
+            "metadata": {
+                "description": "Virtual Network address range"
+            },
+            "defaultValue": "10.0.0.0/16"
+        },
+        "subnetRange": {
+            "type": "string",
+            "metadata": {
+                "description": "subnet range"
+            },
+            "defaultValue": "10.0.0.0/24"
+        },
+        "VMPrivateIPAddress": {
+            "type": "string",
+            "metadata": {
+                "description": "Private IP for the C2 VM"
+            },
+            "defaultValue": "10.0.0.8"
+        },
+        "subnetName": {
+            "type": "string",
+            "metadata": {
+                "description": "Name of the subnet"
+            },
+            "defaultValue": "snet-c2"
+        },
+        "azureBastionSubnetRange": {
+            "type": "string",
+            "metadata": {
+                "description": "Address Range of the Azure Bastion service"
+            },
+            "defaultValue": "192.168.3.0/27"
+        },
+        "c2Framework": {
+            "type": "string",
+            "defaultValue": "metasploit",
+            "allowedValues": [
+                "empire",
+                "covenant",
+                "metasploit"
+            ],
+            "metadata": {
+                "description": "C2 framework to deploy"
+            }
+        },
+        "location": {
+            "type": "string",
+            "defaultValue": "[resourceGroup().location]",
+            "metadata": {
+                "description": "Location for all resources."
+            }
         }
-      }
     },
-    {
-      "type": "Microsoft.Network/networkInterfaces",
-      "apiVersion": "2019-11-01",
-      "name": "[concat('nic-', variables('vmName'))]",
-      "location": "[parameters('location')]",
-      "dependsOn": [
-        "[resourceId('Microsoft.Network/publicIPAddresses/', concat('pip-', variables('vmName')))]",
-        "[resourceId('Microsoft.Network/virtualNetworks/', parameters('virtualNetworkName'))]"
-      ],
-      "properties": {
-        "ipConfigurations": [
-          {
-            "name": "ipconfig1",
-            "properties": {
-              "privateIPAllocationMethod": "Static",
-              "privateIPAddress": "[parameters('VMPrivateIPAddress')]",
-              "publicIPAddress": "[if(equals(parameters('remoteAccessMode'),'AllowPublicIP'), json(concat('{\"id\":', '\"', resourceId('Microsoft.Network/publicIPAddresses/', concat('pip-', variables('vmName'))),'\"}')),json('null'))]",
-              "subnet": {
-                "id": "[variables('subnetRef')]"
-              }
-            }
-          }
-        ]
-      }
-    },
-    {
-        "type": "Microsoft.Compute/virtualMachines",
-        "apiVersion": "2019-03-01",
-        "name": "[variables('vmName')]",
-        "location": "[parameters('location')]",
-        "dependsOn": [
-            "[resourceId('Microsoft.Network/networkInterfaces/', concat('nic-', variables('vmName')))]"
-        ],
-        "properties": {
-            "hardwareProfile": {
-                "vmSize": "[parameters('vmSize')]"
-            },
-            "storageProfile": {
-                "osDisk": {
-                    "createOption": "fromImage"
-                },
-                "imageReference": {
-                    "publisher": "Canonical",
-                    "offer": "0001-com-ubuntu-server-jammy",
-                    "sku": "22_04-lts",
-                    "version": "22.04.202311010"
+    "variables": {
+        "storageAccountName": "[concat(uniquestring(resourceGroup().id, parameters('utcValue')))]",
+        "doc2pipname": "[concat('pip-', variables('vmName'))]",
+        "virtualNetworkName": "[parameters('virtualNetworkName')]",
+        "virtualNetworkAddressRange": "[parameters('virtualNetworkAddressRange')]",
+
+        "subnetName": "[parameters('subnetName')]",
+        "subnetRange": "[parameters('subnetRange')]",
+        "vmPrivateIPPrefixArray": "[take(split(variables('subnetRange'),'.'),3)]",
+        "vmPrivateIPAddresPrefix": "[format('{0}.{1}.{2}.',variables('vmPrivateIPPrefixArray')[0], variables('vmPrivateIPPrefixArray')[1], variables('vmPrivateIPPrefixArray')[2])]",
+        "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('subnetName'))]",
+
+        "bastionSubnetName": "AzureBastionSubnet",
+
+        "nsg-id": { "id": "[resourceId('Microsoft.Network/networkSecurityGroups', 'nsg-ssh-allow')]" },
+        "networkSecurityGroup": "[if(equals(parameters('remoteAccessMode'), 'AllowPublicIP'), variables('nsg-id'), json('null'))]",
+
+        "subnets": [
+            {
+                "name": "[variables('subnetName')]",
+                "properties": {
+                    "addressPrefix": "[variables('subnetRange')]",
+                    "networkSecurityGroup": "[variables('networkSecurityGroup')]"
                 }
-            },
-            "networkProfile": {
-                "networkInterfaces": [
+            }
+        ],
+        "azureBastionSubnet": [
+            {
+                "name": "[variables('bastionSubnetName')]",
+                "properties": {
+                    "addressPrefix": "[parameters('azureBastionSubnetRange')]"
+                }
+            }
+        ],
+        "allSubnets": "[if(equals(parameters('remoteAccessMode'),'AzureBastionHost'), concat(variables('subnets'), variables('azureBastionSubnet')), variables('subnets'))]",
+
+        "linuxConfiguration": {
+            "disablePasswordAuthentication": true,
+            "ssh": {
+                "publicKeys": [
                     {
-                        "id": "[resourceId('Microsoft.Network/networkInterfaces/', concat('nic-', variables('vmName')))]"
+                        "path": "[concat('/home/', parameters('adminUsername'), '/.ssh/authorized_keys')]",
+                        "keyData": "[parameters('adminPasswordOrKey')]"
                     }
                 ]
+            }
+        },
+
+        "c2SetupScript": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/C2/scripts/Install-C2s.sh",
+        "dockerSetupScript": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/C2/scripts/Install-Docker.sh",
+        "vmName": "[parameters('vmName')]"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Storage/storageAccounts",
+            "apiVersion": "2018-11-01",
+            "name": "[variables('storageAccountName')]",
+            "location": "[parameters('location')]",
+            "sku": {
+                "name": "Standard_LRS"
             },
-            "osProfile": {
-                "computerName": "[variables('vmName')]",
-                "adminUsername": "[parameters('adminUsername')]",
-                "adminPassword": "[parameters('adminPasswordOrKey')]",
-                "linuxConfiguration": "[if(equals(parameters('authenticationType'), 'password'), json('null'), variables('linuxConfiguration'))]"
+            "kind": "Storage",
+            "properties": {
             }
-        }
-    },
-    {
-        "type": "Microsoft.Compute/virtualMachines/extensions",
-        "apiVersion": "2019-03-01",
-        "name": "Nux01/UpdateAndReboot",
-        "location": "[parameters('location')]",
-        "dependsOn": [
-            "[concat('Microsoft.Compute/virtualMachines/', variables('vmName'))]"
-        ],
-        "properties": {
-            "publisher": "Microsoft.Azure.Extensions",
-            "type": "CustomScript",
-            "typeHandlerVersion": "2.1",
-            "autoUpgradeMinorVersion": true,
-            "settings": {},
-            "protectedSettings": {
-                "commandToExecute": "bash reboot-c2.sh",
-                "fileUris": [
-                    "[variables('c2updaterebootscript')]"
+        },
+        {
+            "condition": "[equals(parameters('remoteAccessMode'), 'AllowPublicIP')]",
+            "name": "nsg-ssh-allow",
+            "comments": "Default Network Security Group for Linux endpoints",
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "apiVersion": "2019-08-01",
+            "location": "[parameters('location')]",
+            "properties": {
+                "securityRules": [
+                    {
+                        "name": "default-allow-22",
+                        "properties": {
+                            "priority": 100,
+                            "access": "Allow",
+                            "direction": "Inbound",
+                            "destinationPortRange": "22",
+                            "protocol": "Tcp",
+                            "sourcePortRange": "*",
+                            "sourceAddressPrefix": "[parameters('allowedIPAddresses')]",
+                            "destinationAddressPrefix": "*"
+                        }
+                    }
                 ]
             }
-        }
-    },
-    {
-        "type": "Microsoft.Compute/virtualMachines/extensions",
-        "apiVersion": "2019-03-01",
-        "name": "[concat(variables('vmName'), '/C2Setup')]",
-        "location": "[parameters('location')]",
-        "dependsOn": [ "Nux01/UpdateAndReboot" ],
-        "properties": {
-            "publisher": "Microsoft.Azure.Extensions",
-            "type": "CustomScript",
-            "typeHandlerVersion": "2.1",
-            "autoUpgradeMinorVersion": true,
-            "settings": {},
-            "protectedSettings": {
-                "commandToExecute": "[concat('bash Install-C2s.sh -r', ' ', parameters('c2Framework'))]",
-                "fileUris": [
-                    "[variables('dockerSetupScript')]",
-                    "[variables('c2SetupScript')]"
+        },
+        {
+            "type": "Microsoft.Network/virtualNetworks",
+            "apiVersion": "2019-02-01",
+            "name": "[parameters('virtualNetworkName')]",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/networkSecurityGroups', 'nsg-ssh-allow')]"
+            ],
+            "properties": {
+                "addressSpace": {
+                    "addressPrefixes": [
+                        "[variables('virtualNetworkAddressRange')]"
+                    ]
+                },
+                "subnets": "[variables('allSubnets')]"
+            }
+        },
+        {
+            "condition": "[equals(parameters('remoteAccessMode'),'AzureBastionHost')]",
+            "type": "Microsoft.Network/publicIPAddresses",
+            "apiVersion": "2018-11-01",
+            "name": "[concat('pip-', parameters('azureBastionHostName'))]",
+            "location": "[parameters('location')]",
+            "sku": {
+                "name": "Standard"
+            },
+            "properties": {
+                "publicIPAllocationMethod": "Static"
+            }
+        },
+        {
+            "condition": "[equals(parameters('remoteAccessMode'),'AzureBastionHost')]",
+            "type": "Microsoft.Network/bastionHosts",
+            "apiVersion": "2020-05-01",
+            "name": "[parameters('azureBastionHostName')]",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/publicIPAddresses/', concat('pip-', parameters('azureBastionHostName')))]",
+                "[resourceId('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]"
+            ],
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "IpConf",
+                        "properties": {
+                            "privateIPAllocationMethod": "Dynamic",
+                            "publicIPAddress": {
+                                "id": "[resourceId('Microsoft.Network/publicIPAddresses/', concat('pip-', parameters('azureBastionHostName')))]"
+                            },
+                            "subnet": {
+                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets',parameters('virtualNetworkName'), variables('bastionSubnetName'))]"
+                            }
+                        }
+                    }
                 ]
             }
+        },
+        {
+            "condition": "[equals(parameters('remoteAccessMode'),'AllowPublicIP')]",
+            "type": "Microsoft.Network/publicIPAddresses",
+            "apiVersion": "2018-11-01",
+            "name": "[variables('doc2pipname')]",
+            "location": "[parameters('location')]",
+            "properties": {
+                "publicIPAllocationMethod": "Static",
+                "dnsSettings": {
+                    "domainNameLabel": "[toLower(concat(variables('vmName'), '-', uniquestring(resourceGroup().id, parameters('utcValue'))))]"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Network/networkInterfaces",
+            "apiVersion": "2019-11-01",
+            "name": "[concat('nic-', variables('vmName'))]",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/publicIPAddresses/', concat('pip-', variables('vmName')))]",
+                "[resourceId('Microsoft.Network/virtualNetworks/', parameters('virtualNetworkName'))]"
+            ],
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig1",
+                        "properties": {
+                            "privateIPAllocationMethod": "Static",
+                            "privateIPAddress": "[parameters('VMPrivateIPAddress')]",
+                            "publicIPAddress": "[if(equals(parameters('remoteAccessMode'),'AllowPublicIP'), json(concat('{\"id\":', '\"', resourceId('Microsoft.Network/publicIPAddresses/', concat('pip-', variables('vmName'))),'\"}')),json('null'))]",
+                            "subnet": {
+                                "id": "[variables('subnetRef')]"
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.Compute/virtualMachines",
+            "apiVersion": "2019-03-01",
+            "name": "[variables('vmName')]",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/networkInterfaces/', concat('nic-', variables('vmName')))]"
+            ],
+            "properties": {
+                "hardwareProfile": {
+                    "vmSize": "[parameters('vmSize')]"
+                },
+                "storageProfile": {
+                    "osDisk": {
+                        "createOption": "fromImage"
+                    },
+                    "imageReference": {
+                        "publisher": "Canonical",
+                        "offer": "0001-com-ubuntu-server-jammy",
+                        "sku": "22_04-lts",
+                        "version": "22.04.202311010"
+                    }
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces/', concat('nic-', variables('vmName')))]"
+                        }
+                    ]
+                },
+                "osProfile": {
+                    "computerName": "[variables('vmName')]",
+                    "adminUsername": "[parameters('adminUsername')]",
+                    "adminPassword": "[parameters('adminPasswordOrKey')]",
+                    "linuxConfiguration": "[if(equals(parameters('authenticationType'), 'password'), json('null'), variables('linuxConfiguration'))]"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Compute/virtualMachines/extensions",
+            "apiVersion": "2019-03-01",
+            "name": "[concat(variables('vmName'), '/C2Setup')]",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[concat('Microsoft.Compute/virtualMachines/', variables('vmName'))]"
+            ],
+            "properties": {
+                "publisher": "Microsoft.Azure.Extensions",
+                "type": "CustomScript",
+                "typeHandlerVersion": "2.1",
+                "autoUpgradeMinorVersion": true,
+                "settings": {},
+                "protectedSettings": {
+                    "commandToExecute": "[concat('bash Install-C2s.sh -r', ' ', parameters('c2Framework'))]",
+                    "fileUris": [
+                        "[variables('dockerSetupScript')]",
+                        "[variables('c2SetupScript')]"
+                    ]
+                }
+            }
+        }
+    ],
+    "outputs": {
+        "vmName": {
+            "type": "string",
+            "value": "[variables('vmName')]"
+        },
+        "vmResourceID": {
+            "type": "string",
+            "value": "[resourceId('Microsoft.Compute/virtualMachines/', variables('vmName'))]"
+        },
+        "virtualNetworkName": {
+            "type": "string",
+            "value": "[parameters('virtualNetworkName')]"
+        },
+        "virtualNetworkId": {
+            "type": "string",
+            "value": "[resourceId('Microsoft.Network/virtualNetworks/', parameters('virtualNetworkName'))]"
+        },
+        "C2PublicIP": {
+            "type": "string",
+            "value": "[reference(resourceId('Microsoft.Network/publicIPAddresses',variables('doc2pipname'))).IpAddress]"
         }
     }
-  ],
-  "outputs": {
-    "vmName": {
-      "type": "string",
-      "value": "[variables('vmName')]"
-    },
-    "vmResourceID": {
-      "type": "string",
-      "value": "[resourceId('Microsoft.Compute/virtualMachines/', variables('vmName'))]"
-    },
-    "virtualNetworkName": {
-      "type": "string",
-      "value": "[parameters('virtualNetworkName')]"
-    },
-    "virtualNetworkId": {
-      "type": "string",
-      "value": "[resourceId('Microsoft.Network/virtualNetworks/', parameters('virtualNetworkName'))]"
-    },
-    "C2PublicIP": {
-      "type": "string",
-      "value": "[reference(resourceId('Microsoft.Network/publicIPAddresses',variables('doc2pipname'))).IpAddress]"
-    }
-  }
 }
