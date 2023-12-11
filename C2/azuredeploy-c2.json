@@ -179,7 +179,7 @@
             }
         },
 
-        "c2SetupScript": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/C2/scripts/Install-C2s.sh",
+        "c2SetupScript": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/C2/scripts/Install-C2.sh",
         "vmName": "[parameters('vmName')]"
     },
     "resources": [
@@ -328,7 +328,7 @@
                 "autoUpgradeMinorVersion": true,
                 "settings": {},
                 "protectedSettings": {
-                    "commandToExecute": "bash Install-C2s.sh",
+                    "commandToExecute": "bash Install-C2.sh",
                     "fileUris": [
                         "[variables('c2SetupScript')]"
                     ]

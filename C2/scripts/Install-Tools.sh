@@ -1,17 +1,10 @@
 #!/bin/bash
 
-# This script is used for building a tooled up Debian install
-# Includes some apt installs, some git clonesand pip
-# Script available for wide distribution
-
 
 # Run as root, please, it's just easier that way
 sudo -s
 
-
-# update from first boot
-apt update
-apt upgrade -y
+cd /etc/DOAZLAB
 
 
 # Install python3.9
