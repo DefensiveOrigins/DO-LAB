@@ -9,9 +9,6 @@
 sudo -s
 
 
-# housekeeping
-apt update
-apt upgrade -y
 
 
 # Install python3.9
