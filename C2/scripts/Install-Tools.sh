@@ -81,6 +81,7 @@ python3.10 -m venv ph-venv | tee -a /etc/DOAZLAB/install-logs/080-PH.log
 source ph-venv/bin/activate | tee -a /etc/DOAZLAB/install-logs/080-PH.log
 python3.10 -m pip install wheel | tee -a /etc/DOAZLAB/install-logs/080-PH.log
 python3.10 -m pip install -r requirements.txt | tee -a /etc/DOAZLAB/install-logs/080-PH.log
+python3.10 PlumHound.py | tee -a /etc/DOAZLAB/install-logs/080-PH.log
 deactivate
 cd /opt/
 
