@@ -35,4 +35,4 @@ apt-get upgrade -y
 
 # Reboot
 echo "Time: $(date). Rebooting" >> /etc/DOAZLAB/DOAZLABLog 
-reboot -r 1
+shutdown -r +1
