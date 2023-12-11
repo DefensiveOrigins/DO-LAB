@@ -65,18 +65,18 @@
         "description": "Do you want to configure your Log Analytics Workspace to collect Windows Event Logs from several pre-defined event providers?. Windows Security Auditing is not enabled through this option. It is enabled through the Data Connectors parameter."
       },
       "defaultValue": [
-        "System",
-        "Microsoft-Windows-Sysmon/Operational",
-        "Microsoft-Windows-TerminalServices-RemoteConnectionManager/Operational",
-        "Microsoft-Windows-Bits-Client/Operational",
-        "Microsoft-Windows-TerminalServices-LocalSessionManager/Operational",
-        "Directory Service",
-        "Microsoft-Windows-DNS-Client/Operational",
-        "Microsoft-Windows-Windows Firewall With Advanced Security/Firewall",
-        "Windows PowerShell",
-        "Microsoft-Windows-PowerShell/Operational",
-        "Microsoft-Windows-WMI-Activity/Operational",
-        "Microsoft-Windows-TaskScheduler/Operational"
+        "System!*",
+        "Microsoft-Windows-Sysmon/Operational!*",
+        "Microsoft-Windows-TerminalServices-RemoteConnectionManager/Operational!*",
+        "Microsoft-Windows-Bits-Client/Operational!*",
+        "Microsoft-Windows-TerminalServices-LocalSessionManager/Operational!*",
+        "Directory Service!*",
+        "Microsoft-Windows-DNS-Client/Operational!*",
+        "Microsoft-Windows-Windows Firewall With Advanced Security/Firewall!*",
+        "Windows PowerShell!*",
+        "Microsoft-Windows-PowerShell/Operational!*",
+        "Microsoft-Windows-WMI-Activity/Operational!*",
+        "Microsoft-Windows-TaskScheduler/Operational!*"
       ]
     },
     "location": {
@@ -139,19 +139,10 @@
           "uri": "[variables('uri_DeploySentinel')]",
           "contentVersion": "1.0.0.0"
         },
-        "parameters": {      "defaultValue": [
-          "System",
-          "Microsoft-Windows-Sysmon/Operational",
-          "Microsoft-Windows-TerminalServices-RemoteConnectionManager/Operational",
-          "Microsoft-Windows-Bits-Client/Operational",
-          "Microsoft-Windows-TerminalServices-LocalSessionManager/Operational",
-          "Directory Service",
-          "Microsoft-Windows-DNS-Client/Operational",
-          "Microsoft-Windows-Windows Firewall With Advanced Security/Firewall",
-          "Windows PowerShell",
-          "Microsoft-Windows-PowerShell/Operational",
-          "Microsoft-Windows-WMI-Activity/Operational",
-          "Microsoft-Windows-TaskScheduler/Operational"
+        "parameters": {
+          "workspaceName": {
+            "value": "[variables('doworkspaceprefix')]"
+          },
           "pricingTier": {
             "value": "[parameters('pricingTier')]"
           },
@@ -169,21 +160,7 @@
       "apiVersion": "2021-04-01",
       "dependsOn": ["Deploy-Sentinel"],
       "name": "[variables('dataCollectionRuleName')]",
-      "location": "[parameters('location')]",      
-      "defaultValue": [
-        "System!*",
-        "Microsoft-Windows-Sysmon/Operational!*",
-        "Microsoft-Windows-TerminalServices-RemoteConnectionManager/Operational!*",
-        "Microsoft-Windows-Bits-Client/Operational!*",
-        "Microsoft-Windows-TerminalServices-LocalSessionManager/Operational!*",
-        "Directory Service!*",
-        "Microsoft-Windows-DNS-Client/Operational!*",
-        "Microsoft-Windows-Windows Firewall With Advanced Security/Firewall!*",
-        "Windows PowerShell!*",
-        "Microsoft-Windows-PowerShell/Operational!*",
-        "Microsoft-Windows-WMI-Activity/Operational!*",
-        "Microsoft-Windows-TaskScheduler/Operational!*"
-        ],
+      "location": "[parameters('location')]",
       "tags": {
         "createdBy": "Sentinel"
       },
@@ -220,7 +197,9 @@
                 "Security!*[System[(EventID=4720)]]",
                 "Security!*[System[(EventID=4670 or EventID=4657)]]",
                 "Security!(*[System[EventID=4656]] and ((*[EventData[Data[@Name='ObjectType']='Key']]))) or (*[System[EventID=4663]] and ((*[EventData[Data[@Name='ObjectType']='Key']])))",
-                "Security!*[System[(EventID=5058 or EventID=5061)]]"
+                "Security!*[System[(EventID=5058 or EventID=5061)]]",
+                "PowerShell!*[Operational(EventID=4103 or EventID=4104 or EventID=4105)]",
+                "Microsoft-Windows-Sysmon!*[Operational(EventID >= 1 and <= 300)]"
               ]
             }
           ]
