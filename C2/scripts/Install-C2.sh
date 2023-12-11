@@ -20,7 +20,7 @@ touch /etc/DOAZLAB/DOAZLABLog
 
 ## Add Crontab for RunAtReboot
 echo "Time: $(date). Updating Crontab for RunAtReboot" >> /etc/DOAZLAB/DOAZLABLog
-echo @reboot /etc/DOAZLAB/RunAtReboot.sh >> /etc/crontab
+echo @reboot root /etc/DOAZLAB/RunAtReboot.sh >> /etc/crontab
 
 #add RunOnceTrigger
 touch /etc/DOAZLAB/RunInstallToolsAtNextReboot
