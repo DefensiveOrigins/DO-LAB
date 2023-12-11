@@ -318,10 +318,32 @@
         {
             "type": "Microsoft.Compute/virtualMachines/extensions",
             "apiVersion": "2019-03-01",
-            "name": "[concat(variables('vmName'), '/C2Setup')]",
+            "name": "[concat(variables('vmName'), '/UpdateReboot')]",
             "location": "[parameters('location')]",
             "dependsOn": [
                 "[concat('Microsoft.Compute/virtualMachines/', variables('vmName'))]"
+            ],
+            "properties": {
+                "publisher": "Microsoft.Azure.Extensions",
+                "type": "CustomScript",
+                "typeHandlerVersion": "2.1",
+                "autoUpgradeMinorVersion": true,
+                "settings": {},
+                "protectedSettings": {
+                    "commandToExecute": "[concat('bash Update-C2.sh -r', ' ', parameters('c2Framework'))]",
+                    "fileUris": [
+                        "[variables('c2UpdateRebootScript')]"
+                    ]
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Compute/virtualMachines/extensions",
+            "apiVersion": "2019-03-01",
+            "name": "[concat(variables('vmName'), '/C2Setup')]",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[concat(variables('vmName'), '/UpdateReboot')]"
             ],
             "properties": {
                 "publisher": "Microsoft.Azure.Extensions",
