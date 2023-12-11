@@ -2,7 +2,8 @@
 
 
 # Run as root, please, it's just easier that way
-sudo -s
+# this runs in a crontab, so don't run as sudo.  If you ever need to run manually, call sudo first
+# sudo -s
 
 cd /etc/DOAZLAB
 
