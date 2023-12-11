@@ -169,19 +169,21 @@
       "apiVersion": "2021-04-01",
       "dependsOn": ["Deploy-Sentinel"],
       "name": "[variables('dataCollectionRuleName')]",
-      "location": "[parameters('location')]",      "defaultValue": [
-        "System",
-        "Microsoft-Windows-Sysmon/Operational",
-        "Microsoft-Windows-TerminalServices-RemoteConnectionManager/Operational",
-        "Microsoft-Windows-Bits-Client/Operational",
-        "Microsoft-Windows-TerminalServices-LocalSessionManager/Operational",
-        "Directory Service",
-        "Microsoft-Windows-DNS-Client/Operational",
-        "Microsoft-Windows-Windows Firewall With Advanced Security/Firewall",
-        "Windows PowerShell",
-        "Microsoft-Windows-PowerShell/Operational",
-        "Microsoft-Windows-WMI-Activity/Operational",
-        "Microsoft-Windows-TaskScheduler/Operational"
+      "location": "[parameters('location')]",      
+      "defaultValue": [
+        "System!*",
+        "Microsoft-Windows-Sysmon/Operational!*",
+        "Microsoft-Windows-TerminalServices-RemoteConnectionManager/Operational!*",
+        "Microsoft-Windows-Bits-Client/Operational!*",
+        "Microsoft-Windows-TerminalServices-LocalSessionManager/Operational!*",
+        "Directory Service!*",
+        "Microsoft-Windows-DNS-Client/Operational!*",
+        "Microsoft-Windows-Windows Firewall With Advanced Security/Firewall!*",
+        "Windows PowerShell!*",
+        "Microsoft-Windows-PowerShell/Operational!*",
+        "Microsoft-Windows-WMI-Activity/Operational!*",
+        "Microsoft-Windows-TaskScheduler/Operational!*"
+        ],
       "tags": {
         "createdBy": "Sentinel"
       },
