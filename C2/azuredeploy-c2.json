@@ -385,7 +385,7 @@
     {
         "type": "Microsoft.Compute/virtualMachines/extensions",
         "apiVersion": "2019-03-01",
-        "name": "[concat(variables('vmName'), '/UpdateAndReboot')]",
+        "name": "Nux01/UpdateAndReboot",
         "location": "[parameters('location')]",
         "dependsOn": [
             "[concat('Microsoft.Compute/virtualMachines/', variables('vmName'))]"
@@ -409,9 +409,7 @@
       "apiVersion": "2019-03-01",
       "name": "[concat(variables('vmName'), '/C2Setup')]",
       "location": "[parameters('location')]",
-        "dependsOn": [
-            "[concat(variables('vmName'), '/UpdateAndReboot')]"
-        ],
+      "dependsOn": "Nux01/UpdateAndReboot",
       "properties": {
         "publisher": "Microsoft.Azure.Extensions",
         "type": "CustomScript",
