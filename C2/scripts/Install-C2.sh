@@ -6,7 +6,7 @@ sudo -s
 
 
 # Add folder, Download Scripts
-mdkr /etc/DOAZLAB
+mkdir /etc/DOAZLAB
 cd /etc/DOAZLAB
 wget https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/C2/scripts/Install-Tools.sh
 wget https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/C2/scripts/RunAtReboot.sh
