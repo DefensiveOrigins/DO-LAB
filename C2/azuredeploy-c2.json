@@ -36,8 +36,7 @@
             "type": "string",
             "defaultValue": "AllowPublicIP",
             "allowedValues": [
-                "AllowPublicIP",
-                "AzureBastionHost"
+                "AllowPublicIP"
             ],
             "metadata": {
                 "description": "Do you want to restrict access to your environment by a Public IP or set up an Azure Bastion Host. If the former, make sure you add your public IP address to the variable 'allowedIPAddresses'"
@@ -50,16 +49,9 @@
             },
             "defaultValue": "*"
         },
-        "azureBastionHostName": {
-            "type": "string",
-            "metadata": {
-                "description": "Name of Azure Bastion Host assigned to the Virtual network in this template"
-            },
-            "defaultValue": "LinuxBastionHost"
-        },
         "vmName": {
             "type": "string",
-            "defaultValue": "C2001",
+            "defaultValue": "Nux01",
             "metadata": {
                 "description": "Name of the virtual machine"
             }
@@ -131,13 +123,6 @@
             },
             "defaultValue": "snet-c2"
         },
-        "azureBastionSubnetRange": {
-            "type": "string",
-            "metadata": {
-                "description": "Address Range of the Azure Bastion service"
-            },
-            "defaultValue": "192.168.3.0/27"
-        },
         "c2Framework": {
             "type": "string",
             "defaultValue": "metasploit",
@@ -169,9 +154,6 @@
         "vmPrivateIPPrefixArray": "[take(split(variables('subnetRange'),'.'),3)]",
         "vmPrivateIPAddresPrefix": "[format('{0}.{1}.{2}.',variables('vmPrivateIPPrefixArray')[0], variables('vmPrivateIPPrefixArray')[1], variables('vmPrivateIPPrefixArray')[2])]",
         "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('subnetName'))]",
-
-        "bastionSubnetName": "AzureBastionSubnet",
-
         "nsg-id": { "id": "[resourceId('Microsoft.Network/networkSecurityGroups', 'nsg-ssh-allow')]" },
         "networkSecurityGroup": "[if(equals(parameters('remoteAccessMode'), 'AllowPublicIP'), variables('nsg-id'), json('null'))]",
 
@@ -184,16 +166,7 @@
                 }
             }
         ],
-        "azureBastionSubnet": [
-            {
-                "name": "[variables('bastionSubnetName')]",
-                "properties": {
-                    "addressPrefix": "[parameters('azureBastionSubnetRange')]"
-                }
-            }
-        ],
-        "allSubnets": "[if(equals(parameters('remoteAccessMode'),'AzureBastionHost'), concat(variables('subnets'), variables('azureBastionSubnet')), variables('subnets'))]",
-
+        "allSubnets": "[variables('subnets')]",
         "linuxConfiguration": {
             "disablePasswordAuthentication": true,
             "ssh": {
@@ -264,46 +237,6 @@
                     ]
                 },
                 "subnets": "[variables('allSubnets')]"
-            }
-        },
-        {
-            "condition": "[equals(parameters('remoteAccessMode'),'AzureBastionHost')]",
-            "type": "Microsoft.Network/publicIPAddresses",
-            "apiVersion": "2018-11-01",
-            "name": "[concat('pip-', parameters('azureBastionHostName'))]",
-            "location": "[parameters('location')]",
-            "sku": {
-                "name": "Standard"
-            },
-            "properties": {
-                "publicIPAllocationMethod": "Static"
-            }
-        },
-        {
-            "condition": "[equals(parameters('remoteAccessMode'),'AzureBastionHost')]",
-            "type": "Microsoft.Network/bastionHosts",
-            "apiVersion": "2020-05-01",
-            "name": "[parameters('azureBastionHostName')]",
-            "location": "[parameters('location')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Network/publicIPAddresses/', concat('pip-', parameters('azureBastionHostName')))]",
-                "[resourceId('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]"
-            ],
-            "properties": {
-                "ipConfigurations": [
-                    {
-                        "name": "IpConf",
-                        "properties": {
-                            "privateIPAllocationMethod": "Dynamic",
-                            "publicIPAddress": {
-                                "id": "[resourceId('Microsoft.Network/publicIPAddresses/', concat('pip-', parameters('azureBastionHostName')))]"
-                            },
-                            "subnet": {
-                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets',parameters('virtualNetworkName'), variables('bastionSubnetName'))]"
-                            }
-                        }
-                    }
-                ]
             }
         },
         {
