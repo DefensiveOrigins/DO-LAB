@@ -1,7 +1,8 @@
 #!/bin/bash
 
 # Run as root, please, it's just easier that way
-sudo -s
+# this runs at crontab without sudo, no need to sudo 
+# sudo -s
 
 
 # Log Entering Script
