@@ -100,7 +100,7 @@ cd /opt/
 
 # BruteLoops
 # clone it, cd to it, add a venv container, activate, add wheel, install tools, deactivate
-echo "Time: $(date). -- 100 -- BruteLoops.py" >> /etc/DOAZLAB/DOAZLABLog
+echo "Time: $(date). -- 100 -- BruteLoops" >> /etc/DOAZLAB/DOAZLABLog
 
 cd /opt/
 git clone https://github.com/DefensiveOrigins/BruteLoops.git
