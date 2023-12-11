@@ -92,7 +92,7 @@
     },
     "doenablesysmonparsers": {
       "type": "bool",
-      "defaultValue": true
+      "defaultValue": false
     },
     "doenableaadconnect": {
       "type": "bool",
