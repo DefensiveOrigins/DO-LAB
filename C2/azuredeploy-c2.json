@@ -409,7 +409,7 @@
       "apiVersion": "2019-03-01",
       "name": "[concat(variables('vmName'), '/C2Setup')]",
       "location": "[parameters('location')]",
-      "dependsOn": "Nux01/UpdateAndReboot",
+      "dependsOn": "[Nux01/UpdateAndReboot]",
       "properties": {
         "publisher": "Microsoft.Azure.Extensions",
         "type": "CustomScript",
