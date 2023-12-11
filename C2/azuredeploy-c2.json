@@ -385,7 +385,7 @@
     {
         "type": "Microsoft.Compute/virtualMachines/extensions",
         "apiVersion": "2019-03-01",
-        "name": "Nux01/UpdateAndReboot",
+        "name": "Nux01-UpdateAndReboot",
         "location": "[parameters('location')]",
         "dependsOn": [
             "[concat('Microsoft.Compute/virtualMachines/', variables('vmName'))]"
@@ -405,27 +405,25 @@
         }
     },
     {
-      "type": "Microsoft.Compute/virtualMachines/extensions",
-      "apiVersion": "2019-03-01",
-      "name": "[concat(variables('vmName'), '/C2Setup')]",
-      "location": "[parameters('location')]",
-        "dependsOn": [
-            "Nux01/UpdateAndReboot"
-        ],
-      "properties": {
-        "publisher": "Microsoft.Azure.Extensions",
-        "type": "CustomScript",
-        "typeHandlerVersion": "2.1",
-        "autoUpgradeMinorVersion": true,
-        "settings": {},
-        "protectedSettings": {
-          "commandToExecute": "[concat('bash Install-C2s.sh -r', ' ', parameters('c2Framework'))]",
-          "fileUris": [
-            "[variables('dockerSetupScript')]",
-            "[variables('c2SetupScript')]"
-          ]
+        "type": "Microsoft.Compute/virtualMachines/extensions",
+        "apiVersion": "2019-03-01",
+        "name": "[concat(variables('vmName'), '/C2Setup')]",
+        "location": "[parameters('location')]",
+        "dependsOn": [ "Nux01-UpdateAndReboot" ],
+        "properties": {
+            "publisher": "Microsoft.Azure.Extensions",
+            "type": "CustomScript",
+            "typeHandlerVersion": "2.1",
+            "autoUpgradeMinorVersion": true,
+            "settings": {},
+            "protectedSettings": {
+                "commandToExecute": "[concat('bash Install-C2s.sh -r', ' ', parameters('c2Framework'))]",
+                "fileUris": [
+                    "[variables('dockerSetupScript')]",
+                    "[variables('c2SetupScript')]"
+                ]
+            }
         }
-      }
     }
   ],
   "outputs": {
