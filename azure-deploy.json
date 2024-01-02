@@ -198,8 +198,8 @@
                 "Security!*[System[(EventID=4670 or EventID=4657)]]",
                 "Security!(*[System[EventID=4656]] and ((*[EventData[Data[@Name='ObjectType']='Key']]))) or (*[System[EventID=4663]] and ((*[EventData[Data[@Name='ObjectType']='Key']])))",
                 "Security!*[System[(EventID=5058 or EventID=5061)]]",
-                "PowerShell!*[Operational(EventID=4103 or EventID=4104 or EventID=4105)]",
-                "Microsoft-Windows-Sysmon!*[Operational(EventID >= 1 and <= 300)]"
+                "Microsoft-Windows-Sysmon!*[Operational[(EventID >= 1 and <= 300)]]",
+                "PowerShell!*[Operational[(EventID=4103 or EventID=4104 or EventID=4105)]]"
               ]
             }
           ]
