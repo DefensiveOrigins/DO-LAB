@@ -13,7 +13,7 @@ fi
 apt-get update -y
 apt-get install python3 -y
 apt-get install virtualenv -y
-apt-get install python3-distutils python3-virtualenv libssl-dev libffi-dev python-dev-is-python3 build-essential smbclient libpcap-dev -y
+apt-get install python3-distutils python3-virtualenv libssl-dev libffi-dev python-dev-is-python3 build-essential smbclient libpcap-dev apt-transport-https -y
 apt-get install vim-nox htop ncat rlwrap golang jq feroxbuster silversearcher-ag testssl.sh crackmapexec nmap masscan proxychains4 -y
 apt-get install python3.11-venv -y
 apt-get install onesixtyone snmp-mibs-downloader -y
@@ -40,6 +40,7 @@ sed -e '/mibs/ s/^#*/#/' -i /etc/snmp/snmp.conf
 [[ ! -d /opt/PCredz ]] && git clone https://github.com/lgandx/PCredz.git /opt/PCredz
 [[ ! -d /opt/certsync ]] && git clone https://github.com/zblurx/certsync.git /opt/certsync
 [[ ! -d /opt/pyLAPS ]] && git clone https://github.com/p0dalirius/pyLAPS.git /opt/pyLAPS
+[[ ! -d /opt/PlumHound ]] && git clone https://github.com/PlumHound/PlumHound.git /opt/PlumHound
 [[ ! -d /opt/CrackMapExec ]] && git clone https://github.com/byt3bl33d3r/CrackMapExec.git /opt/CrackMapExec
 
 cat << 'EOF' >> "${HOME}/.screenrc"
@@ -110,6 +111,7 @@ install_with_virtualenv() {
 install_with_virtualenv Responder
 install_with_virtualenv impacket
 install_with_virtualenv BloodHound.py
+install_with_virtualenv PlumHound
 install_with_virtualenv Certipy
 install_with_virtualenv Coercer
 install_with_virtualenv mitm6
@@ -124,10 +126,8 @@ install_pipx() {
 
         if [ "$python_version" == "3.10" ] || [ "$python_version" == "3.11" ] || [ "$python_version" == "3.12" ]; then
             python3 -m pip install pipx --break-system-packages || python3 -m pip install pipx
-        else
-            python3 -m pip install pipx || python3 -m pip install pipx --user
-        fi
-    fi
+        elseapt update
+
 }
 
 install_pipx
@@ -177,3 +177,16 @@ cd - &>/dev/null || exit 1
 
 # Install Evil-WinRM
 gem install evil-winrm
+
+# Install neo4j
+echo "deb http://httpredir.debian.org/debian stretch-backports main" | sudo tee -a /etc/apt/sources.list.d/stretch-backports.list
+wget -O - https://debian.neo4j.com/neotechnology.gpg.key | sudo apt-key add -
+echo 'deb https://debian.neo4j.com stable 4.0' > /etc/apt/sources.list.d/neo4j.list
+apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 0E98404D386FA1D9 648ACFD622F3D138
+apt update
+apt install neo4j -y
+systemctl stop neo4j
+cd /usr/bin
+echo "dbms.default_listen_address=0.0.0.0" >> /etc/neo4j/neo4j.conf
+# don't open the console dave. especially not during bootstrap
+systemctl start neo4j
