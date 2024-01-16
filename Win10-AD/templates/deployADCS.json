@@ -41,6 +41,9 @@
                         "url": "[parameters('deployadcsscript')]",
                         "script": "Deploy-ADCS.ps1",
                         "function": "Deploy-ADCS"
+                    },
+                    "configurationArguments": {
+                        "DomainFQDN": "[parameters('DomainFQDN')]",
                     }
                 },
                 "protectedSettings": {
