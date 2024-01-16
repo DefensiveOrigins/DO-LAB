@@ -43,7 +43,7 @@
                         "function": "Deploy-ADCS"
                     },
                     "configurationArguments": {
-                        "DomainFQDN": "[parameters('DomainFQDN')]",
+                        "DomainFQDN": "[parameters('DomainFQDN')]"
                     }
                 },
                 "protectedSettings": {
