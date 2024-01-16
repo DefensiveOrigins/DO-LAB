@@ -64,6 +64,12 @@ configuration Deploy-ADCS {
                 New-ADCSTemplate -DisplayName Vuln_Template1 -JSON (Get-Content C:\ProgramData\vuln_template1.json -Raw) -Publish
                 New-ADCSTemplate -DisplayName Vuln_Template4 -JSON (Get-Content C:\ProgramData\vuln_template4.json -Raw) -Publish
 
+                #ESC6 
+                certutil -config "DC01.doazlab.com\doazlab-DC01-CA" -setreg policy\Editflags +EDITF_ATTRIBUTESUBJECTALTNAME2
+
+                #Restart CertSrv
+                Restart-Service -Name CertSvc
+
             }
             GetScript =  
             {
