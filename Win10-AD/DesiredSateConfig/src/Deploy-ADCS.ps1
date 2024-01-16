@@ -36,11 +36,11 @@ configuration Deploy-ADCS {
                 Add-WindowsFeature ADCS-Device-Enrollment -IncludeManagementTools 
                 Add-WindowsFeature ADCS-Online-Cert -IncludeManagementTools 
                 
-                Install-AdcsEnrollmentPolicyWebService -Force
-                Install-AdcsEnrollmentWebService -Force
+                #Install-AdcsEnrollmentPolicyWebService -Force
+                #Install-AdcsEnrollmentWebService -Force
                 #Install-AdcsNetworkDeviceEnrollmentService -Force
-                Install-AdcsOnlineresponder -Force
-                Install-AdcsWebEnrollment -Force
+                #Install-AdcsOnlineresponder -Force
+                #Install-AdcsWebEnrollment -Force
 
 
                 #Add Default templates
