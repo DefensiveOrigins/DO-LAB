@@ -850,7 +850,7 @@
         },
         {
             "condition": "[parameters('enableSysmon')]",
-            "name": "[concat(variables('domainController')[0].vmName, '-installSysmon')]",
+            "name": "DC01-InstallSysmon",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-10-01",
             "dependsOn": [
@@ -880,7 +880,8 @@
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-10-01",
             "dependsOn": [
-                "UpdateVNetDNS"
+                "UpdateVNetDNS",
+                "DC01-InstallSysmon"
             ],
             "properties": {
                 "mode": "Incremental",

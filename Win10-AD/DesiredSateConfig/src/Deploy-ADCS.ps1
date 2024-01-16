@@ -8,7 +8,7 @@ configuration Deploy-ADCS {
         [String]$DomainFQDN,
 
         [Parameter(Mandatory)]
-        [System.Management.Automation.PSCredential]$AdminCreds,
+        [System.Management.Automation.PSCredential]$AdminCreds
 
     ) 
     Import-DscResource -ModuleName ActiveDirectoryDsc, NetworkingDsc, xPSDesiredStateConfiguration, ComputerManagementDsc
