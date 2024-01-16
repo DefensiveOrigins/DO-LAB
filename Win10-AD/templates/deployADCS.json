@@ -5,7 +5,7 @@
         "vmName": {
             "type": "string"
         },
-        "createADForestScript": {
+        "deployadcsscript": {
             "type": "string"
         },
         "domainFQDN": {
@@ -16,9 +16,6 @@
         },
         "adminPassword": {
             "type": "securestring"
-        },
-        "domainUsers": {
-            "type": "secureObject"
         },
         "location": {
             "type": "string",
@@ -41,7 +38,7 @@
                 "settings": {
                     "wmfVersion": "latest",
                     "configuration": {
-                        "url": "[parameters('createADForestScript')]",
+                        "url": "[parameters('deployadcsscript')]",
                         "script": "Deploy-ADCS.ps1",
                         "function": "Deploy-ADCS"
                     }
@@ -51,8 +48,7 @@
                         "AdminCreds": {
                             "UserName": "[parameters('adminUsername')]",
                             "Password": "[parameters('adminPassword')]"
-                        },
-                        "DomainUsers": "[parameters('domainUsers').array]"
+                        }
                     }
                 }
             }
