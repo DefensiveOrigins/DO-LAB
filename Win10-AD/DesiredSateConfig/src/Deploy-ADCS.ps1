@@ -42,7 +42,6 @@ configuration Deploy-ADCS {
                 #Install-AdcsOnlineresponder -Force
                 #Install-AdcsWebEnrollment -Force
 
-
                 #Add Default templates
                 Add-CATemplate "ClientAuth" -Force
                 Add-CATemplate "CodeSigning" -Force 
@@ -57,12 +56,15 @@ configuration Deploy-ADCS {
 
                 #Download DOLAB templates 
                 $wc = new-object System.Net.WebClient
-                $wc.DownloadFile('https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Win10-AD/resources/ca_templates/vuln_template1.json', 'C:\ProgramData\vuln_template1.json')
-                $wc.DownloadFile('https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Win10-AD/resources/ca_templates/vuln_template4.json', 'C:\ProgramData\vuln_template4.json')
+                $wc.DownloadFile('https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Win10-AD/resources/ca_templates/DOAZLab_User.json', 'C:\ProgramData\DOAZLab_User.json')
+                $wc.DownloadFile('https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Win10-AD/resources/ca_templates/DOAZLab_Computer.json', 'C:\ProgramData\DOAZLab_Computer.json')
+                $wc.DownloadFile('https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Win10-AD/resources/ca_templates/DOAZLab_IPSec.json', 'C:\ProgramData\DOAZLab_IPSec.json')
 
                 #Import DOLAB templates
-                New-ADCSTemplate -DisplayName Vuln_Template1 -JSON (Get-Content C:\ProgramData\vuln_template1.json -Raw) -Publish
-                New-ADCSTemplate -DisplayName Vuln_Template4 -JSON (Get-Content C:\ProgramData\vuln_template4.json -Raw) -Publish
+                New-ADCSTemplate -DisplayName DOAZLab_User -JSON (Get-Content C:\ProgramData\DOAZLab_User.json -Raw) -Publish
+                New-ADCSTemplate -DisplayName DOAZLab_Computer -JSON (Get-Content C:\ProgramData\DOAZLab_Computer.json -Raw) -Publish
+                New-ADCSTemplate -DisplayName DOAZLab_IPSec -JSON (Get-Content C:\ProgramData\DOAZLab_IPSec.json -Raw) -Publish
+
 
                 #ESC6 
                 certutil -config "DC01.doazlab.com\doazlab-DC01-CA" -setreg policy\Editflags +EDITF_ATTRIBUTESUBJECTALTNAME2
