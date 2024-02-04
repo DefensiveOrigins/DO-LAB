@@ -64,7 +64,6 @@ configuration Deploy-ADCS {
                 New-ADCSTemplate -DisplayName DOAZLab_Computer -JSON (Get-Content C:\ProgramData\DOAZLab_Computer.json -Raw) -Publish
                 New-ADCSTemplate -DisplayName DOAZLab_IPSec -JSON (Get-Content C:\ProgramData\DOAZLab_IPSec.json -Raw) -Publish
 
-
                 #ESC6 
                 certutil -config "DC01.doazlab.com\doazlab-DC01-CA" -setreg policy\Editflags +EDITF_ATTRIBUTESUBJECTALTNAME2
 
