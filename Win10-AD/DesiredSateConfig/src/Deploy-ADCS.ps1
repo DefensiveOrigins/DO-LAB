@@ -30,16 +30,33 @@ configuration Deploy-ADCS {
                 Add-WindowsFeature Adcs-Cert-Authority -IncludeManagementTools
                 Install-AdcsCertificationAuthority -CAType EnterpriseRootCA -Force
 
+                # from the UI, this is step 2 of post OS install (Add Roles)
+                # step 1 is creds 
+                # Server manager currently prompts to complete the install
                 Add-WindowsFeature ADCS-Enroll-Web-Pol -IncludeManagementTools 
                 Add-WindowsFeature Adcs-Enroll-Web-Svc -IncludeManagementTools 
                 Add-WindowsFeature ADCS-Web-Enrollment -IncludeManagementTools 
-                Add-WindowsFeature ADCS-Device-Enrollment -IncludeManagementTools 
                 Add-WindowsFeature ADCS-Online-Cert -IncludeManagementTools 
                 
                 Install-AdcsEnrollmentPolicyWebService -Force
                 Install-AdcsEnrollmentWebService -Force
                 Install-AdcsOnlineresponder -Force
                 Install-AdcsWebEnrollment -Force
+
+                # Step 3 - add the CA name:
+                # DC01.doazlab.com\doazlab-DC01-CA
+
+                # Step 4 - set CES authentication type (Windows integrated)
+
+                # Step 5 - specify CES service account
+                # Use the built in application pool identity
+
+                # Step 6 - authentication type for CEP (Windows integrated)
+
+                # Step 7 - specify server authentication certificate 
+                # Issued to DC01.doazlab.com
+
+                # Step 8 - confirm everything
 
                 #Add Default templates
                 Add-CATemplate "ClientAuth" -Force
