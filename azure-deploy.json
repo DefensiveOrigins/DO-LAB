@@ -119,7 +119,7 @@
         "doadminusername": "doadmin",
         "doadminpassword": "DOLabAdmin1!",
         "donameprefix": "WS0",
-        "doWSKU": "21h1-pro",
+        "doWSKU": "Windows-10-N-x64",
         "doServerSKU": "2022-Datacenter",
         "doServerVer": "20348.2031.231006",
         "dofqdn": "doazlab.com",
