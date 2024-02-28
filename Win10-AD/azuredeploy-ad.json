@@ -149,7 +149,7 @@
     },
     "windowsDesktopSKU": {
       "type": "string",
-      "defaultValue": "19h2-pro",
+      "defaultValue": "win10-22h2-pro",
       "metadata": {
         "description": "The Windows version for the Desktop VM. This will pick a fully patched image of this given Windows version."
       }
@@ -364,9 +364,9 @@
                     "ipAddress": "[concat(variables('vmPrivateIPAddresPrefix'),copyIndex('allWinWKS',5))]",
                     "vmSize": "[parameters('vmSize')]",
                     "publisher": "MicrosoftWindowsDesktop",
-                    "offer": "Windows-11",
-                    "sku": "win11-23h2-pro",
-                    "version": "22631.2428.231023",
+                    "offer": "Windows-10",
+                    "sku": "win10-22h2-pro",
+                    "version": "19045.4046.240203",
                     "extensionName": "SetupWinVM"
                 }
             }
