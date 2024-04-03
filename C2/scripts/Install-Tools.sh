@@ -14,9 +14,10 @@ apt-get update -y
 apt-get install python3 -y
 apt-get install virtualenv -y
 apt-get install python3-distutils python3-virtualenv libssl-dev libffi-dev python-dev-is-python3 build-essential smbclient libpcap-dev apt-transport-https -y
-apt-get install vim-nox htop ncat rlwrap golang jq feroxbuster silversearcher-ag testssl.sh crackmapexec nmap masscan proxychains4 -y
+apt-get install vim-nox htop ncat rlwrap golang jq feroxbuster silversearcher-ag testssl.sh nmap masscan proxychains4 -y
 apt-get install python3.11-venv -y
 apt-get install onesixtyone snmp-mibs-downloader -y
+apt-get install net-tools
 apt-get install zsh
 # Install latest metasploit
 gem install bundler
@@ -29,7 +30,6 @@ apt-get autoremove -y
 sed -e '/mibs/ s/^#*/#/' -i /etc/snmp/snmp.conf
 
 # Repos
-[[ ! -d /opt/EyeWitness ]] && git clone https://github.com/RedSiege/EyeWitness.git /opt/EyeWitness
 [[ ! -d /opt/testssl.sh ]] && git clone --depth 1 https://github.com/drwetter/testssl.sh.git /opt/testssl.sh
 [[ ! -d /opt/Responder ]] && git clone https://github.com/lgandx/Responder.git /opt/Responder
 [[ ! -d /opt/impacket ]] && git clone https://github.com/fortra/impacket.git /opt/impacket
@@ -131,49 +131,6 @@ install_pipx() {
 }
 
 install_pipx
-
-
-# Install CrackMapExec latest
-install_cme() {
-    # Find the path of crackmapexec
-    CME_PATH="/usr/bin/crackmapexec"
-    if [ -f "$CME_PATH" ]; then
-        sudo mv "$CME_PATH" "${CME_PATH}.old"
-        echo -e "[+] old crackmapexec installation from APT has been moved to ${CME_PATH}.old"
-        echo -e "[+] installing latest version of CrackMapExec via pipx"
-        [[ -d /opt/CrackMapExec ]] && cd /opt/CrackMapExec && pipx install .
-        # pipx ensurepath adds $HOME/.local/bin to ~/.zshrc
-        pipx ensurepath
-    else
-        echo -e "[+] Old crackmapexec version from APT is not installed : ) \n Installing latest version of CME"
-        [[ -d /opt/CrackMapExec ]] && cd /opt/CrackMapExec && pipx install .
-        # pipx ensurepath adds $HOME/.local/bin to ~/.zshrc
-        pipx ensurepath
-    fi
-
-    if [[ ":$PATH:" != *":${HOME}/.local/bin:"* ]]; then
-        export PATH="${PATH}:${HOME}/.local/bin"
-    fi
-    # Initialize CME database
-    "$HOME"/.local/bin/crackmapexec smb --help
-}
-
-if [ -e "$HOME"/.local/bin/crackmapexec ]; then
-    echo -e "[+] CrackMapExec is already installed at ${HOME}/.local/bin/crackmapexec"
-else
-    install_cme
-fi
-
-# Install EyeWitness
-# EyeWitness project was not initially created with python3 virtual environments in mind and handles dependency installs via setup.sh
-# Long story short, if you try to use a virtualenv for EyeWitness, it will just be ignored unless you modify setup.sh to support them because the setup.sh bash script is not virtualenv context aware.
-# TL:DR no need for virtualenv for EyeWitness.
-
-echo -e "Installing EyeWitness"
-[[ -d /opt/EyeWitness/Python/setup ]] && cd /opt/EyeWitness/Python/setup && bash setup.sh
-# EyeWitness Selenium Fix
-python3 -m pip install selenium==4.9.1 --break-system-packages
-cd - &>/dev/null || exit 1
 
 # Install Evil-WinRM
 gem install evil-winrm
