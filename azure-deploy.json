@@ -65,7 +65,7 @@
         "description": "Do you want to configure your Log Analytics Workspace to collect Windows Event Logs from several pre-defined event providers?. Windows Security Auditing is not enabled through this option. It is enabled through the Data Connectors parameter."
       },
       "defaultValue": [
-        "System!*",
+        "Security!*",
         "Microsoft-Windows-Sysmon/Operational!*",
         "Microsoft-Windows-TerminalServices-RemoteConnectionManager/Operational!*",
         "Microsoft-Windows-Bits-Client/Operational!*",
