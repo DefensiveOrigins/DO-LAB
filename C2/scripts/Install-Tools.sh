@@ -26,6 +26,18 @@ apt-get install metasploit-framework -y
 # remove outdated packages
 apt-get autoremove -y
 
+# Install neo4j
+echo "deb http://httpredir.debian.org/debian stretch-backports main" | sudo tee -a /etc/apt/sources.list.d/stretch-backports.list
+wget -O - https://debian.neo4j.com/neotechnology.gpg.key | sudo apt-key add -
+echo 'deb https://debian.neo4j.com stable 4.0' > /etc/apt/sources.list.d/neo4j.list
+apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 0E98404D386FA1D9 648ACFD622F3D138
+apt update
+apt install neo4j -y
+systemctl stop neo4j
+echo "dbms.default_listen_address=10.0.0.8" >> /etc/neo4j/neo4j.conf
+# don't open the console dave. especially not during bootstrap
+systemctl start neo4j
+
 # update snmp.conf
 sed -e '/mibs/ s/^#*/#/' -i /etc/snmp/snmp.conf
 
@@ -131,19 +143,3 @@ install_pipx() {
 }
 
 install_pipx
-
-# Install Evil-WinRM
-gem install evil-winrm
-
-# Install neo4j
-echo "deb http://httpredir.debian.org/debian stretch-backports main" | sudo tee -a /etc/apt/sources.list.d/stretch-backports.list
-wget -O - https://debian.neo4j.com/neotechnology.gpg.key | sudo apt-key add -
-echo 'deb https://debian.neo4j.com stable 4.0' > /etc/apt/sources.list.d/neo4j.list
-apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 0E98404D386FA1D9 648ACFD622F3D138
-apt update
-apt install neo4j -y
-systemctl stop neo4j
-cd /usr/bin
-echo "dbms.default_listen_address=0.0.0.0" >> /etc/neo4j/neo4j.conf
-# don't open the console dave. especially not during bootstrap
-systemctl start neo4j
