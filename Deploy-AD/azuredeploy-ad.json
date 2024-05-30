@@ -244,13 +244,6 @@
         "description": "Do you want to install Sysmon on the endpoint?"
       }
     },
-    "enableAADConnect": {
-      "type": "bool",
-      "metadata": {
-        "description": "Do you want to want download the AADConnect installer and get it ready to set up after the deployment?"
-      },
-      "defaultValue": false
-    },
     "_artifactsLocation": {
       "type": "string",
       "defaultValue": "https://raw.githubusercontent.com/OTRF/Blacksmith/master/",
@@ -319,7 +312,6 @@
         "sysmonInstallTemplateUri": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-AD/templates/sysmonInstall.json",
         "createADTemplateUri": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-AD/templates/createADForest.json",
         "joinDomainTemplateUri": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-AD/templates/joinDomain.json",
-        "installAADConnectTemplateUri": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-AD/templates/installAADConnect.json",
         "deployADCSTemplateURI": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-AD/templates/deployADCS.json",
 
         // Custom Scripts
@@ -336,7 +328,6 @@
         "createADForestScript": "https://github.com/DefensiveOrigins/DO-LAB/raw/main/Deploy-AD/DesiredSateConfig/Create-AD.zip",
         "joinDomainScript": "https://github.com/DefensiveOrigins/DO-LAB/raw/main/Deploy-AD/DesiredSateConfig/Join-Domain.zip",
         "installSysmonScript": "https://github.com/DefensiveOrigins/DO-LAB/raw/main/Deploy-AD/DesiredSateConfig/Install-Sysmon.zip",
-        "installAADConnectScript": "https://github.com/DefensiveOrigins/DO-LAB/raw/main/Deploy-AD/DesiredSateConfig/Install-AADConnect.zip",
         "deployADCSScript": "https://github.com/DefensiveOrigins/DO-LAB/raw/main/Deploy-AD/DesiredSateConfig/Deploy-ADCS.zip",
 
         // Initial Setup Scripts
@@ -904,34 +895,6 @@
                     },
                     "adminPassword": {
                         "value": "[parameters('adminPassword')]"
-                    },
-                    "location": {
-                        "value": "[parameters('location')]"
-                    }
-                }
-            }
-        },
-        {
-            "condition": "[parameters('enableAADConnect')]",
-            "name": "[concat(variables('domainController')[0].vmName, '-installAADConnect')]",
-            "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2019-10-01",
-            "dependsOn": [
-                "vmDomainJoinCopy",
-                "[concat(variables('domainController')[0].vmName, '-installSysmon')]"
-            ],
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[variables('installAADConnectTemplateUri')]",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "vmName": {
-                        "value": "[variables('domainController')[0].vmName]"
-                    },
-                    "installAADConnectScript": {
-                        "value": "[variables('installAADConnectScript')]"
                     },
                     "location": {
                         "value": "[parameters('location')]"
