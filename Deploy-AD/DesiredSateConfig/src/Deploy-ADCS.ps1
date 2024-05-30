@@ -100,7 +100,7 @@ configuration Deploy-ADCS {
             }
         }
 
-        PendingReboot RebootOnSignalFromAADConnect
+        PendingReboot RebootAfterADCSInstall
         {
             Name        = 'RebootOnSignalFromADCS'
             DependsOn   = "[xScript]InstallADCS"
