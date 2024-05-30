@@ -109,20 +109,6 @@
       },
       "defaultValue": "*"
     },
-    "azureBastionHostName": {
-      "type": "string",
-      "metadata": {
-        "description": "Name of Azure Bastion Host assigned to the Virtual network in this template"
-      },
-      "defaultValue": "AzureBastionHost"
-    },
-    "azureBastionSubnetRange": {
-      "type": "string",
-      "metadata": {
-        "description": "Address Range of the Azure Bastion service"
-      },
-      "defaultValue": "192.168.3.0/27"
-    },
     "domainFQDN": {
       "type": "string",
       "metadata": {
@@ -283,21 +269,6 @@
                 }
             }
         ],
-        //Bastion Host Network
-        "bastionSubnetName": "AzureBastionSubnet",
-        "nsg-bastion-host-name": "nsg-bastion-host",
-        "azureBastionSubnet": [
-            {
-                "name": "[variables('bastionSubnetName')]",
-                "properties": {
-                    "addressPrefix": "[parameters('azureBastionSubnetRange')]",
-                    "networkSecurityGroup": {
-                        "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('nsg-bastion-host-name'))]"
-                    }
-                }
-            }
-        ],
-        "allSubnets": "[if(equals(parameters('remoteAccessMode'),'AzureBastionHost'), concat(variables('subnets'), variables('azureBastionSubnet')), variables('subnets'))]",
 
         // Nested Templates
         "updateDNSServerScript": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-AD/templates/vnet-dns-server.json",
@@ -422,8 +393,7 @@
             "name": "[variables('virtualNetworkName')]",
             "location": "[parameters('location')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Network/networkSecurityGroups', variables('nsg-default-name'))]",
-                "[resourceId('Microsoft.Network/networkSecurityGroups', variables('nsg-bastion-host-name'))]"
+                "[resourceId('Microsoft.Network/networkSecurityGroups', variables('nsg-default-name'))]"
             ],
             "properties": {
                 "addressSpace": {
@@ -431,7 +401,7 @@
                         "[variables('virtualNetworkAddressRange')]"
                     ]
                 },
-                "subnets": "[variables('allSubnets')]"
+                "subnets": "[variables('subnets')]"
             }
         },
         {
@@ -632,7 +602,7 @@
                         "value": "[variables('virtualNetworkAddressRange')]"
                     },
                     "subnets": {
-                        "value": "[variables('allSubnets')]"
+                        "value": "[variables('subnets')]"
                     },
                     "DNSServerAddress": {
                         "value": [
