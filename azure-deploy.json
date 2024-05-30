@@ -119,7 +119,7 @@
       }
     },
     {
-      "name": "Deploy-ActiveDirectoryEnvironment",
+      "name": "Deploy-AD",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2020-10-01",
       "dependsOn": [
@@ -183,7 +183,7 @@
       "apiVersion": "2020-10-01",
       "dependsOn": [
         "Deploy-Sentinel",
-        "Deploy-ActiveDirectoryEnvironment"
+        "Deploy-AD"
       ],
       "properties": {
         "mode": "Incremental",
@@ -193,7 +193,7 @@
         },
         "parameters": {
           "virtualMachines": {
-            "value": "[reference('Deploy-ActiveDirectoryEnvironment').outputs.allWinVMsDeployed.value]"
+            "value": "[reference('Deploy-AD').outputs.allWinVMsDeployed.value]"
           },
           "monitorAgent": {
             "value": "Azure Monitor Agent"
@@ -245,7 +245,7 @@
       "apiVersion": "2019-11-01",
       "dependsOn": [
         "Deploy-Linux",
-        "Deploy-ActiveDirectoryEnvironment"
+        "Deploy-AD"
       ],
       "location": "[parameters('location')]",
       "properties": {
@@ -254,7 +254,7 @@
         "allowGatewayTransit": false,
         "useRemoteGateways": false,
         "remoteVirtualNetwork": {
-          "id": "[reference('Deploy-ActiveDirectoryEnvironment').outputs.virtualNetworkId.value]"
+          "id": "[reference('Deploy-AD').outputs.virtualNetworkId.value]"
         }
       }
     },
@@ -264,7 +264,7 @@
       "apiVersion": "2019-11-01",
       "dependsOn": [
         "Deploy-Linux",
-        "Deploy-ActiveDirectoryEnvironment"
+        "Deploy-AD"
       ],
       "location": "[parameters('location')]",
       "properties": {
@@ -285,11 +285,11 @@
     },
     "DCPublicIP": {
       "type": "string",
-      "value": "[reference('Deploy-ActiveDirectoryEnvironment').outputs.DCPublicIP.value]"
+      "value": "[reference('Deploy-AD').outputs.DCPublicIP.value]"
     },
     "WSPublicIP": {
       "type": "string",
-      "value": "[reference('Deploy-ActiveDirectoryEnvironment').outputs.WSPublicIP.value]"
+      "value": "[reference('Deploy-AD').outputs.WSPublicIP.value]"
     }
   }
 }
