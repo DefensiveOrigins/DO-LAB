@@ -154,36 +154,6 @@
       }
     },
     {
-      "condition": "[not(empty(parameters('enableAdditionalLASolutions')))]",
-      "name": "enableAdditionalLASolutions",
-      "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2020-10-01",
-      "dependsOn": [
-        "[resourceId('Microsoft.OperationsManagement/solutions/', concat('SecurityInsights','(', variables('uniqueWorkspace'),')'))]"
-      ],
-      "properties": {
-        "mode": "Incremental",
-        "templateLink": {
-          "uri": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Sentinel/templates/additionalSolutions.json",
-          "contentVersion": "1.0.0.0"
-        },
-        "parameters": {
-          "solutionTypes": {
-            "value": "[parameters('enableAdditionalLASolutions')]"
-          },
-          "workspaceName": {
-            "value": "[variables('uniqueWorkspace')]"
-          },
-          "workspaceId": {
-            "value": "[resourceId('Microsoft.OperationalInsights/workspaces/', variables('uniqueWorkspace'))]"
-          },
-          "location": {
-            "value": "[parameters('location')]"
-          }
-        }
-      }
-    },
-    {
       "condition": "[not(empty(parameters('dataConnectors')))]",
       "name": "enableDataConnectors",
       "type": "Microsoft.Resources/deployments",
