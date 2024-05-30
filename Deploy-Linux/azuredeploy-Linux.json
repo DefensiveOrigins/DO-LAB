@@ -196,7 +196,6 @@
             }
         },
         {
-            "condition": "[equals(parameters('remoteAccessMode'), 'AllowPublicIP')]",
             "name": "nsg-ssh-allow",
             "comments": "Default Network Security Group for Linux endpoints",
             "type": "Microsoft.Network/networkSecurityGroups",
@@ -238,7 +237,6 @@
             }
         },
         {
-            "condition": "[equals(parameters('remoteAccessMode'),'AllowPublicIP')]",
             "type": "Microsoft.Network/publicIPAddresses",
             "apiVersion": "2018-11-01",
             "name": "[variables('doc2pipname')]",
