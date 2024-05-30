@@ -72,9 +72,9 @@ configuration Deploy-ADCS {
 
                 #Download DOLAB templates 
                 $wc = new-object System.Net.WebClient
-                $wc.DownloadFile('https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Win10-AD/resources/ca_templates/DOAZLab_User.json', 'C:\ProgramData\DOAZLab_User.json')
-                $wc.DownloadFile('https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Win10-AD/resources/ca_templates/DOAZLab_Computer.json', 'C:\ProgramData\DOAZLab_Computer.json')
-                $wc.DownloadFile('https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Win10-AD/resources/ca_templates/DOAZLab_IPSec.json', 'C:\ProgramData\DOAZLab_IPSec.json')
+                $wc.DownloadFile('https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-AD/resources/ca_templates/DOAZLab_User.json', 'C:\ProgramData\DOAZLab_User.json')
+                $wc.DownloadFile('https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-AD/resources/ca_templates/DOAZLab_Computer.json', 'C:\ProgramData\DOAZLab_Computer.json')
+                $wc.DownloadFile('https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-AD/resources/ca_templates/DOAZLab_IPSec.json', 'C:\ProgramData\DOAZLab_IPSec.json')
 
                 #Import DOLAB templates
                 New-ADCSTemplate -DisplayName DOAZLab_User -JSON (Get-Content C:\ProgramData\DOAZLab_User.json -Raw) -Publish

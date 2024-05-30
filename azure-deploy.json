@@ -128,7 +128,7 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-            "uri": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Win10-AD/azuredeploy-ad.json",
+            "uri": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-AD/azuredeploy-ad.json",
             "contentVersion": "1.0.0.0"
         },
         "parameters": {

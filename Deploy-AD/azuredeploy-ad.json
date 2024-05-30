@@ -315,29 +315,29 @@
         "allSubnets": "[if(equals(parameters('remoteAccessMode'),'AzureBastionHost'), concat(variables('subnets'), variables('azureBastionSubnet')), variables('subnets'))]",
 
         // Nested Templates
-        "updateDNSServerScript": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Win10-AD/templates/vnet-dns-server.json",
-        "sysmonInstallTemplateUri": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Win10-AD/templates/sysmonInstall.json",
-        "createADTemplateUri": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Win10-AD/templates/createADForest.json",
-        "joinDomainTemplateUri": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Win10-AD/templates/joinDomain.json",
-        "installAADConnectTemplateUri": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Win10-AD/templates/installAADConnect.json",
-        "deployADCSTemplateURI": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Win10-AD/templates/deployADCS.json",
+        "updateDNSServerScript": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-AD/templates/vnet-dns-server.json",
+        "sysmonInstallTemplateUri": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-AD/templates/sysmonInstall.json",
+        "createADTemplateUri": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-AD/templates/createADForest.json",
+        "joinDomainTemplateUri": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-AD/templates/joinDomain.json",
+        "installAADConnectTemplateUri": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-AD/templates/installAADConnect.json",
+        "deployADCSTemplateURI": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-AD/templates/deployADCS.json",
 
         // Custom Scripts
-        "initialSettingsScript": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Win10-AD/scripts/Set-Initial-Settings.ps1",
-        "prepareBoxScript": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Win10-AD/scripts/Prepare-Box.ps1",
-        "setSecurityAuditingScript": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Win10-AD/scripts/Enable-WinAuditCategories.ps1",
-        "setPowerShellLogging": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Win10-AD/scripts/Enable-PowerShell-Logging.ps1",
+        "initialSettingsScript": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-AD/scripts/Set-Initial-Settings.ps1",
+        "prepareBoxScript": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-AD/scripts/Prepare-Box.ps1",
+        "setSecurityAuditingScript": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-AD/scripts/Enable-WinAuditCategories.ps1",
+        "setPowerShellLogging": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-AD/scripts/Enable-PowerShell-Logging.ps1",
         "saclModule": "https://raw.githubusercontent.com/OTRF/Set-AuditRule/master/Set-AuditRule.ps1",
-        "setSACLScript": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Win10-AD/scripts/Set-SACLs.ps1",
-        "setWallPaperScript": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Win10-AD/scripts/Set-WallPaper.ps1",
+        "setSACLScript": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-AD/scripts/Set-SACLs.ps1",
+        "setWallPaperScript": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-AD/scripts/Set-WallPaper.ps1",
 
         // Powershell DSC Scripts
-        "dscModules": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Win10-AD/scripts/Install-DSC-Modules.ps1",
-        "createADForestScript": "https://github.com/DefensiveOrigins/DO-LAB/raw/main/Win10-AD/DesiredSateConfig/Create-AD.zip",
-        "joinDomainScript": "https://github.com/DefensiveOrigins/DO-LAB/raw/main/Win10-AD/DesiredSateConfig/Join-Domain.zip",
-        "installSysmonScript": "https://github.com/DefensiveOrigins/DO-LAB/raw/main/Win10-AD/DesiredSateConfig/Install-Sysmon.zip",
-        "installAADConnectScript": "https://github.com/DefensiveOrigins/DO-LAB/raw/main/Win10-AD/DesiredSateConfig/Install-AADConnect.zip",
-        "deployADCSScript": "https://github.com/DefensiveOrigins/DO-LAB/raw/main/Win10-AD/DesiredSateConfig/Deploy-ADCS.zip",
+        "dscModules": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-AD/scripts/Install-DSC-Modules.ps1",
+        "createADForestScript": "https://github.com/DefensiveOrigins/DO-LAB/raw/main/Deploy-AD/DesiredSateConfig/Create-AD.zip",
+        "joinDomainScript": "https://github.com/DefensiveOrigins/DO-LAB/raw/main/Deploy-AD/DesiredSateConfig/Join-Domain.zip",
+        "installSysmonScript": "https://github.com/DefensiveOrigins/DO-LAB/raw/main/Deploy-AD/DesiredSateConfig/Install-Sysmon.zip",
+        "installAADConnectScript": "https://github.com/DefensiveOrigins/DO-LAB/raw/main/Deploy-AD/DesiredSateConfig/Install-AADConnect.zip",
+        "deployADCSScript": "https://github.com/DefensiveOrigins/DO-LAB/raw/main/Deploy-AD/DesiredSateConfig/Deploy-ADCS.zip",
 
         // Initial Setup Scripts
         "initialSetUpScripts": [
