@@ -30,33 +30,18 @@ configuration Deploy-ADCS {
                 Add-WindowsFeature Adcs-Cert-Authority -IncludeManagementTools
                 Install-AdcsCertificationAuthority -CAType EnterpriseRootCA -Force
 
-                # from the UI, this is step 2 of post OS install (Add Roles)
-                # step 1 is creds 
-                # Server manager currently prompts to complete the install
                 Add-WindowsFeature ADCS-Enroll-Web-Pol -IncludeManagementTools 
                 Add-WindowsFeature Adcs-Enroll-Web-Svc -IncludeManagementTools 
                 Add-WindowsFeature ADCS-Web-Enrollment -IncludeManagementTools 
+                Add-WindowsFeature ADCS-Device-Enrollment -IncludeManagementTools 
                 Add-WindowsFeature ADCS-Online-Cert -IncludeManagementTools 
                 
-                Install-AdcsEnrollmentPolicyWebService -Force
-                Install-AdcsEnrollmentWebService -Force
-                Install-AdcsOnlineresponder -Force
-                Install-AdcsWebEnrollment -Force
+                #Install-AdcsEnrollmentPolicyWebService -Force
+                #Install-AdcsEnrollmentWebService -Force
+                #Install-AdcsNetworkDeviceEnrollmentService -Force
+                #Install-AdcsOnlineresponder -Force
+                #Install-AdcsWebEnrollment -Force
 
-                # Step 3 - add the CA name:
-                # DC01.doazlab.com\doazlab-DC01-CA
-
-                # Step 4 - set CES authentication type (Windows integrated)
-
-                # Step 5 - specify CES service account
-                # Use the built in application pool identity
-
-                # Step 6 - authentication type for CEP (Windows integrated)
-
-                # Step 7 - specify server authentication certificate 
-                # Issued to DC01.doazlab.com
-
-                # Step 8 - confirm everything
 
                 #Add Default templates
                 Add-CATemplate "ClientAuth" -Force
@@ -72,14 +57,12 @@ configuration Deploy-ADCS {
 
                 #Download DOLAB templates 
                 $wc = new-object System.Net.WebClient
-                $wc.DownloadFile('https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-AD/resources/ca_templates/DOAZLab_User.json', 'C:\ProgramData\DOAZLab_User.json')
-                $wc.DownloadFile('https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-AD/resources/ca_templates/DOAZLab_Computer.json', 'C:\ProgramData\DOAZLab_Computer.json')
-                $wc.DownloadFile('https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-AD/resources/ca_templates/DOAZLab_IPSec.json', 'C:\ProgramData\DOAZLab_IPSec.json')
+                $wc.DownloadFile('https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-AD/resources/ca_templates/vuln_template1.json', 'C:\ProgramData\vuln_template1.json')
+                $wc.DownloadFile('https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-AD/resources/ca_templates/vuln_template4.json', 'C:\ProgramData\vuln_template4.json')
 
                 #Import DOLAB templates
-                New-ADCSTemplate -DisplayName DOAZLab_User -JSON (Get-Content C:\ProgramData\DOAZLab_User.json -Raw) -Publish
-                New-ADCSTemplate -DisplayName DOAZLab_Computer -JSON (Get-Content C:\ProgramData\DOAZLab_Computer.json -Raw) -Publish
-                New-ADCSTemplate -DisplayName DOAZLab_IPSec -JSON (Get-Content C:\ProgramData\DOAZLab_IPSec.json -Raw) -Publish
+                New-ADCSTemplate -DisplayName Vuln_Template1 -JSON (Get-Content C:\ProgramData\vuln_template1.json -Raw) -Publish
+                New-ADCSTemplate -DisplayName Vuln_Template4 -JSON (Get-Content C:\ProgramData\vuln_template4.json -Raw) -Publish
 
                 #ESC6 
                 certutil -config "DC01.doazlab.com\doazlab-DC01-CA" -setreg policy\Editflags +EDITF_ATTRIBUTESUBJECTALTNAME2
@@ -100,7 +83,7 @@ configuration Deploy-ADCS {
             }
         }
 
-        PendingReboot RebootAfterADCSInstall
+        PendingReboot RebootOnSignalFromAADConnect
         {
             Name        = 'RebootOnSignalFromADCS'
             DependsOn   = "[xScript]InstallADCS"
