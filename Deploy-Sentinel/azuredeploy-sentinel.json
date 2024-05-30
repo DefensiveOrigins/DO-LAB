@@ -59,27 +59,6 @@
         "description": "Tier for gathering Windows Security Events."
       }
     },
-    "enableScheduledAlerts": {
-      "type": "bool",
-      "metadata": {
-        "description": "Enable scheduled alert rules: https://docs.microsoft.com/en-us/rest/api/securityinsights/alertrules/createorupdate#scheduledalertrule"
-      },
-      "defaultValue": false
-    },
-    "_artifactsLocation": {
-      "type": "string",
-      "metadata": {
-        "description": "The location of resources"
-      },
-      "defaultValue": "https://raw.githubusercontent.com/OTRF/Microsoft-Sentinel2Go/master/"
-    },
-    "_artifactsLocationSasToken": {
-      "type": "securestring",
-      "metadata": {
-        "description": "Auto-generated token to access _artifactsLocation. Leave it blank unless you need to provide your own value."
-      },
-      "defaultValue": ""
-    },
     "location": {
       "type": "string",
       "metadata": {
