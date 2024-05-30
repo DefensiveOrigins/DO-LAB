@@ -8,16 +8,6 @@
         "description": "List of endpoints to install the Azure Monitor Agent. The format is an array of endpoints with a property/attribute named 'vmName'"
       }
     },
-    "monitorAgent": {
-      "type": "string",
-      "metadata": {
-        "description": "What Azure Monitoring agent you would like to install? Log Analytics Agent (Legacy - known as MMA or OMS) or Azure Monitoring Agent"
-      },
-      "allowedValues": [
-        "Log Analytics Agent",
-        "Azure Monitor Agent"
-      ]
-    },
     "workspaceId": {
       "type": "string",
       "metadata": {
@@ -43,30 +33,6 @@
   "variables": {},
   "resources": [
     {
-      "condition": "[equals(parameters('monitorAgent'), 'Log Analytics Agent')]",
-      "name": "[concat(parameters('virtualMachines')[copyIndex('LAACopy')].vmName,'/LogAnalyticsAgent')]",
-      "type": "Microsoft.Compute/virtualMachines/extensions",
-      "apiVersion": "2020-06-01",
-      "location": "[parameters('location')]",
-      "copy": {
-        "name": "LAACopy",
-        "count": "[length(parameters('virtualMachines'))]"
-      },
-      "properties": {
-        "publisher": "Microsoft.EnterpriseCloud.Monitoring",
-        "type": "MicrosoftMonitoringAgent",
-        "typeHandlerVersion": "1.0",
-        "autoUpgradeMinorVersion": true,
-        "settings": {
-          "workspaceId": "[parameters('workspaceId')]"
-        },
-        "protectedSettings": {
-          "workspaceKey": "[parameters('workspaceKey')]"
-        }
-      }
-    },
-    {
-      "condition": "[equals(parameters('monitorAgent'), 'Azure Monitor Agent')]",
       "name": "[concat(parameters('virtualMachines')[copyIndex('AMACopy')].vmName,'/AzureMonitorAgent')]",
       "type": "Microsoft.Compute/virtualMachines/extensions",
       "apiVersion": "2020-06-01",

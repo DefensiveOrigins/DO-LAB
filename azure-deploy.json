@@ -66,10 +66,6 @@
         "description": "Location for all resources."
       }
     },
-    "doenablesysmon": {
-      "type": "bool",
-      "defaultValue": true
-    },
     "doimmediatePurgeDataOn30Days": {
       "type": "bool",
       "defaultValue": true
@@ -167,9 +163,6 @@
           },
           "allowedIPAddresses": {
             "value": "[parameters('allowedIPAddresses')]"
-          },
-          "enableSysmon": {
-            "value": "[parameters('doenablesysmon')]"
           },
           "location": {
             "value": "[parameters('location')]"
