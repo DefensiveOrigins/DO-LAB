@@ -208,7 +208,7 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-            "uri": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/C2/azuredeploy-c2.json",
+            "uri": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-Linux/azuredeploy-Linux.json",
             "contentVersion": "1.0.0.0"
         },
         "parameters": {

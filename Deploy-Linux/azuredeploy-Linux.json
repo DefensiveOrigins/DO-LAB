@@ -179,7 +179,7 @@
             }
         },
 
-        "c2SetupScript": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/C2/scripts/Install-C2.sh",
+        "c2SetupScript": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-Linux/scripts/Install-C2.sh",
         "vmName": "[parameters('vmName')]"
     },
     "resources": [
