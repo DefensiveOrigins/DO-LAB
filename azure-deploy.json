@@ -187,9 +187,6 @@
         "parameters": {
           "virtualMachines": {
             "value": "[reference('Deploy-AD').outputs.allWinVMsDeployed.value]"
-          },
-          "monitorAgent": {
-            "value": "Azure Monitor Agent"
           }
         }
       }
