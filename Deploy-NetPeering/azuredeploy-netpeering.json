@@ -1,0 +1,59 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "ad-net-id": {
+            "type": "string",
+            "metadata": {
+                "description": "List of endpoints to install the Azure Monitor Agent. The format is an array of endpoints with a property/attribute named 'vmName'"
+            }
+        },
+        "linux-net-id": {
+            "type": "string",
+            "metadata": {
+                "description": "Linux Network ID"
+            }
+        },
+        "location": {
+            "type": "string",
+            "defaultValue": "[resourceGroup().location]",
+            "metadata": {
+                "description": "Location for all resources."
+            }
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "name": "vnet-c2/peering-to-remote-vnet-win",
+            "type": "Microsoft.Network/virtualNetworks/virtualNetworkPeerings",
+            "apiVersion": "2019-11-01",
+            "location": "[parameters('location')]",
+            "properties": {
+                "allowVirtualNetworkAccess": true,
+                "allowForwardedTraffic": false,
+                "allowGatewayTransit": false,
+                "useRemoteGateways": false,
+                "remoteVirtualNetwork": {
+                    "id": "[parameters('ad-net-id')]"
+                }
+            }
+        },
+        {
+            "name": "vnet-win/peering-to-remote-vnet-c2",
+            "type": "Microsoft.Network/virtualNetworks/virtualNetworkPeerings",
+            "apiVersion": "2019-11-01",
+            "location": "[parameters('location')]",
+            "properties": {
+                "allowVirtualNetworkAccess": true,
+                "allowForwardedTraffic": false,
+                "allowGatewayTransit": false,
+                "useRemoteGateways": false,
+                "remoteVirtualNetwork": {
+                    "id": "[parameters('linux-net-id')]"
+                }
+            }
+        }
+    ],
+    "outputs": {}
+}
