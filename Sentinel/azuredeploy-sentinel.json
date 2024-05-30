@@ -46,27 +46,6 @@
       },
       "defaultValue": true
     },
-    "dataConnectors": {
-      "type": "array",
-      "metadata": {
-        "description": "The kind of data connectors to enable via ARM templates. Example: [\"AzureActivityLog\",\"SecurityEvents\",\"WindowsFirewall\",\"DnsAnalytics\"], Reference: https://docs.microsoft.com/en-us/azure/templates/microsoft.operationalinsights/2020-03-01-preview/workspaces/datasources#microsoftoperationalinsightsworkspacesdatasources-object"
-      },
-      "defaultValue": []
-    },
-    "enableAdditionalLASolutions": {
-      "type": "array",
-      "metadata": {
-        "description": "Additional Log Solutions that you can install on the top of your Log Analytics Workspace. (e.g [\"ServiceMap\",\"WireData2\",\"InfrastructureInsights\"])"
-      },
-      "defaultValue": []
-    },
-    "enableLAFunctions": {
-      "type": "array",
-      "metadata": {
-        "description": "List of functions to enable in your Log Analytics Workspace. Available: Sysmon"
-      },
-      "defaultValue": []
-    },
     "securityCollectionTier": {
       "type": "string",
       "defaultValue": "Minimal",
@@ -86,13 +65,6 @@
         "description": "Enable scheduled alert rules: https://docs.microsoft.com/en-us/rest/api/securityinsights/alertrules/createorupdate#scheduledalertrule"
       },
       "defaultValue": false
-    },
-    "enableSpecificScheduledAlerts": {
-      "type": "array",
-      "metadata": {
-        "description": "Name of specific scheduled alert rules to enable. Reference: https://github.com/Azure/microsoft-sentinel/tree/master/Detections"
-      },
-      "defaultValue": []
     },
     "_artifactsLocation": {
       "type": "string",
@@ -151,97 +123,6 @@
         "product": "OMSGallery/SecurityInsights",
         "publisher": "Microsoft",
         "promotionCode": ""
-      }
-    },
-    {
-      "condition": "[not(empty(parameters('dataConnectors')))]",
-      "name": "enableDataConnectors",
-      "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2020-10-01",
-      "dependsOn": [
-        "[resourceId('Microsoft.OperationsManagement/solutions/', concat('SecurityInsights','(', variables('uniqueWorkspace'),')'))]"
-      ],
-      "properties": {
-        "mode": "Incremental",
-        "templateLink": {
-          "uri": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Sentinel/templates/allConnectors.json",
-          "contentVersion": "1.0.0.0"
-        },
-        "parameters": {
-          "dataConnectors": {
-            "value": "[parameters('dataConnectors')]"
-          },
-          "workspaceName": {
-            "value": "[variables('uniqueWorkspace')]"
-          },
-          "workspaceId": {
-            "value": "[resourceId('Microsoft.OperationalInsights/workspaces/', variables('uniqueWorkspace'))]"
-          },
-          "subscriptionId": {
-            "value": "[subscription().subscriptionId]"
-          },
-          "tenantId": {
-            "value": "[subscription().tenantId]"
-          },
-          "securityCollectionTier": {
-            "value": "[parameters('securityCollectionTier')]"
-          },
-          "location": {
-            "value": "[parameters('location')]"
-          }
-        }
-      }
-    },
-    {
-      "condition": "[not(empty(parameters('enableLAFunctions')))]",
-      "name": "deployLAFunctions",
-      "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2020-10-01",
-      "dependsOn": [
-        "[resourceId('Microsoft.OperationalInsights/workspaces/', variables('uniqueWorkspace'))]"
-      ],
-      "properties": {
-        "mode": "Incremental",
-        "templateLink": {
-          "uri": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Sentinel/templates/functions.json",
-          "contentVersion": "1.0.0.0"
-        },
-        "parameters": {
-          "workspaceName": {
-            "value": "[variables('uniqueWorkspace')]"
-          },
-          "enableLAFunctions": {
-            "value": "[parameters('enableLAFunctions')]"
-          }
-        }
-      }
-    },
-    {
-      "condition": "[or(parameters('enableScheduledAlerts'),not(empty(parameters('enableSpecificScheduledAlerts'))))]",
-      "name": "enableScheduledAlerts",
-      "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2020-10-01",
-      "dependsOn": [
-        "[resourceId('Microsoft.OperationsManagement/solutions/', concat('SecurityInsights','(', variables('uniqueWorkspace'),')'))]",
-        "enableDataConnectors"
-      ],
-      "properties": {
-        "mode": "Incremental",
-        "templateLink": {
-          "uri": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Sentinel/templates/scheduledAlerts.json",
-          "contentVersion": "1.0.0.0"
-        },
-        "parameters": {
-          "workspaceName": {
-            "value": "[variables('uniqueWorkspace')]"
-          },
-          "dataConnectors": {
-            "value": "[parameters('dataConnectors')]"
-          },
-          "specificScheduledAlerts": {
-            "value": "[parameters('enableSpecificScheduledAlerts')]"
-          }
-        }
       }
     }
   ],
