@@ -156,104 +156,6 @@
       }
     },
     {
-      "type": "Microsoft.Insights/dataCollectionRules",
-      "apiVersion": "2021-04-01",
-      "dependsOn": ["Deploy-Sentinel"],
-      "name": "[variables('dataCollectionRuleName')]",
-      "location": "[parameters('location')]",
-      "tags": {
-        "createdBy": "Sentinel"
-      },
-      "properties": {
-        "dataSources": {
-          "windowsEventLogs": [
-            {
-              "name": "eventLogsDataSource",
-              "scheduledTransferPeriod": "PT5M",
-              "streams": [
-                "Microsoft-WindowsEvent"
-            ],
-              "xPathQueries": [
-                "Security!*",
-                "Microsoft-Windows-Sysmon/Operational!*",
-                "Microsoft-Windows-PowerShell/Operational!*"
-              ]
-            }
-          ]
-        },
-        "destinations": {
-          "logAnalytics": [
-            {
-              "name": "WindowsEvents",
-              "workspaceId": "[reference('Deploy-Sentinel').outputs.workspaceIdOutput.value]",
-              "workspaceResourceId": "[reference('Deploy-Sentinel').outputs.workspaceResourceIdOutput.value]"
-            }
-          ]
-        },
-        "dataFlows": [
-          {
-            "streams": [
-              "Microsoft-WindowsEvent"
-            ],
-            "destinations": [
-              "WindowsEvents"
-            ]
-          }
-        ]
-      }
-    },
-    {
-      "condition": "[not(empty(parameters('collectWinEventProviders')))]",
-      "name": "Deploy-WinDataSources",
-      "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2020-10-01",
-      "dependsOn": [
-        "Deploy-Sentinel"
-      ],
-      "properties": {
-        "mode": "Incremental",
-        "templateLink": {
-          "uri": "[variables('uri_collectWinDataSources')]",
-          "contentVersion": "1.0.0.0"
-        },
-        "parameters": {
-          "workspaceName": {
-            "value": "[reference('Deploy-Sentinel').outputs.workspaceName.value]"
-          },
-          "winEventProviders": {
-            "value": "[parameters('collectWinEventProviders')]"
-          },
-          "location": {
-            "value": "[parameters('location')]"
-          }
-        }
-      }
-    },
-    {
-      "condition": "[parameters('doenablesysmonparsers')]",
-      "name": "deploySysmonWindowsParserPack",
-      "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2020-10-01",
-      "dependsOn": [
-        "Deploy-Sentinel"
-      ],
-      "properties": {
-        "mode": "Incremental",
-        "templateLink": {
-          "uri": "[variables('uri_sysmonWindowsParserPackTemplate')]",
-          "contentVersion": "1.0.0.0"
-        },
-        "parameters": {
-          "workspaceName": {
-            "value": "[reference('Deploy-Sentinel').outputs.workspaceName.value]"
-          },
-          "location": {
-            "value": "[parameters('location')]"
-          }
-        }
-      }
-    },
-    {
       "name": "Deploy-ActiveDirectoryEnvironment",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2020-10-01",
@@ -335,33 +237,6 @@
           },
           "monitorAgent": {
             "value": "Azure Monitor Agent"
-          }
-        }
-      }
-    },
-    {
-      "name": "associateWindowsDCR",
-      "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2020-10-01",
-      "dependsOn": [
-        "[resourceId('microsoft.insights/dataCollectionRules', variables('dataCollectionRuleName'))]",
-        "Deploy-AzureMonitorAgent"
-      ],
-      "properties": {
-        "mode": "Incremental",
-        "templateLink": {
-          "uri": "[variables('uri_dcrassociation')]",
-          "contentVersion": "1.0.0.0"
-        },
-        "parameters": {
-          "virtualMachines": {
-            "value": "[reference('Deploy-ActiveDirectoryEnvironment').outputs.allWinVMsDeployed.value]"
-          },
-          "dataCollectionRuleId": {
-            "value": "[resourceId('microsoft.insights/dataCollectionRules', variables('dataCollectionRuleName'))]"
-          },
-          "dataCollectionRuleName": {
-            "value": "[variables('dataCollectionRuleName')]"
           }
         }
       }

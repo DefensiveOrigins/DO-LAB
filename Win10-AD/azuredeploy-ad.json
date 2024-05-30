@@ -366,7 +366,7 @@
                     "publisher": "MicrosoftWindowsDesktop",
                     "offer": "Windows-10",
                     "sku": "win10-22h2-pro",
-                    "version": "19045.4046.240203",
+                    "version": "19045.4412.240510",
                     "extensionName": "SetupWinVM"
                 }
             }
