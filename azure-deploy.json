@@ -59,26 +59,6 @@
         "description": "Size of the virtual machine. Reference: https://docs.microsoft.com/en-us/azure/virtual-machines/sizes-general"
       }
     },
-    "collectWinEventProviders": {
-      "type": "array",
-      "metadata": {
-        "description": "Do you want to configure your Log Analytics Workspace to collect Windows Event Logs from several pre-defined event providers?. Windows Security Auditing is not enabled through this option. It is enabled through the Data Connectors parameter."
-      },
-      "defaultValue": [
-        "Security!*",
-        "Microsoft-Windows-Sysmon/Operational!*",
-        "Microsoft-Windows-TerminalServices-RemoteConnectionManager/Operational!*",
-        "Microsoft-Windows-Bits-Client/Operational!*",
-        "Microsoft-Windows-TerminalServices-LocalSessionManager/Operational!*",
-        "Directory Service!*",
-        "Microsoft-Windows-DNS-Client/Operational!*",
-        "Microsoft-Windows-Windows Firewall With Advanced Security/Firewall!*",
-        "Windows PowerShell!*",
-        "Microsoft-Windows-PowerShell/Operational!*",
-        "Microsoft-Windows-WMI-Activity/Operational!*",
-        "Microsoft-Windows-TaskScheduler/Operational!*"
-      ]
-    },
     "location": {
       "type": "string",
       "defaultValue": "[resourceGroup().location]",
@@ -89,14 +69,6 @@
     "doenablesysmon": {
       "type": "bool",
       "defaultValue": true
-    },
-    "doenablesysmonparsers": {
-      "type": "bool",
-      "defaultValue": false
-    },
-    "doenableaadconnect": {
-      "type": "bool",
-      "defaultValue": false
     },
     "doimmediatePurgeDataOn30Days": {
       "type": "bool",
@@ -112,13 +84,11 @@
         "uri_azure_win10_ad": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Win10-AD/azuredeploy-ad.json",
         "uri_azure_c2": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/C2/azuredeploy-c2.json",
         "uri_azure_monitoragents": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/MonitorAgents/windows.json",
-        "dataCollectionRuleName": "WindowsDCR",
         "doadminusername": "doadmin",
         "doadminpassword": "DOLabAdmin1!",
         "donameprefix": "WS0",
         "doWSKU": "win10-22h2-pro",
         "doServerSKU": "2022-Datacenter",
-        "doServerVer": "20348.2031.231006",
         "dofqdn": "doazlab.com",
         "doc2": "metasploit",
         "doc2ubuntusku": "22.04-lts",
@@ -204,9 +174,6 @@
           },
           "enableSysmon": {
             "value": "[parameters('doenablesysmon')]"
-          },
-          "enableAADConnect": {
-            "value": "[parameters('doenableaadconnect')]"
           },
           "location": {
             "value": "[parameters('location')]"
