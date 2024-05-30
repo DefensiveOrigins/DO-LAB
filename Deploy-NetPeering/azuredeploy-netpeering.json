@@ -5,7 +5,7 @@
         "ad-net-id": {
             "type": "string",
             "metadata": {
-                "description": "List of endpoints to install the Azure Monitor Agent. The format is an array of endpoints with a property/attribute named 'vmName'"
+                "description": "AD Network ID"
             }
         },
         "linux-net-id": {
