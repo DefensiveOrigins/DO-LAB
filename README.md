@@ -32,6 +32,11 @@ The following locations have specifically been tested:
 
 ## Training Course Pre-Requisites
 Are you attending a Defensive Origins training course that utilizes the Defensive Origins Azure Lab Environment?  See the below links for additional information on the DOAZLab Pre-Requisites for Defensive Origins training courses. 
+
+Attack Detect Defend:
+* https://github.com/DefensiveOrigins/ADD-PreReqs
+
+Applied Purple Teaming:
 * https://github.com/DefensiveOrigins/APT-PreReqs
 
 ## Lab Environment
@@ -41,11 +46,6 @@ Are you attending a Defensive Origins training course that utilizes the Defensiv
 * Ubuntu 22.04LTS C2 with Metasploit
 * Sysmon Installation on Server and Workstation
 * Microsoft Sentinel Log Aggregation
-
-# Upcoming Classes
-New classes will be coming in 2024!
-
-For more information on upcoming classes, see our classes at https://www.defensiveorigins.com.
 
 
 # Acknowledgments
