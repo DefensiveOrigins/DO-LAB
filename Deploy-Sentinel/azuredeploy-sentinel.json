@@ -87,8 +87,8 @@
       }
     },
     {
-      "name": "[concat('SecurityInsights','(', variables('uniqueWorkspace'),')')]",
       "type": "Microsoft.OperationalInsights/workspaces/providers/onboardingStates",
+      "name": "[concat('SecurityInsights','(', variables('uniqueWorkspace'),')')]",
       "apiVersion": "2023-02-01-preview",
       "location": "[parameters('location')]",
       "scope": "string",
