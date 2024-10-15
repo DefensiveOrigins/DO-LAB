@@ -8,7 +8,7 @@
         "description": "Returns the current (UTC) datetime value in the specified format. If no format is provided, the ISO 8601 (yyyyMMddTHHmmssZ) format is used"
       },
       "defaultValue": "[utcNow()]"
-    },
+    }, 
     "workspaceName": {
       "type": "string",
       "metadata": {
