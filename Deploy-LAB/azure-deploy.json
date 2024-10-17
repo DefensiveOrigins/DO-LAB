@@ -88,39 +88,39 @@
         "doremoteaccessmode": "AllowPublicIP"
     },
     "resources": [
-//        {
-//            "name": "Deploy-Sentinel",
-//            "type": "Microsoft.Resources/deployments",
-//            "apiVersion": "2020-10-01",
-//            "properties": {
-//                "mode": "Incremental",
-//                "templateLink": {
-//                    "uri": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-Sentinel/azuredeploy-sentinel.json",
-//                    "contentVersion": "1.0.0.0"
-//                },
-//                "parameters": {
-//                    "workspaceName": {
-//                        "value": "[variables('doworkspaceprefix')]"
-//                    },
-//                    "pricingTier": {
-//                        "value": "[parameters('pricingTier')]"
-//                    },
-//                    "dataRetention": {
-//                        "value": "[parameters('dataRetention')]"
-//                    },
-//                    "immediatePurgeDataOn30Days": {
-//                        "value": "[parameters('doimmediatePurgeDataOn30Days')]"
-//                    }
-//                }
-//            }
-//        },
+        {
+            "name": "Deploy-Sentinel",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2020-10-01",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-Sentinel/azuredeploy-sentinel.json",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "workspaceName": {
+                        "value": "[variables('doworkspaceprefix')]"
+                    },
+                    "pricingTier": {
+                        "value": "[parameters('pricingTier')]"
+                    },
+                    "dataRetention": {
+                        "value": "[parameters('dataRetention')]"
+                    },
+                    "immediatePurgeDataOn30Days": {
+                        "value": "[parameters('doimmediatePurgeDataOn30Days')]"
+                    }
+                }
+            }
+        },
         {
             "name": "Deploy-AD",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2020-10-01",
-//            "dependsOn": [
-//                "Deploy-Sentinel"
-//            ],
+            "dependsOn": [
+                "Deploy-Sentinel"
+            ],
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
@@ -175,7 +175,7 @@
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2020-10-01",
             "dependsOn": [
-//                "Deploy-Sentinel",
+                "Deploy-Sentinel",
                 "Deploy-AD"
             ],
             "properties": {
