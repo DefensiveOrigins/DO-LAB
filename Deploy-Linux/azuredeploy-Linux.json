@@ -144,7 +144,7 @@
         }
     },
     "variables": {
-        "storageAccountName": "[concat('sa_ln_',uniquestring(resourceGroup().id, parameters('utcValue')))]",
+        "storageAccountName": "[concat('saln',uniquestring(resourceGroup().id, parameters('utcValue')))]",
         "doc2pipname": "[concat('pip-', variables('vmName'))]",
         "virtualNetworkName": "[parameters('virtualNetworkName')]",
         "virtualNetworkAddressRange": "[parameters('virtualNetworkAddressRange')]",

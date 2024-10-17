@@ -245,7 +245,7 @@
     }
   },
     "variables": {
-        "storageAccountName": "[concat('sa_ad_',uniquestring(resourceGroup().id, parameters('utcValue')))]",
+        "storageAccountName": "[concat('saad',uniquestring(resourceGroup().id, parameters('utcValue')))]",
 
         // Virtual Network Setup
         "virtualNetworkName": "[parameters('virtualNetworkName')]",
