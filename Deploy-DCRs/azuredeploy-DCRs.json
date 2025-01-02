@@ -136,6 +136,7 @@
         "apiVersion": "2021-09-01-preview",
         "name": "Syslog",
         "location": "[parameters('location')]",
+        "kind": "Linux",
         "properties": {
             "dataSources": {
                 "syslog": [
@@ -166,7 +167,7 @@
             "destinations": {
                 "logAnalytics": [
                     {
-					"name": "Syslog",
+					              "name": "Syslog",
                         "workspaceResourceId": "[parameters('workspaceResourceIdOutput')]"
                     }
                 ]
@@ -178,7 +179,9 @@
                     ],
                     "destinations": [
                         "Syslog"
-                    ]
+                    ],
+                    "transformKql": "source",
+                    "outputStream": "Microsoft-Syslog"
                 }
             ]
         }
