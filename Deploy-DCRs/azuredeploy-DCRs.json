@@ -34,6 +34,7 @@
           "dataSources": {
             "windowsEventLogs": [
               {
+                "name": "eventLogsDataSource",
                 "streams": ["Microsoft-SecurityEvent"],
                 "xPathQueries": [
                   "Security!*"
@@ -44,6 +45,7 @@
           "destinations": {
             "logAnalytics": [
               {
+                "name": "WindowsEvents",
                 "workspaceResourceId": "[parameters('workspaceResourceIdOutput')]"
               }
             ]
