@@ -8,7 +8,7 @@
         "description": "List of endpoints to install the Azure Monitor Agent. The format is an array of endpoints with a property/attribute named 'vmName'"
       }
     },
-    "workspaceId": {
+    "workspaceResourceIdOutput": {
       "type": "string",
       "metadata": {
         "description": "Log analytics workspace ID"
@@ -44,7 +44,7 @@
           "destinations": {
             "logAnalytics": [
               {
-                "workspaceResourceId": "[parameters('workspaceId')]"
+                "workspaceResourceId": "[parameters('workspaceResourceIdOutput')]"
               }
             ]
           },

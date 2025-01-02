@@ -248,8 +248,8 @@
                     "virtualMachines": {
                         "value": "[reference('Deploy-AD').outputs.allWinVMsDeployed.value]"
                     },
-                    "workspaceId": {
-                        "value": "[reference('Deploy-Sentinel').outputs.workspaceIdOutput.value]"
+                    "workspaceResourceIdOutput": {
+                        "value": "[reference('Deploy-Sentinel').outputs.workspaceResourceIdOutput.value]"
                     }
                 }
             }
