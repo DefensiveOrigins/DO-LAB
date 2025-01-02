@@ -132,6 +132,58 @@
         }
     },
     {
+        "type": "Microsoft.Insights/dataCollectionRules",
+        "apiVersion": "2021-09-01-preview",
+        "name": "Syslog",
+        "location": "[parameters('location')]",
+        "properties": {
+            "dataSources": {
+                "syslog": [
+                    {
+					"name": "Syslog",
+                        "streams": [
+                            "Microsoft-Syslog"
+                        ],
+                        "facilityNames": [
+                            "auth",
+                            "authpriv",
+                            "alert"
+                        ],
+					"logLevels": 
+					[
+						"Debug",
+						"Info",
+						"Notice",
+						"Warning",
+						"Error",
+						"Critical",
+						"Alert",
+						"Emergency"
+					]
+                    }
+                ]
+            },
+            "destinations": {
+                "logAnalytics": [
+                    {
+					"name": "Syslog",
+                        "workspaceResourceId": "[parameters('workspaceResourceIdOutput')]"
+                    }
+                ]
+            },
+            "dataFlows": [
+                {
+                    "streams": [
+                        "Microsoft-Syslog"
+                    ],
+                    "destinations": [
+                        "Syslog"
+                    ]
+                }
+            ]
+        }
+    },
+    {
         "name": "[concat(parameters('virtualMachines')[copyIndex('vmDCRCopy')].vmName, '/microsoft.insights/', 'SecurityEvents')]",
         "dependsOn": [ "[resourceId('Microsoft.Insights/dataCollectionRules', 'SecurityEvents')]" ],
         "type": "Microsoft.Compute/virtualMachines/providers/dataCollectionRuleAssociations",
@@ -175,7 +227,20 @@
             "description": "Association of data collection rule. Deleting this association will break the data collection for this virtual machine.",
             "dataCollectionRuleId": "[resourceId('Microsoft.Insights/dataCollectionRules', 'AdditionalLogs')]"
         }
-    }
+    },
+    {
+        "type": "Microsoft.Compute/virtualMachines/providers/dataCollectionRuleAssociations",
+        "apiVersion": "2019-11-01-preview",
+        "name": "[concat('Nux01', '/microsoft.insights/', 'Syslog')]",
+        "location": "[parameters('location')]",
+        "dependsOn": [
+            "[resourceId('Microsoft.Insights/dataCollectionRules', 'Syslog')]"
+        ],
+        "properties": {
+            "description": "Association of data collection rule. Deleting this association will break the data collection for this virtual machine.",
+            "dataCollectionRuleId": "[resourceId('Microsoft.Insights/dataCollectionRules', 'Syslog')]"
+        }
+     }
   ],
   "outputs": {}
 }
