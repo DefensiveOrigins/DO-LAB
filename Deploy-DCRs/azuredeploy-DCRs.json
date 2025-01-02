@@ -24,226 +24,225 @@
     }
   },
   "variables": {},
-  "resources": [ 
+  "resources": [
     {
-        "type": "Microsoft.Insights/dataCollectionRules",
-        "apiVersion": "2021-09-01-preview",
-        "name": "SecurityEvents",
-        "location": "[parameters('location')]",
-        "properties": {
-          "dataSources": {
-            "windowsEventLogs": [
-              {
-                "name": "eventLogsDataSource",
-                "streams": ["Microsoft-SecurityEvent"],
-                "xPathQueries": [
-                  "Security!*"
-                ]
-              }
-            ]
-          },
-          "destinations": {
-            "logAnalytics": [
-              {
-                "name": "WindowsEvents",
-                "workspaceResourceId": "[parameters('workspaceResourceIdOutput')]"
-              }
-            ]
-          },
-          "dataFlows": [
+      "type": "Microsoft.Insights/dataCollectionRules",
+      "apiVersion": "2021-09-01-preview",
+      "name": "SecurityEvents",
+      "location": "[parameters('location')]",
+      "properties": {
+        "dataSources": {
+          "windowsEventLogs": [
             {
-              "streams": ["Microsoft-SecurityEvent"],
-              "destinations": ["WindowsEvents"]
+              "name": "eventLogsDataSource",
+              "streams": [ "Microsoft-SecurityEvent" ],
+              "xPathQueries": [
+                "Security!*"
+              ]
             }
           ]
-        }
-    },
-    {
-        "type": "Microsoft.Insights/dataCollectionRules",
-        "apiVersion": "2021-09-01-preview",
-        "name": "Sysmon",
-        "location": "[parameters('location')]",
-        "properties": {
-          "dataSources": {
-            "windowsEventLogs": [
-              {
-                "name": "SysmonLogs",
-                "streams": ["Microsoft-Event"],
-                "xPathQueries": [
-                  "Microsoft-Windows-Sysmon/Operational!*"
-                ]
-              }
-            ]
-          },
-          "destinations": {
-            "logAnalytics": [
-              {
-                "name": "SysmonLogs",
-                "workspaceResourceId": "[parameters('workspaceResourceIdOutput')]"
-              }
-            ]
-          },
-          "dataFlows": [
+        },
+        "destinations": {
+          "logAnalytics": [
             {
-            "streams": ["Microsoft-Event"],
-            "destinations": ["SysmonLogs"]
+              "name": "WindowsEvents",
+              "workspaceResourceId": "[parameters('workspaceResourceIdOutput')]"
             }
           ]
-        }
+        },
+        "dataFlows": [
+          {
+            "streams": [ "Microsoft-SecurityEvent" ],
+            "destinations": [ "WindowsEvents" ]
+          }
+        ]
+      }
     },
     {
-        "type": "Microsoft.Insights/dataCollectionRules",
-        "apiVersion": "2021-09-01-preview",
-        "name": "AdditionalLogs",
-        "location": "[parameters('location')]",
-        "properties": {
-          "dataSources": {
-            "windowsEventLogs": [
-              {
-                "name": "AdditionalLogs",
-                "streams": ["Microsoft-Event"],
-                "xPathQueries": [
-                  "Microsoft-Windows-TerminalServices-RemoteConnectionManager/Operational!*",
-                  "Microsoft-Windows-Bits-Client/Operational!*",
-                  "Microsoft-Windows-TerminalServices-LocalSessionManager/Operational!*",
-                  "Microsoft-Windows-DNS-Client/Operational!*",
-                  "Microsoft-Windows-Windows Firewall With Advanced Security/Firewall!*",
-                  "Microsoft-Windows-PowerShell/Operational!*",
-                  "Microsoft-Windows-WMI-Activity/Operational!*",
-                  "Microsoft-Windows-TaskScheduler/Operational!*"
-                ]
-              }
-            ]
-          },
-          "destinations": {
-            "logAnalytics": [
-              {
-                "name": "AdditionalLogs",
-                "workspaceResourceId": "[parameters('workspaceResourceIdOutput')]"
-              }
-            ]
-          },
-          "dataFlows": [
+      "type": "Microsoft.Insights/dataCollectionRules",
+      "apiVersion": "2021-09-01-preview",
+      "name": "Sysmon",
+      "location": "[parameters('location')]",
+      "properties": {
+        "dataSources": {
+          "windowsEventLogs": [
             {
-            "streams": ["Microsoft-Event"],
-            "destinations": ["AdditionalLogs"]
+              "name": "SysmonLogs",
+              "streams": [ "Microsoft-Event" ],
+              "xPathQueries": [
+                "Microsoft-Windows-Sysmon/Operational!*"
+              ]
             }
           ]
-        }
-    },
-    {
-        "type": "Microsoft.Insights/dataCollectionRules",
-        "apiVersion": "2021-09-01-preview",
-        "name": "Syslog",
-        "location": "[parameters('location')]",
-        "kind": "Linux",
-        "properties": {
-            "dataSources": {
-                "syslog": [
-                    {
-					"name": "Syslog",
-                        "streams": [
-                            "Microsoft-Syslog"
-                        ],
-                        "facilityNames": [
-                            "auth",
-                            "authpriv",
-                            "alert"
-                        ],
-					"logLevels": 
-					[
-						"Debug",
-						"Info",
-						"Notice",
-						"Warning",
-						"Error",
-						"Critical",
-						"Alert",
-						"Emergency"
-					]
-                    }
-                ]
-            },
-            "destinations": {
-                "logAnalytics": [
-                    {
-					              "name": "Syslog",
-                        "workspaceResourceId": "[parameters('workspaceResourceIdOutput')]"
-                    }
-                ]
-            },
-            "dataFlows": [
-                {
-                    "streams": [
-                        "Microsoft-Syslog"
-                    ],
-                    "destinations": [
-                        "Syslog"
-                    ],
-                    "transformKql": "source",
-                    "outputStream": "Microsoft-Syslog"
-                }
-            ]
-        }
-    },
-    {
-        "name": "[concat(parameters('virtualMachines')[copyIndex('vmDCRCopy')].vmName, '/microsoft.insights/', 'SecurityEvents')]",
-        "dependsOn": [ "[resourceId('Microsoft.Insights/dataCollectionRules', 'SecurityEvents')]" ],
-        "type": "Microsoft.Compute/virtualMachines/providers/dataCollectionRuleAssociations",
-        "apiVersion": "2019-11-01-preview",
-        "location": "[parameters('location')]",
-        "copy": {
-            "name": "vmDCRCopy",
-            "count": "[length(parameters('virtualMachines'))]"
         },
-        "properties": {
-            "description": "Association of data collection rule. Deleting this association will break the data collection for this virtual machine.",
-            "dataCollectionRuleId": "[resourceId('Microsoft.Insights/dataCollectionRules', 'SecurityEvents')]"
-        }
-    },
-    {
-        "name": "[concat(parameters('virtualMachines')[copyIndex('vmDCRCopy')].vmName, '/microsoft.insights/', 'Sysmon')]",
-        "dependsOn": [ "[resourceId('Microsoft.Insights/dataCollectionRules', 'Sysmon')]" ],
-        "type": "Microsoft.Compute/virtualMachines/providers/dataCollectionRuleAssociations",
-        "apiVersion": "2019-11-01-preview",
-        "location": "[parameters('location')]",
-        "copy": {
-            "name": "vmDCRCopy",
-            "count": "[length(parameters('virtualMachines'))]"
+        "destinations": {
+          "logAnalytics": [
+            {
+              "name": "SysmonLogs",
+              "workspaceResourceId": "[parameters('workspaceResourceIdOutput')]"
+            }
+          ]
         },
-        "properties": {
-            "description": "Association of data collection rule. Deleting this association will break the data collection for this virtual machine.",
-            "dataCollectionRuleId": "[resourceId('Microsoft.Insights/dataCollectionRules', 'Sysmon')]"
-        }
+        "dataFlows": [
+          {
+            "streams": [ "Microsoft-Event" ],
+            "destinations": [ "SysmonLogs" ]
+          }
+        ]
+      }
     },
     {
-        "name": "[concat(parameters('virtualMachines')[copyIndex('vmDCRCopy')].vmName, '/microsoft.insights/', 'AdditionalLogs')]",
-        "dependsOn": [ "[resourceId('Microsoft.Insights/dataCollectionRules', 'AdditionalLogs')]" ],
-        "type": "Microsoft.Compute/virtualMachines/providers/dataCollectionRuleAssociations",
-        "apiVersion": "2019-11-01-preview",
-        "location": "[parameters('location')]",
-        "copy": {
-            "name": "vmDCRCopy",
-            "count": "[length(parameters('virtualMachines'))]"
+      "type": "Microsoft.Insights/dataCollectionRules",
+      "apiVersion": "2021-09-01-preview",
+      "name": "AdditionalLogs",
+      "location": "[parameters('location')]",
+      "properties": {
+        "dataSources": {
+          "windowsEventLogs": [
+            {
+              "name": "AdditionalLogs",
+              "streams": [ "Microsoft-Event" ],
+              "xPathQueries": [
+                "Microsoft-Windows-TerminalServices-RemoteConnectionManager/Operational!*",
+                "Microsoft-Windows-Bits-Client/Operational!*",
+                "Microsoft-Windows-TerminalServices-LocalSessionManager/Operational!*",
+                "Microsoft-Windows-DNS-Client/Operational!*",
+                "Microsoft-Windows-Windows Firewall With Advanced Security/Firewall!*",
+                "Microsoft-Windows-PowerShell/Operational!*",
+                "Microsoft-Windows-WMI-Activity/Operational!*",
+                "Microsoft-Windows-TaskScheduler/Operational!*"
+              ]
+            }
+          ]
         },
-        "properties": {
-            "description": "Association of data collection rule. Deleting this association will break the data collection for this virtual machine.",
-            "dataCollectionRuleId": "[resourceId('Microsoft.Insights/dataCollectionRules', 'AdditionalLogs')]"
-        }
+        "destinations": {
+          "logAnalytics": [
+            {
+              "name": "AdditionalLogs",
+              "workspaceResourceId": "[parameters('workspaceResourceIdOutput')]"
+            }
+          ]
+        },
+        "dataFlows": [
+          {
+            "streams": [ "Microsoft-Event" ],
+            "destinations": [ "AdditionalLogs" ]
+          }
+        ]
+      }
     },
     {
-        "type": "Microsoft.Compute/virtualMachines/providers/dataCollectionRuleAssociations",
-        "apiVersion": "2019-11-01-preview",
-        "name": "[concat('Nux01', '/microsoft.insights/', 'Syslog')]",
-        "location": "[parameters('location')]",
-        "dependsOn": [
-            "[resourceId('Microsoft.Insights/dataCollectionRules', 'Syslog')]"
-        ],
-        "properties": {
-            "description": "Association of data collection rule. Deleting this association will break the data collection for this virtual machine.",
-            "dataCollectionRuleId": "[resourceId('Microsoft.Insights/dataCollectionRules', 'Syslog')]"
-        }
-     }
+      "type": "Microsoft.Insights/dataCollectionRules",
+      "apiVersion": "2021-09-01-preview",
+      "name": "Syslog",
+      "location": "[parameters('location')]",
+      "kind": "Linux",
+      "properties": {
+        "dataSources": {
+          "syslog": [
+            {
+              "name": "Syslog",
+              "streams": [
+                "Microsoft-Syslog"
+              ],
+              "facilityNames": [
+                "auth",
+                "authpriv",
+                "alert"
+              ],
+              "logLevels": [
+                "Debug",
+                "Info",
+                "Notice",
+                "Warning",
+                "Error",
+                "Critical",
+                "Alert",
+                "Emergency"
+              ]
+            }
+          ]
+        },
+        "destinations": {
+          "logAnalytics": [
+            {
+              "name": "Syslog",
+              "workspaceResourceId": "[parameters('workspaceResourceIdOutput')]"
+            }
+          ]
+        },
+        "dataFlows": [
+          {
+            "streams": [
+              "Microsoft-Syslog"
+            ],
+            "destinations": [
+              "Syslog"
+            ],
+            "transformKql": "source",
+            "outputStream": "Microsoft-Syslog"
+          }
+        ]
+      }
+    },
+    {
+      "name": "[concat(parameters('virtualMachines')[copyIndex('vmDCRCopy')].vmName, '/microsoft.insights/', 'SecurityEvents')]",
+      "dependsOn": [ "[resourceId('Microsoft.Insights/dataCollectionRules', 'SecurityEvents')]" ],
+      "type": "Microsoft.Compute/virtualMachines/providers/dataCollectionRuleAssociations",
+      "apiVersion": "2019-11-01-preview",
+      "location": "[parameters('location')]",
+      "copy": {
+        "name": "vmDCRCopy",
+        "count": "[length(parameters('virtualMachines'))]"
+      },
+      "properties": {
+        "description": "Association of data collection rule. Deleting this association will break the data collection for this virtual machine.",
+        "dataCollectionRuleId": "[resourceId('Microsoft.Insights/dataCollectionRules', 'SecurityEvents')]"
+      }
+    },
+    {
+      "name": "[concat(parameters('virtualMachines')[copyIndex('vmDCRCopy')].vmName, '/microsoft.insights/', 'Sysmon')]",
+      "dependsOn": [ "[resourceId('Microsoft.Insights/dataCollectionRules', 'Sysmon')]" ],
+      "type": "Microsoft.Compute/virtualMachines/providers/dataCollectionRuleAssociations",
+      "apiVersion": "2019-11-01-preview",
+      "location": "[parameters('location')]",
+      "copy": {
+        "name": "vmDCRCopy",
+        "count": "[length(parameters('virtualMachines'))]"
+      },
+      "properties": {
+        "description": "Association of data collection rule. Deleting this association will break the data collection for this virtual machine.",
+        "dataCollectionRuleId": "[resourceId('Microsoft.Insights/dataCollectionRules', 'Sysmon')]"
+      }
+    },
+    {
+      "name": "[concat(parameters('virtualMachines')[copyIndex('vmDCRCopy')].vmName, '/microsoft.insights/', 'AdditionalLogs')]",
+      "dependsOn": [ "[resourceId('Microsoft.Insights/dataCollectionRules', 'AdditionalLogs')]" ],
+      "type": "Microsoft.Compute/virtualMachines/providers/dataCollectionRuleAssociations",
+      "apiVersion": "2019-11-01-preview",
+      "location": "[parameters('location')]",
+      "copy": {
+        "name": "vmDCRCopy",
+        "count": "[length(parameters('virtualMachines'))]"
+      },
+      "properties": {
+        "description": "Association of data collection rule. Deleting this association will break the data collection for this virtual machine.",
+        "dataCollectionRuleId": "[resourceId('Microsoft.Insights/dataCollectionRules', 'AdditionalLogs')]"
+      }
+    },
+    {
+      "type": "Microsoft.Compute/virtualMachines/providers/dataCollectionRuleAssociations",
+      "apiVersion": "2019-11-01-preview",
+      "name": "[concat('Nux01', '/microsoft.insights/', 'Syslog')]",
+      "location": "[parameters('location')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Insights/dataCollectionRules', 'Syslog')]"
+      ],
+      "properties": {
+        "description": "Association of data collection rule. Deleting this association will break the data collection for this virtual machine.",
+        "dataCollectionRuleId": "[resourceId('Microsoft.Insights/dataCollectionRules', 'Syslog')]"
+      }
+    }
   ],
   "outputs": {}
 }
