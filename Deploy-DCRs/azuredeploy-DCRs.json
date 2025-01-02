@@ -36,7 +36,7 @@
               {
                 "streams": ["Microsoft-SecurityEvent"],
                 "xPathQueries": [
-                  "Security!"
+                  "Security!*"
                 ]
               }
             ]
