@@ -2,62 +2,18 @@
   "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "pricingTier": {
-      "type": "string",
-      "allowedValues": [
-        "PerGB2018",
-        "Free",
-        "Standalone",
-        "PerNode",
-        "Standard",
-        "Premium"
-      ],
-      "defaultValue": "PerGB2018",
+    "virtualMachines": {
+      "type": "array",
       "metadata": {
-        "description": "Pricing tier: pergb2018 or legacy tiers (Free, Standalone, PerNode, Standard or Premium) which are not available to all customers."
+        "description": "List of endpoints to install the Azure Monitor Agent. The format is an array of endpoints with a property/attribute named 'vmName'"
       }
     },
-    "dataRetention": {
-      "type": "int",
-      "defaultValue": 30
-    },
-    "allowedIPAddresses": {
+    "workspaceId": {
       "type": "string",
       "metadata": {
-        "description": "The sourceAddressPrefixes allowed to connect to this deployment"
-      }
-    },
-    "windowsServerVersion": {
-      "type": "string",
-      "defaultValue": "latest",
-      "allowedValues": [
-        "17763.1999.2106060321",
-        "latest"
-      ],
-      "metadata": {
-        "description": "The specific version for the Server VM."
-      }
-    },
-    "vmSize": {
-      "type": "string",
-      "defaultValue": "Standard_B2s",
-        "allowedValues": [
-            "Standard_B2s",
-            "Standard_B2ms",
-            "Standard_B2s_v2",
-            "Standard_B2ls_v2",
-            "Standard_B2ts_v2",
-            "Standard_B2als_v2",
-            "Standard_B2as_v2",
-            "Standard_DS2",
-            "Standard_DS11",
-            "Standard_D2s_v3",
-            "Standard_D2s_v4",
-            "Standard_D2s_v5"
-        ],
-      "metadata": {
-        "description": "Size of the virtual machine. Reference: https://docs.microsoft.com/en-us/azure/virtual-machines/sizes-general"
-      }
+        "description": "Log analytics workspace ID"
+      },
+      "defaultValue": ""
     },
     "location": {
       "type": "string",
@@ -65,232 +21,55 @@
       "metadata": {
         "description": "Location for all resources."
       }
-    },
-    "doimmediatePurgeDataOn30Days": {
-      "type": "bool",
-      "defaultValue": true
-    },
-    "dowscount": {
-      "type": "int",
-      "defaultValue": 1
     }
   },
-    "variables": {
-        "doadminusername": "doadmin",
-        "doadminpassword": "DOLabAdmin1!",
-        "donameprefix": "WS0",
-        "doWSKU": "win10-22h2-pro",
-        "doServerSKU": "2022-Datacenter",
-        "dofqdn": "doazlab.com",
-        "doc2": "metasploit",
-        "doc2ubuntusku": "22.04-lts",
-        "doworkspaceprefix": "LA-workspace",
-        "doremoteaccessmode": "AllowPublicIP"
-    },
-    "resources": [
-        {
-            "name": "Deploy-Sentinel",
-            "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2020-10-01",
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-Sentinel/azuredeploy-sentinel.json",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "workspaceName": {
-                        "value": "[variables('doworkspaceprefix')]"
-                    },
-                    "pricingTier": {
-                        "value": "[parameters('pricingTier')]"
-                    },
-                    "dataRetention": {
-                        "value": "[parameters('dataRetention')]"
-                    },
-                    "immediatePurgeDataOn30Days": {
-                        "value": "[parameters('doimmediatePurgeDataOn30Days')]"
-                    }
-                }
+  "variables": {},
+  "resources": [ 
+    {
+        "type": "Microsoft.Insights/dataCollectionRules",
+        "apiVersion": "2021-09-01",
+        "name": "SecurityEvents",
+        "location": "[parameters('location')]",
+        "properties": {
+          "dataSources": {
+            "windowsEventLogs": [
+              {
+                "streams": ["Microsoft-SecurityEvent"],
+                "xPathQueries": [
+                  "Security!"
+                ]
+              }
+            ]
+          },
+          "destinations": {
+            "logAnalytics": [
+              {
+                "workspaceResourceId": "[parameters('workspaceId')]"
+              }
+            ]
+          },
+          "dataFlows": [
+            {
+              "streams": ["Microsoft-SecurityEvent"],
+              "destinations": ["logAnalytics"]
             }
-        },
-        {
-            "name": "Deploy-AD",
-            "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2020-10-01",
-            "dependsOn": [
-                "Deploy-Sentinel"
-            ],
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-AD/azuredeploy-ad.json",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "adminUsername": {
-                        "value": "[variables('doadminusername')]"
-                    },
-                    "adminPassword": {
-                        "value": "[variables('doadminpassword')]"
-                    },
-                    "numberOfWorkstations": {
-                        "value": "[parameters('dowscount')]"
-                    },
-                    "vmNamePrefix": {
-                        "value": "[variables('donameprefix')]"
-                    },
-                    "windowsDesktopSKU": {
-                        "value": "[variables('doWSKU')]"
-                    },
-                    "windowsServerSKU": {
-                        "value": "[variables('doServerSKU')]"
-                    },
-                    "vmSize": {
-                        "value": "[parameters('vmSize')]"
-                    },
-                    "windowsServerVersion": {
-                        "value": "[parameters('windowsServerVersion')]"
-                    },
-                    "domainFQDN": {
-                        "value": "[variables('dofqdn')]"
-                    },
-                    "identityType": {
-                        "value": "SystemAssigned"
-                    },
-                    "remoteAccessMode": {
-                        "value": "[variables('doremoteaccessmode')]"
-                    },
-                    "allowedIPAddresses": {
-                        "value": "[parameters('allowedIPAddresses')]"
-                    },
-                    "location": {
-                        "value": "[parameters('location')]"
-                    }
-                }
-            }
-        },
-        {
-            "name": "Deploy-AMA",
-            "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2020-10-01",
-            "dependsOn": [
-                "Deploy-Sentinel",
-                "Deploy-AD"
-            ],
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-AMA/azuredeploy-ama.json",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "virtualMachines": {
-                        "value": "[reference('Deploy-AD').outputs.allWinVMsDeployed.value]"
-                    }
-                }
-            }
-        },
-        {
-            "name": "Deploy-Linux",
-            "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2020-10-01",
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-Linux/azuredeploy-Linux.json",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "adminUsername": {
-                        "value": "[variables('doadminusername')]"
-                    },
-                    "authenticationType": {
-                        "value": "password"
-                    },
-                    "adminPasswordOrKey": {
-                        "value": "[variables('doadminpassword')]"
-                    },
-                    "vmName": {
-                        "value": "Nux01"
-                    },
-                    "ubuntuSKU": {
-                        "value": "[variables('doc2ubuntusku')]"
-                    },
-                    "vmSize": {
-                        "value": "[parameters('vmSize')]"
-                    },
-                    "allowedIPAddresses": {
-                        "value": "[parameters('allowedIPAddresses')]"
-                    },
-                    "c2Framework": {
-                        "value": "[variables('doc2')]"
-                    }
-                }
-            }
-        },
-        {
-            "name": "Deploy-DCRs",
-            "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2020-10-01",
-            "dependsOn": [
-                "Deploy-Sentinel",
-                "Deploy-AD",
-                "Deploy-AMA"
-            ],
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-DCRs/azuredeploy-DCRs.json",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "virtualMachines": {
-                        "value": "[reference('Deploy-AD').outputs.allWinVMsDeployed.value]"
-                    },
-                    "workspaceId": {
-                        "value": "[reference('Deploy-Sentinel').outputs.workspaceIdOutput.value]"
-                    }
-                }
-            }
-        },
-        {
-            "name": "Deploy-NetPeering",
-            "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2020-10-01",
-            "dependsOn": [
-                "Deploy-Linux",
-                "Deploy-AD"
-            ],
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-NetPeering/azuredeploy-netpeering.json",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "linux-net-id": {
-                        "value": "[reference('Deploy-Linux').outputs.virtualNetworkId.value]"
-                    },
-                    "ad-net-id": {
-                        "value": "[reference('Deploy-AD').outputs.virtualNetworkId.value]"
-                    }
-                }
-            }
+          ]
         }
-    ],
-  "outputs": {
-    "C2PublicIP": {
-      "type": "string",
-      "value": "[reference('Deploy-Linux').outputs.C2PublicIP.value]"
     },
-    "DCPublicIP": {
-      "type": "string",
-      "value": "[reference('Deploy-AD').outputs.DCPublicIP.value]"
-    },
-    "WSPublicIP": {
-      "type": "string",
-      "value": "[reference('Deploy-AD').outputs.WSPublicIP.value]"
+    {
+        "name": "[concat(parameters('virtualMachines')[copyIndex('vmDCRCopy')].vmName, '/microsoft.insights/', 'SecurityEvents')]",
+        "type": "Microsoft.Compute/virtualMachines/providers/dataCollectionRuleAssociations",
+        "apiVersion": "2019-11-01-preview",
+        "location": "[parameters('location')]",
+        "copy": {
+            "name": "vmDCRCopy",
+            "count": "[length(parameters('virtualMachines'))]"
+        },
+        "properties": {
+            "description": "Association of data collection rule. Deleting this association will break the data collection for this virtual machine.",
+            "dataCollectionRuleId": "[resourceId('Microsoft.Insights/dataCollectionRules', 'SecurityEvents')]"
+        }
     }
-  }
+  ],
+  "outputs": {}
 }
