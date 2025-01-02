@@ -68,7 +68,7 @@
             "windowsEventLogs": [
               {
                 "name": "SysmonLogs",
-                "streams": ["Microsoft-SysmonEvent"],
+                "streams": ["Microsoft-Event"],
                 "xPathQueries": [
                   "Microsoft-Windows-Sysmon/Operational!*"
                 ]
@@ -85,8 +85,8 @@
           },
           "dataFlows": [
             {
-            "streams": ["Microsoft-SysmonEvent"],
-            "destinations": ["WindowsEvents"]
+            "streams": ["Microsoft-Event"],
+            "destinations": ["SysmonLogs"]
             }
           ]
         }
