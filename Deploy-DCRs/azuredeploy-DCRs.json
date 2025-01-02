@@ -27,7 +27,7 @@
   "resources": [ 
     {
         "type": "Microsoft.Insights/dataCollectionRules",
-        "apiVersion": "2021-09-01",
+        "apiVersion": "2021-09-01-preview",
         "name": "SecurityEvents",
         "location": "[parameters('location')]",
         "properties": {
