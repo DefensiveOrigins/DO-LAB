@@ -49,6 +49,20 @@
         "settings": {},
         "protectedSettings": {}
       }
+    },
+    {
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      "apiVersion": "2020-06-01",
+      "name": "[concat('Nux01','/AzureMonitorAgent')]",
+      "location": "[parameters('location')]",
+      "properties": {
+        "publisher": "Microsoft.Azure.Monitor",
+        "type": "AzureMonitorLinuxAgent",
+        "typeHandlerVersion": "1.0",
+        "autoUpgradeMinorVersion": true,
+        "settings": {},
+        "protectedSettings": {}
+      }
     }
   ],
   "outputs": {}
