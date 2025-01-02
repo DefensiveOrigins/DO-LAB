@@ -41,20 +41,20 @@
     "vmSize": {
       "type": "string",
       "defaultValue": "Standard_B2s",
-        "allowedValues": [
-            "Standard_B2s",
-            "Standard_B2ms",
-            "Standard_B2s_v2",
-            "Standard_B2ls_v2",
-            "Standard_B2ts_v2",
-            "Standard_B2als_v2",
-            "Standard_B2as_v2",
-            "Standard_DS2",
-            "Standard_DS11",
-            "Standard_D2s_v3",
-            "Standard_D2s_v4",
-            "Standard_D2s_v5"
-        ],
+      "allowedValues": [
+        "Standard_B2s",
+        "Standard_B2ms",
+        "Standard_B2s_v2",
+        "Standard_B2ls_v2",
+        "Standard_B2ts_v2",
+        "Standard_B2als_v2",
+        "Standard_B2as_v2",
+        "Standard_DS2",
+        "Standard_DS11",
+        "Standard_D2s_v3",
+        "Standard_D2s_v4",
+        "Standard_D2s_v5"
+      ],
       "metadata": {
         "description": "Size of the virtual machine. Reference: https://docs.microsoft.com/en-us/azure/virtual-machines/sizes-general"
       }
@@ -75,210 +75,210 @@
       "defaultValue": 1
     }
   },
-    "variables": {
-        "doadminusername": "doadmin",
-        "doadminpassword": "DOLabAdmin1!",
-        "donameprefix": "WS0",
-        "doWSKU": "win10-22h2-pro",
-        "doServerSKU": "2022-Datacenter",
-        "dofqdn": "doazlab.com",
-        "doc2": "metasploit",
-        "doc2ubuntusku": "22.04-lts",
-        "doworkspaceprefix": "LA-workspace",
-        "doremoteaccessmode": "AllowPublicIP"
-    },
-    "resources": [
-        {
-            "name": "Deploy-Sentinel",
-            "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2020-10-01",
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-Sentinel/azuredeploy-sentinel.json",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "workspaceName": {
-                        "value": "[variables('doworkspaceprefix')]"
-                    },
-                    "pricingTier": {
-                        "value": "[parameters('pricingTier')]"
-                    },
-                    "dataRetention": {
-                        "value": "[parameters('dataRetention')]"
-                    },
-                    "immediatePurgeDataOn30Days": {
-                        "value": "[parameters('doimmediatePurgeDataOn30Days')]"
-                    }
-                }
-            }
+  "variables": {
+    "doadminusername": "doadmin",
+    "doadminpassword": "DOLabAdmin1!",
+    "donameprefix": "WS0",
+    "doWSKU": "win10-22h2-pro",
+    "doServerSKU": "2022-Datacenter",
+    "dofqdn": "doazlab.com",
+    "doc2": "metasploit",
+    "doc2ubuntusku": "22.04-lts",
+    "doworkspaceprefix": "LA-workspace",
+    "doremoteaccessmode": "AllowPublicIP"
+  },
+  "resources": [
+    {
+      "name": "Deploy-Sentinel",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2020-10-01",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-Sentinel/azuredeploy-sentinel.json",
+          "contentVersion": "1.0.0.0"
         },
-        {
-            "name": "Deploy-AD",
-            "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2020-10-01",
-            "dependsOn": [
-                "Deploy-Sentinel"
-            ],
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-AD/azuredeploy-ad.json",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "adminUsername": {
-                        "value": "[variables('doadminusername')]"
-                    },
-                    "adminPassword": {
-                        "value": "[variables('doadminpassword')]"
-                    },
-                    "numberOfWorkstations": {
-                        "value": "[parameters('dowscount')]"
-                    },
-                    "vmNamePrefix": {
-                        "value": "[variables('donameprefix')]"
-                    },
-                    "windowsDesktopSKU": {
-                        "value": "[variables('doWSKU')]"
-                    },
-                    "windowsServerSKU": {
-                        "value": "[variables('doServerSKU')]"
-                    },
-                    "vmSize": {
-                        "value": "[parameters('vmSize')]"
-                    },
-                    "windowsServerVersion": {
-                        "value": "[parameters('windowsServerVersion')]"
-                    },
-                    "domainFQDN": {
-                        "value": "[variables('dofqdn')]"
-                    },
-                    "identityType": {
-                        "value": "SystemAssigned"
-                    },
-                    "remoteAccessMode": {
-                        "value": "[variables('doremoteaccessmode')]"
-                    },
-                    "allowedIPAddresses": {
-                        "value": "[parameters('allowedIPAddresses')]"
-                    },
-                    "location": {
-                        "value": "[parameters('location')]"
-                    }
-                }
-            }
-        },
-        {
-            "name": "Deploy-AMA",
-            "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2020-10-01",
-            "dependsOn": [
-                "Deploy-Sentinel",
-                "Deploy-AD"
-            ],
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-AMA/azuredeploy-ama.json",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "virtualMachines": {
-                        "value": "[reference('Deploy-AD').outputs.allWinVMsDeployed.value]"
-                    }
-                }
-            }
-        },
-        {
-            "name": "Deploy-Linux",
-            "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2020-10-01",
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-Linux/azuredeploy-Linux.json",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "adminUsername": {
-                        "value": "[variables('doadminusername')]"
-                    },
-                    "authenticationType": {
-                        "value": "password"
-                    },
-                    "adminPasswordOrKey": {
-                        "value": "[variables('doadminpassword')]"
-                    },
-                    "vmName": {
-                        "value": "Nux01"
-                    },
-                    "ubuntuSKU": {
-                        "value": "[variables('doc2ubuntusku')]"
-                    },
-                    "vmSize": {
-                        "value": "[parameters('vmSize')]"
-                    },
-                    "allowedIPAddresses": {
-                        "value": "[parameters('allowedIPAddresses')]"
-                    },
-                    "c2Framework": {
-                        "value": "[variables('doc2')]"
-                    }
-                }
-            }
-        },
-        {
-            "name": "Deploy-DCRs",
-            "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2020-10-01",
-            "dependsOn": [
-                "Deploy-Sentinel",
-                "Deploy-AD",
-                "Deploy-AMA"
-            ],
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-DCRs/azuredeploy-DCRs.json",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "virtualMachines": {
-                        "value": "[reference('Deploy-AD').outputs.allWinVMsDeployed.value]"
-                    },
-                    "workspaceResourceIdOutput": {
-                        "value": "[reference('Deploy-Sentinel').outputs.workspaceResourceIdOutput.value]"
-                    }
-                }
-            }
-        },
-        {
-            "name": "Deploy-NetPeering",
-            "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2020-10-01",
-            "dependsOn": [
-                "Deploy-Linux",
-                "Deploy-AD"
-            ],
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-NetPeering/azuredeploy-netpeering.json",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "linux-net-id": {
-                        "value": "[reference('Deploy-Linux').outputs.virtualNetworkId.value]"
-                    },
-                    "ad-net-id": {
-                        "value": "[reference('Deploy-AD').outputs.virtualNetworkId.value]"
-                    }
-                }
-            }
+        "parameters": {
+          "workspaceName": {
+            "value": "[variables('doworkspaceprefix')]"
+          },
+          "pricingTier": {
+            "value": "[parameters('pricingTier')]"
+          },
+          "dataRetention": {
+            "value": "[parameters('dataRetention')]"
+          },
+          "immediatePurgeDataOn30Days": {
+            "value": "[parameters('doimmediatePurgeDataOn30Days')]"
+          }
         }
-    ],
+      }
+    },
+    {
+      "name": "Deploy-AD",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2020-10-01",
+      "dependsOn": [
+        "Deploy-Sentinel"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-AD/azuredeploy-ad.json",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "adminUsername": {
+            "value": "[variables('doadminusername')]"
+          },
+          "adminPassword": {
+            "value": "[variables('doadminpassword')]"
+          },
+          "numberOfWorkstations": {
+            "value": "[parameters('dowscount')]"
+          },
+          "vmNamePrefix": {
+            "value": "[variables('donameprefix')]"
+          },
+          "windowsDesktopSKU": {
+            "value": "[variables('doWSKU')]"
+          },
+          "windowsServerSKU": {
+            "value": "[variables('doServerSKU')]"
+          },
+          "vmSize": {
+            "value": "[parameters('vmSize')]"
+          },
+          "windowsServerVersion": {
+            "value": "[parameters('windowsServerVersion')]"
+          },
+          "domainFQDN": {
+            "value": "[variables('dofqdn')]"
+          },
+          "identityType": {
+            "value": "SystemAssigned"
+          },
+          "remoteAccessMode": {
+            "value": "[variables('doremoteaccessmode')]"
+          },
+          "allowedIPAddresses": {
+            "value": "[parameters('allowedIPAddresses')]"
+          },
+          "location": {
+            "value": "[parameters('location')]"
+          }
+        }
+      }
+    },
+    {
+      "name": "Deploy-AMA",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2020-10-01",
+      "dependsOn": [
+        "Deploy-Sentinel",
+        "Deploy-AD"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-AMA/azuredeploy-ama.json",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "virtualMachines": {
+            "value": "[reference('Deploy-AD').outputs.allWinVMsDeployed.value]"
+          }
+        }
+      }
+    },
+    {
+      "name": "Deploy-Linux",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2020-10-01",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-Linux/azuredeploy-Linux.json",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "adminUsername": {
+            "value": "[variables('doadminusername')]"
+          },
+          "authenticationType": {
+            "value": "password"
+          },
+          "adminPasswordOrKey": {
+            "value": "[variables('doadminpassword')]"
+          },
+          "vmName": {
+            "value": "Nux01"
+          },
+          "ubuntuSKU": {
+            "value": "[variables('doc2ubuntusku')]"
+          },
+          "vmSize": {
+            "value": "[parameters('vmSize')]"
+          },
+          "allowedIPAddresses": {
+            "value": "[parameters('allowedIPAddresses')]"
+          },
+          "c2Framework": {
+            "value": "[variables('doc2')]"
+          }
+        }
+      }
+    },
+    {
+      "name": "Deploy-DCRs",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2020-10-01",
+      "dependsOn": [
+        "Deploy-Sentinel",
+        "Deploy-AD",
+        "Deploy-AMA"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-DCRs/azuredeploy-DCRs.json",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "virtualMachines": {
+            "value": "[reference('Deploy-AD').outputs.allWinVMsDeployed.value]"
+          },
+          "workspaceResourceIdOutput": {
+            "value": "[reference('Deploy-Sentinel').outputs.workspaceResourceIdOutput.value]"
+          }
+        }
+      }
+    },
+    {
+      "name": "Deploy-NetPeering",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2020-10-01",
+      "dependsOn": [
+        "Deploy-Linux",
+        "Deploy-AD"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-NetPeering/azuredeploy-netpeering.json",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "linux-net-id": {
+            "value": "[reference('Deploy-Linux').outputs.virtualNetworkId.value]"
+          },
+          "ad-net-id": {
+            "value": "[reference('Deploy-AD').outputs.virtualNetworkId.value]"
+          }
+        }
+      }
+    }
+  ],
   "outputs": {
     "C2PublicIP": {
       "type": "string",

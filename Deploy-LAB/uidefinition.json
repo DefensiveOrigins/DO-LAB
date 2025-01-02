@@ -1,108 +1,108 @@
 {
-	"$schema": "https://schema.management.azure.com/schemas/0.1.2-preview/CreateUIDefinition.MultiVm.json#",
-	"handler": "Microsoft.Azure.CreateUIDef",
-	"version": "0.1.2-preview",
-	"parameters": {
-		"config": {
-			"isWizard": true,
-			"basics": {
-				"description": "<img width=450 src=\"https://github.com/DefensiveOrigins/DO-LAB/raw/main/images/APT1.jpg\">\n\n\n Defensive Origins Azure Lab Environment\n https://www.doazlab.com",
-				"location": {
-					"label": "Location",
-					"toolTip": "Location for all resources",
-					"resourceTypes": [
-						"Microsoft.OperationalInsights"
-					]
-				}
-			}
-		},
-		"basics": [
-			{
-				"name": "workspaceName",
-				"type": "Microsoft.Common.TextBox",
-				"label": "Workspace Name",
-				"placeholder": "",
-				"defaultValue": "LA-workspace",
-				"toolTip": "The workspace name should include 4-63 letters, digits or '-'. The '-' shouldn't be the first or the last symbol.",
-				"constraints": {
-					"required": true,
-					"regex": "^[A-Za-z0-9][A-Za-z0-9-]+[A-Za-z0-9]$",
-					"validationMessage": "Only alphanumeric characters are allowed, and the value must be 1-30 characters long."
-				},
-				"visible": false
-			}
-		],
-		"steps": [
-			{
-				"name": "vmParameters",
-				"label": "VM Parameters",
-				"elements": [
-					{
-						"name": "vmSection",
-						"type": "Microsoft.Common.Section",
-						"label": "Customize your VM",
-						"elements": [
-							{
-								"name": "vmSize",
-								"type": "Microsoft.Compute.SizeSelector",
-								"label": "Size",
-								"toolTip": "",
-								"recommendedSizes": [
-									"Standard_B2s",
-									"Standard_B2ms",
-									"Standard_DS2",
-									"Standard_DS11"
-								],
-								"constraints": {
-									"allowedSizes": [
-										"Standard_B2s",
-										"Standard_B2ms",
-										"Standard_DS2",
-										"Standard_DS11"
-									]
-								},
-								"options": {
-									"hideDiskTypeFilter": false
-								},
-								"osPlatform": "Windows",
-								"imageReference": {
-									"publisher": "MicrosoftWindowsServer",
-									"offer": "WindowsServer",
-									"sku": "2012-R2-Datacenter"
-								},
-								"count": 1,
-								"visible": true
-							}
-						],
-						"visible": true
-					}
-				]
-			},
-			{
-				"name": "networkParameters",
-				"label": "Networking",
-				"elements": [
-					{
-						"name": "allowedIPAddresses",
-						"type": "Microsoft.Common.TextBox",
-						"label": "Allowed IP Addresses",
-						"placeholder": "0.0.0.0/0",
-						"defaultValue": "0.0.0.0/0",
-						"toolTip": "The sourceAddressPrefixes allowed to connect to this deployment.",
-						"constraints": {
-							"required": true,
-							"regex": "^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(?:\\/(\\d|[12]\\d|3[01]))?$",
-							"validationMessage": "Please enter a valid CIDR."
-						},
-						"visible": true
-					}
-				]
-			}
-		],
-		"outputs": {
-			"workspaceName": "[steps('basics').workspaceName]",
-			"vmSize": "[steps('vmParameters').vmSection.vmSize]",
-			"allowedIPAddresses": "[steps('networkParameters').allowedIPAddresses]"
-		}
-	}
+  "$schema": "https://schema.management.azure.com/schemas/0.1.2-preview/CreateUIDefinition.MultiVm.json#",
+  "handler": "Microsoft.Azure.CreateUIDef",
+  "version": "0.1.2-preview",
+  "parameters": {
+    "config": {
+      "isWizard": true,
+      "basics": {
+        "description": "<img width=450 src=\"https://github.com/DefensiveOrigins/DO-LAB/raw/main/images/APT1.jpg\">\n\n\n Defensive Origins Azure Lab Environment\n https://www.doazlab.com",
+        "location": {
+          "label": "Location",
+          "toolTip": "Location for all resources",
+          "resourceTypes": [
+            "Microsoft.OperationalInsights"
+          ]
+        }
+      }
+    },
+    "basics": [
+      {
+        "name": "workspaceName",
+        "type": "Microsoft.Common.TextBox",
+        "label": "Workspace Name",
+        "placeholder": "",
+        "defaultValue": "LA-workspace",
+        "toolTip": "The workspace name should include 4-63 letters, digits or '-'. The '-' shouldn't be the first or the last symbol.",
+        "constraints": {
+          "required": true,
+          "regex": "^[A-Za-z0-9][A-Za-z0-9-]+[A-Za-z0-9]$",
+          "validationMessage": "Only alphanumeric characters are allowed, and the value must be 1-30 characters long."
+        },
+        "visible": false
+      }
+    ],
+    "steps": [
+      {
+        "name": "vmParameters",
+        "label": "VM Parameters",
+        "elements": [
+          {
+            "name": "vmSection",
+            "type": "Microsoft.Common.Section",
+            "label": "Customize your VM",
+            "elements": [
+              {
+                "name": "vmSize",
+                "type": "Microsoft.Compute.SizeSelector",
+                "label": "Size",
+                "toolTip": "",
+                "recommendedSizes": [
+                  "Standard_B2s",
+                  "Standard_B2ms",
+                  "Standard_DS2",
+                  "Standard_DS11"
+                ],
+                "constraints": {
+                  "allowedSizes": [
+                    "Standard_B2s",
+                    "Standard_B2ms",
+                    "Standard_DS2",
+                    "Standard_DS11"
+                  ]
+                },
+                "options": {
+                  "hideDiskTypeFilter": false
+                },
+                "osPlatform": "Windows",
+                "imageReference": {
+                  "publisher": "MicrosoftWindowsServer",
+                  "offer": "WindowsServer",
+                  "sku": "2012-R2-Datacenter"
+                },
+                "count": 1,
+                "visible": true
+              }
+            ],
+            "visible": true
+          }
+        ]
+      },
+      {
+        "name": "networkParameters",
+        "label": "Networking",
+        "elements": [
+          {
+            "name": "allowedIPAddresses",
+            "type": "Microsoft.Common.TextBox",
+            "label": "Allowed IP Addresses",
+            "placeholder": "0.0.0.0/0",
+            "defaultValue": "0.0.0.0/0",
+            "toolTip": "The sourceAddressPrefixes allowed to connect to this deployment.",
+            "constraints": {
+              "required": true,
+              "regex": "^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(?:\\/(\\d|[12]\\d|3[01]))?$",
+              "validationMessage": "Please enter a valid CIDR."
+            },
+            "visible": true
+          }
+        ]
+      }
+    ],
+    "outputs": {
+      "workspaceName": "[steps('basics').workspaceName]",
+      "vmSize": "[steps('vmParameters').vmSection.vmSize]",
+      "allowedIPAddresses": "[steps('networkParameters').allowedIPAddresses]"
+    }
+  }
 }
