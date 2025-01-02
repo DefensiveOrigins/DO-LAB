@@ -53,7 +53,40 @@
           "dataFlows": [
             {
               "streams": ["Microsoft-SecurityEvent"],
-              "destinations": ["logAnalytics"]
+              "destinations": ["WindowsEvents"]
+            }
+          ]
+        }
+    },
+    {
+        "type": "Microsoft.Insights/dataCollectionRules",
+        "apiVersion": "2021-09-01-preview",
+        "name": "Sysmon",
+        "location": "[parameters('location')]",
+        "properties": {
+          "dataSources": {
+            "windowsEventLogs": [
+              {
+                "name": "SysmonLogs",
+                "streams": ["Microsoft-SysmonEvent"],
+                "xPathQueries": [
+                  "Microsoft-Windows-Sysmon/Operational!*"
+                ]
+              }
+            ]
+          },
+          "destinations": {
+            "logAnalytics": [
+              {
+                "name": "SysmonLogs",
+                "workspaceResourceId": "[parameters('workspaceResourceIdOutput')]"
+              }
+            ]
+          },
+          "dataFlows": [
+            {
+            "streams": ["Microsoft-SysmonEvent"],
+            "destinations": ["WindowsEvents"]
             }
           ]
         }
@@ -72,7 +105,23 @@
             "description": "Association of data collection rule. Deleting this association will break the data collection for this virtual machine.",
             "dataCollectionRuleId": "[resourceId('Microsoft.Insights/dataCollectionRules', 'SecurityEvents')]"
         }
+    },
+    {
+        "name": "[concat(parameters('virtualMachines')[copyIndex('vmDCRCopy')].vmName, '/microsoft.insights/', 'Sysmon')]",
+        "dependsOn": [ "[resourceId('Microsoft.Insights/dataCollectionRules', 'Sysmon')]" ],
+        "type": "Microsoft.Compute/virtualMachines/providers/dataCollectionRuleAssociations",
+        "apiVersion": "2019-11-01-preview",
+        "location": "[parameters('location')]",
+        "copy": {
+            "name": "vmDCRCopy",
+            "count": "[length(parameters('virtualMachines'))]"
+        },
+        "properties": {
+            "description": "Association of data collection rule. Deleting this association will break the data collection for this virtual machine.",
+            "dataCollectionRuleId": "[resourceId('Microsoft.Insights/dataCollectionRules', 'Sysmon')]"
+        }
     }
+
   ],
   "outputs": {}
 }
