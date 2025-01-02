@@ -60,6 +60,7 @@
     },
     {
         "name": "[concat(parameters('virtualMachines')[copyIndex('vmDCRCopy')].vmName, '/microsoft.insights/', 'SecurityEvents')]",
+        "dependsOn": [ "[resourceId('Microsoft.Insights/dataCollectionRules', 'SecurityEvents')]" ],
         "type": "Microsoft.Compute/virtualMachines/providers/dataCollectionRuleAssociations",
         "apiVersion": "2019-11-01-preview",
         "location": "[parameters('location')]",
