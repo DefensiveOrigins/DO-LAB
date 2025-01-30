@@ -44,10 +44,10 @@ Applied Purple Teaming:
 ## Lab Environment
 * Windows Server 2022 /w Active Directory.
   * Domain: doazlab.com
-* Windows Workstation 23h2-pro
-* Ubuntu 22.04LTS C2 with Metasploit
+* Windows Workstation 
+* Ubuntu 22.04LTS 
 * Sysmon Installation on Server and Workstation
-* Microsoft Sentinel Log Aggregation
+* Microsoft Sentinel & Log Analytics
 
 
 # Acknowledgments
