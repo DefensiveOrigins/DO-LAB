@@ -49,6 +49,9 @@ Applied Purple Teaming:
 * Sysmon Installation on Server and Workstation
 * Microsoft Sentinel & Log Analytics
 
+| ![Labenv](../AC-PreReqs/images/labenv.png) | 
+|----------------------------------------------------------|
+
 
 # Acknowledgments
 * Open Threat Research Forge: https://github.com/DefensiveOrigins/DO-LAB
