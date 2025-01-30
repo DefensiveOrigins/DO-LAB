@@ -1,6 +1,5 @@
 ![](images/APT1.jpg)
 
-
 # Defensive Origins Lab Environment
 The  Defensive Origins Lab (DO-LAB) Environment is used during the Defensive Origins training classes by Defensive Origins, AntiSyphon Training, and Black Hills Information Security.
 <!-- Start Document Outline -->
@@ -33,7 +32,7 @@ The following locations have specifically been tested:
 ## Training Course Pre-Requisites
 Are you attending a Defensive Origins training course that utilizes the Defensive Origins Azure Lab Environment?  See the below links for additional information on the DOAZLab Pre-Requisites for Defensive Origins training courses. 
 
-Assumed Compromise - A Methodology With Azure Sentinel
+Assumed Compromise - Methodology With Detections and Microsoft Sentinel
 * https://github.com/DefensiveOrigins/AC-PreReqs
 
 Attack Detect Defend:
