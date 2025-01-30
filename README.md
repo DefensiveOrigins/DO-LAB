@@ -33,6 +33,9 @@ The following locations have specifically been tested:
 ## Training Course Pre-Requisites
 Are you attending a Defensive Origins training course that utilizes the Defensive Origins Azure Lab Environment?  See the below links for additional information on the DOAZLab Pre-Requisites for Defensive Origins training courses. 
 
+Assumed Compromise - A Methodology With Azure Sentinel
+* https://github.com/DefensiveOrigins/AC-PreReqs
+
 Attack Detect Defend:
 * https://github.com/DefensiveOrigins/ADD-PreReqs
 
