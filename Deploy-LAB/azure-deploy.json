@@ -77,8 +77,8 @@
     }
   },
   "variables": {
-    "doadminusername": "doadmin",
-    "doadminpassword": "DOLabAdmin1!",
+    "doadminusername": "dolabbuilder",
+    "doadminpassword": "DOLabAdmin1!!",
     "donameprefix": "WS0",
     "doWSKU": "win10-22h2-pro",
     "doServerSKU": "2022-Datacenter",
