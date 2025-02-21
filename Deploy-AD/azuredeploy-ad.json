@@ -30,8 +30,8 @@
       "defaultValue": {
         "array": [
           {
-            "FirstName": "DOLAB",
-            "LastName": "Admin",
+            "FirstName": "Defensive",
+            "LastName": "Origins",
             "SamAccountName": "DOAdmin",
             "Department": "Lab Admin",
             "JobTitle": "Administrator",
