@@ -30,43 +30,13 @@
       "defaultValue": {
         "array": [
           {
-            "FirstName": "Bridget",
-            "LastName": "Horrarah",
-            "SamAccountName": "bhorrarah",
-            "Department": "Human Resources",
-            "JobTitle": "HR Director",
-            "Password": "Jingle4Days!!",
-            "Identity": "Users",
-            "UserContainer": "DomainUsers"
-          },
-          {
-            "FirstName": "Sandy",
-            "LastName": "Silver",
-            "SamAccountName": "ssilver",
-            "Department": "IT Support",
-            "JobTitle": "CIO",
-            "Password": "RedFindings1Again!",
+            "FirstName": "DOLAB",
+            "LastName": "Admin",
+            "SamAccountName": "DOAdmin",
+            "Department": "Lab Admin",
+            "JobTitle": "Administrator",
+            "Password": "DOLabAdmin1!",
             "Identity": "Domain Admins",
-            "UserContainer": "DomainUsers"
-          },
-          {
-            "FirstName": "Christopher",
-            "LastName": "Liken",
-            "SamAccountName": "cliken",
-            "Department": "Accounting",
-            "JobTitle": "VP",
-            "Password": "IloveCounting4real!",
-            "Identity": "Users",
-            "UserContainer": "DomainUsers"
-          },
-          {
-            "FirstName": "Betty",
-            "LastName": "Cleaver",
-            "SamAccountName": "bcleaver",
-            "Department": "Sales",
-            "JobTitle": "Sales Engineer",
-            "Password": "LeastFavoriteMonday1!",
-            "Identity": "Users",
             "UserContainer": "DomainUsers"
           },
           {
@@ -75,17 +45,7 @@
             "SamAccountName": "sysmonsvc",
             "Department": "IT Support",
             "JobTitle": "Service Account",
-            "Password": "Buggy!1122",
-            "Identity": "Users",
-            "UserContainer": "DomainUsers"
-          },
-          {
-            "FirstName": "Nxlog",
-            "LastName": "Shipper",
-            "SamAccountName": "nxlogsvc",
-            "Department": "IT Support",
-            "JobTitle": "Service Account",
-            "Password": "S3nData!1122",
+            "Password": "Buggy!112233",
             "Identity": "Users",
             "UserContainer": "DomainUsers"
           }
