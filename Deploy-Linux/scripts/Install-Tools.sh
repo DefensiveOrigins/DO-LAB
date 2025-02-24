@@ -17,6 +17,7 @@ apt-get install python3-distutils python3-virtualenv libssl-dev libffi-dev pytho
 apt-get install vim-nox htop ncat rlwrap golang jq feroxbuster silversearcher-ag testssl.sh nmap masscan proxychains4 -y
 apt-get install python3.11-venv -y
 apt-get install golang-go -y
+apt-get install proxychains -y
 apt-get install onesixtyone snmp-mibs-downloader -y
 apt-get install net-tools
 apt-get install zsh
