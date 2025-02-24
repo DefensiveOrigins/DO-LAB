@@ -57,9 +57,12 @@
     "doadminusername": "dolabbuilder",
     "doadminpassword": "DOLabAdmin1!!",
     "donameprefix": "WS0",
+    "doWOffer": "Windows-10",
     "doWSKU": "win10-22h2-pro",
+    "doWVersion": "19045.5247.241206",
+    "doServerOffer": "WindowsServer",
     "doServerSKU": "2022-Datacenter",
-    "windowsServerVersion": "17763.1999.2106060321"
+    "doServerVersion": "20348.2966.241205",
     "dofqdn": "doazlab.com",
     "doc2": "metasploit",
     "doc2ubuntusku": "22.04-lts",
@@ -67,8 +70,7 @@
     "doremoteaccessmode": "AllowPublicIP",
     "doimmediatePurgeDataOn30Days": true,
     "dataRetention": 30,
-    "dowscount": 1,
-
+    "dowscount": 1
   },
   "resources": [
     {
@@ -123,17 +125,26 @@
           "vmNamePrefix": {
             "value": "[variables('donameprefix')]"
           },
+          "windowsDesktopOffer": {
+            "value": "[variables('doWOffer')]"
+          },
           "windowsDesktopSKU": {
             "value": "[variables('doWSKU')]"
+          },
+          "windowsDesktopVersion": {
+            "value": "[variables('doWVersion')]"
+          },
+          "windowsServerOffer": {
+            "value": "[variables('doServerOffer')]"
           },
           "windowsServerSKU": {
             "value": "[variables('doServerSKU')]"
           },
+          "windowsServerVersion": {
+            "value": "[variables('doServerVersion')]"
+          },
           "vmSize": {
             "value": "[parameters('vmSize')]"
-          },
-          "windowsServerVersion": {
-            "value": "[variables('windowsServerVersion')]"
           },
           "domainFQDN": {
             "value": "[variables('dofqdn')]"

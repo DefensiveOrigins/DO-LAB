@@ -99,9 +99,23 @@
         "description": "The Windows version for the Desktop VM. This will pick a fully patched image of this given Windows version."
       }
     },
+    "windowsDesktopOffer": {
+      "type": "string",
+      "defaultValue": "Windows-10",
+      "metadata": {
+        "description": "The Windows desktop offer"
+      }
+    },
     "windowsDesktopVersion": {
       "type": "string",
       "defaultValue": "latest"
+    },
+    "windowsServerOffer": {
+      "type": "string",
+      "defaultValue": "WindowsServer",
+      "metadata": {
+        "description": "The Windows Server offer"
+      }
     },
     "windowsServerSKU": {
       "type": "string",
@@ -112,7 +126,7 @@
     },
     "windowsServerVersion": {
       "type": "string",
-      "defaultValue": "20348.2031.231006"
+      "defaultValue": "20348.2966.241205"
     },
     "vmSize": {
       "type": "string",
@@ -278,9 +292,9 @@
           "ipAddress": "[concat(variables('vmPrivateIPAddresPrefix'),copyIndex('allWinWKS',5))]",
           "vmSize": "[parameters('vmSize')]",
           "publisher": "MicrosoftWindowsDesktop",
-          "offer": "Windows-10",
-          "sku": "win10-22h2-pro",
-          "version": "19045.5247.241206",
+          "offer": "[parameters('windowsDesktopOffer')]",
+          "sku": "[parameters('windowsDesktopSKU')]",
+          "version": "[parameters('windowsServerVersion')]",
           "extensionName": "SetupWinVM"
         }
       }
@@ -294,9 +308,9 @@
         "ipAddress": "[concat(variables('vmPrivateIPAddresPrefix'),'4')]",
         "vmSize": "[parameters('vmSize')]",
         "publisher": "MicrosoftWindowsServer",
-        "offer": "WindowsServer",
-        "sku": "2022-Datacenter",
-        "version": "20348.2966.241205",
+        "offer": "[parameters('windowsServerOffer')]",
+        "sku": "[parameters('windowsServerSKU')]",
+        "version": "[parameters('windowsDesktopVersion')]",
         "extensionName": "SetUpDC"
       }
     ],
