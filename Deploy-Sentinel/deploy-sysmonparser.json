@@ -1,0 +1,55 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "workspaceId": {
+      "type": "string",
+      "metadata": {
+        "description": "The resource ID or name of the Sentinel (Log Analytics) workspace."
+      }
+    },
+    "sentinelParserUrl": {
+      "type": "string",
+      "metadata": {
+        "description": "The publicly accessible URL that contains the raw text of the Sentinel parser function."
+      },
+      "defaultValue": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/refs/heads/main/Deploy-Sentinel/resources/sentinelparser.kql"
+    }
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Resources/deploymentScripts",
+      "apiVersion": "2020-10-01",
+      "name": "getSentinelParserContent",
+      "location": "[resourceGroup().location]",
+      "kind": "AzureCLI",
+      "properties": {
+        "azCliVersion": "2.0.80",
+        "timeout": "PT10M",
+        "retentionInterval": "P1D",
+        "scriptContent": "[concat('curl -s ', parameters('sentinelParserUrl'))]",
+        "arguments": "",
+        "environmentVariables": [],
+        "outputs": {
+          "parserContent": {
+            "type": "string",
+            "value": "[script.outputs.stdout]"
+          }
+        }
+      }
+    },
+    {
+      "type": "Microsoft.OperationalInsights/workspaces/savedFunctions",
+      "apiVersion": "2021-06-01",
+      "name": "[concat(parameters('workspaceId'), '/SentinelParser')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Resources/deploymentScripts', 'getSentinelParserContent')]"
+      ],
+      "properties": {
+        "functionAlias": "SentinelParser",
+        "functionParameters": "WorkspaceId:string", 
+        "query": "[reference('getSentinelParserContent').outputs.parserContent.value]"
+      }
+    }
+  ]
+}
