@@ -294,7 +294,7 @@
           "publisher": "MicrosoftWindowsDesktop",
           "offer": "[parameters('windowsDesktopOffer')]",
           "sku": "[parameters('windowsDesktopSKU')]",
-          "version": "[parameters('windowsServerVersion')]",
+          "version": "[parameters('windowsDesktopVersion')]",
           "extensionName": "SetupWinVM"
         }
       }
@@ -310,7 +310,7 @@
         "publisher": "MicrosoftWindowsServer",
         "offer": "[parameters('windowsServerOffer')]",
         "sku": "[parameters('windowsServerSKU')]",
-        "version": "[parameters('windowsDesktopVersion')]",
+        "version": "[parameters('windowsServerVersion')]",
         "extensionName": "SetUpDC"
       }
     ],
