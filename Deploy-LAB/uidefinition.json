@@ -68,7 +68,7 @@
                 "imageReference": {
                   "publisher": "MicrosoftWindowsServer",
                   "offer": "WindowsServer",
-                  "sku": "2012-R2-Datacenter"
+                  "sku": "2022-Datacenter"
                 },
                 "count": 1,
                 "visible": true
