@@ -35,7 +35,7 @@
   },
   "resources": [
     {
-      "name": "[concat(parameters('vmName'), '/',parameters('function'))]",
+      "name": "[concat(parameters('vmName'), '/PowerShellDSC')]",
       "type": "Microsoft.Compute/virtualMachines/extensions",
       "apiVersion": "2019-12-01",
       "location": "[parameters('location')]",
