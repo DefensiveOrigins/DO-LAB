@@ -520,7 +520,7 @@
       }
     },
     {
-      "name": "CreateADForest1-Services",
+      "name": "DC01-CreateADForest1-Services",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2019-10-01",
       "dependsOn": [
@@ -564,11 +564,11 @@
       }
     },
     {
-      "name": "CreateADForest2-DCPromo",
+      "name": "DC01-CreateADForest2-DCPromo",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2019-10-01",
       "dependsOn": [
-        "CreateADForest1-Services"
+        "DC01-CreateADForest1-Services"
       ],
       "properties": {
         "mode": "Incremental",
@@ -608,11 +608,11 @@
       }
     },
     {
-      "name": "CreateADForest3-Objects",
+      "name": "DC01-CreateADForest3-Objects",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2019-10-01",
       "dependsOn": [
-        "CreateADForest2-DCPromo"
+        "DC01-CreateADForest2-DCPromo"
       ],
       "properties": {
         "mode": "Incremental",
@@ -695,7 +695,7 @@
       "apiVersion": "2019-10-01",
       "dependsOn": [
 //        "CreateADForest"
-        "CreateADForest3-Objects"
+        "DC01-CreateADForest3-Objects"
       ],
       "properties": {
         "mode": "Incremental",
