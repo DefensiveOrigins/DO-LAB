@@ -213,3 +213,9 @@ Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
 
 # Skip SmartScreen 
 New-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer" -Name "SmartScreenEnabled" -Value "Off" -PropertyType String -Force
+
+# Disable first logon animation
+New-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" -Name EnableFirstLogonAnimation -Value 0 -PropertyType DWord -Force
+
+# Set Detailed Logon Messages
+Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" -Name "VerboseStatus" -Type DWord -Value 1
