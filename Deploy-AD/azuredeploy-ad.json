@@ -260,7 +260,8 @@
     "setSACLScript": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-AD/scripts/Set-SACLs.ps1",
     "setWallPaperScript": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-AD/scripts/Set-WallPaper.ps1",
     "setServerManagerScript": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-AD/scripts/Set-ServerManager.ps1",
-    "setEdgeFRU": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-AD/scripts/Set-EdgeFRU.ps1",
+    "setEdgeFRUscript": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-AD/scripts/Set-EdgeFRU.ps1",
+    "addshortcutsscript": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-AD/scripts/Add-Shortcuts.ps1",
 
     // Powershell DSC Scripts
     "dscModules": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-AD/scripts/Install-DSC-Modules.ps1",
@@ -280,7 +281,8 @@
       "[variables('setSACLScript')]",
       "[variables('setWallPaperScript')]",
       "[variables('setServerManagerScript')]",
-      "[variables('setEdgeFRU')]"
+      "[variables('setEdgeFRUscript')]",
+      "[variables('addshortcutsscript')]"
     ],
 
     // Virtual Machine Properties

@@ -23,17 +23,6 @@ else
     & .\Enable-WinAuditCategories.ps1
 }
 
-# Set FRU's'
-if ($SetupType -eq 'DC')
-{
-    & .\Set-ServerManager.ps1
-    & .\Set-EdgeFRU.ps1
-}
-else
-{
-    & .\Set-EdgeFRU.ps1
-}
-
 # ADD RSAT 
 if ($SetupType -eq 'DC')
 {
@@ -44,6 +33,15 @@ else
     Add-WindowsCapability -Name Rsat.ActiveDirectory.DS-LDS.Tools~~~~0.0.1.0 -Online
 }
 
+# Quiet SM
+if ($SetupType -eq 'DC')
+{
+    & .\Set-ServerManager.ps1
+}
+
+#Set Edge FRU
+& .\Set-EdgeFRU.ps1
+
 # PowerShell Logging
 & .\Enable-PowerShell-Logging.ps1
 
@@ -52,3 +50,6 @@ else
 
 # Set Wallpaper
 & .\Set-WallPaper.ps1
+
+# Set Shortcuts
+& .\Add-Shortcuts.ps1
