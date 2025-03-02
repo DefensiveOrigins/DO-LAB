@@ -690,7 +690,7 @@
 //      }
 //    },
     {
-      "name": "UpdateVNetDNS",
+      "name": "VNET-UpdateDNS",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2019-10-01",
       "dependsOn": [
@@ -730,7 +730,7 @@
       "apiVersion": "2019-10-01",
       "dependsOn": [
         "InitialSetUpWKSCopy",
-        "UpdateVNetDNS"
+        "VNET-UpdateDNS"
       ],
       "copy": {
         "name": "vmDomainJoinCopy",
@@ -805,7 +805,7 @@
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2019-10-01",
       "dependsOn": [
-        "UpdateVNetDNS"
+        "VNET-UpdateDNS"
       ],
       "properties": {
         "mode": "Incremental",
@@ -831,7 +831,7 @@
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2019-10-01",
       "dependsOn": [
-        "UpdateVNetDNS",
+        "VNET-UpdateDNS",
         "DC01-InstallSysmon"
       ],
       "properties": {
