@@ -23,6 +23,17 @@ else
     & .\Enable-WinAuditCategories.ps1
 }
 
+# Set FRU's'
+if ($SetupType -eq 'DC')
+{
+    & .\Set-ServerManager.ps1
+    & .\Set-EdgeFRU.ps1
+}
+else
+{
+    & .\Set-EdgeFRU.ps1
+}
+
 # PowerShell Logging
 & .\Enable-PowerShell-Logging.ps1
 

@@ -259,6 +259,8 @@
     "saclModule": "https://raw.githubusercontent.com/OTRF/Set-AuditRule/master/Set-AuditRule.ps1",
     "setSACLScript": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-AD/scripts/Set-SACLs.ps1",
     "setWallPaperScript": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-AD/scripts/Set-WallPaper.ps1",
+    "setServerManagerScript": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-AD/scripts/Set-ServerManager.ps1",
+    "setEdgeFRU": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-AD/scripts/Set-EdgeFRU.ps11",
 
     // Powershell DSC Scripts
     "dscModules": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-AD/scripts/Install-DSC-Modules.ps1",
@@ -276,7 +278,9 @@
       "[variables('setPowerShellLogging')]",
       "[variables('saclModule')]",
       "[variables('setSACLScript')]",
-      "[variables('setWallPaperScript')]"
+      "[variables('setWallPaperScript')]",
+      "[variables('setServerManagerScript')]",
+      "[variables('setEdgeFRU')]"
     ],
 
     // Virtual Machine Properties
