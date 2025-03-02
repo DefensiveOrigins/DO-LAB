@@ -32,6 +32,8 @@ if ($SetupType -eq 'DC')
 else
 {
     & .\Set-EdgeFRU.ps1
+    New-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" -Name EnableFirstLogonAnimation -Value 0 -PropertyType DWord -Force
+
 }
 
 # ADD RSAT 
