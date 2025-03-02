@@ -35,7 +35,7 @@
   },
   "resources": [
     {
-      "name": "[concat(parameters('vmName'), '/PowerShellDSC')]",
+      "name": "[concat(parameters('vmName'), '/',parameters('function'))]",
       "type": "Microsoft.Compute/virtualMachines/extensions",
       "apiVersion": "2019-12-01",
       "location": "[parameters('location')]",
@@ -50,8 +50,6 @@
             "url": "[parameters('createADForestScript')]",
             "script": "[parameters('script')]",
             "function": "[parameters('function')]"
-            //"script": "Create-AD.ps1",
-            //"function": "Create-AD"
           },
           "configurationArguments": {
             "DomainFQDN": "[parameters('DomainFQDN')]"
