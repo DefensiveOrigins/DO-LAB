@@ -34,6 +34,16 @@ else
     & .\Set-EdgeFRU.ps1
 }
 
+# ADD RSAT 
+if ($SetupType -eq 'DC')
+{
+    Add-WindowsFeature -Name "RSAT-AD-Tools" -IncludeAllSubFeature
+}
+else
+{
+    Add-WindowsCapability -Name Rsat.ActiveDirectory.DS-LDS.Tools~~~~0.0.1.0 -Online
+}
+
 # PowerShell Logging
 & .\Enable-PowerShell-Logging.ps1
 
