@@ -210,3 +210,9 @@ write-Host "Adding Authenticated Users to Remote Desktop Users.."
 Add-LocalGroupMember -Group "Remote Desktop Users" -Member "Authenticated Users" -ErrorAction SilentlyContinue
 Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server' -name "fDenyTSConnections" -value 0
 Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
+
+# Skip SmartScreen 
+New-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer" -Name "SmartScreenEnabled" -Value "Off" -PropertyType String -Force
+
+# Disable Store Updates
+New-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\WindowsStore" -Name "AutoDownload" -Value 2 -PropertyType DWord -Force
