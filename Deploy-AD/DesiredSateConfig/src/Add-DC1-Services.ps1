@@ -92,7 +92,7 @@ configuration ADD-DC1-Services {
         PendingReboot RebootOnSignalFromADAdminCenter
         {
             Name        = 'RebootOnSignalFromADAdminCenter'
-            DependsOn   = "[ADDomain]ADAdminCenter"
+            DependsOn   = "[WindowsFeature]ADAdminCenter"
         }
     }
 }
