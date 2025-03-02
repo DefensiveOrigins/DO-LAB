@@ -262,7 +262,7 @@
 
     // Powershell DSC Scripts
     "dscModules": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-AD/scripts/Install-DSC-Modules.ps1",
-    "createADForestScript": "https://github.com/DefensiveOrigins/DO-LAB/raw/main/Deploy-AD/DesiredSateConfig/Create-AD.zip",
+    "createADForestZip": "https://github.com/DefensiveOrigins/DO-LAB/raw/main/Deploy-AD/DesiredSateConfig/Create-AD.zip",
     "joinDomainScript": "https://github.com/DefensiveOrigins/DO-LAB/raw/main/Deploy-AD/DesiredSateConfig/Join-Domain.zip",
     "installSysmonScript": "https://github.com/DefensiveOrigins/DO-LAB/raw/main/Deploy-AD/DesiredSateConfig/Install-Sysmon.zip",
     "deployADCSScript": "https://github.com/DefensiveOrigins/DO-LAB/raw/main/Deploy-AD/DesiredSateConfig/Deploy-ADCS.zip",
@@ -520,7 +520,7 @@
       }
     },
     {
-      "name": "CreateADForest",
+      "name": "CreateADForest1-Services",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2019-10-01",
       "dependsOn": [
@@ -537,7 +537,13 @@
             "value": "[variables('domainController')[0].vmName]"
           },
           "createADForestScript": {
-            "value": "[variables('createADForestScript')]"
+            "value": "[variables('createADForestZip')]"
+          },
+          "script": {
+            "value": "Add-DC1-Services.ps1"
+          },
+          "function": {
+            "value": "ADD-DC1-Services"
           },
           "domainFQDN": {
             "value": "[parameters('domainFQDN')]"
@@ -558,11 +564,138 @@
       }
     },
     {
+      "name": "CreateADForest2-DCPromo",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2019-10-01",
+      "dependsOn": [
+        "CreateADForest1-Services"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[variables('createADTemplateUri')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "vmName": {
+            "value": "[variables('domainController')[0].vmName]"
+          },
+          "createADForestScript": {
+            "value": "[variables('createADForestZip')]"
+          },
+          "script": {
+            "value": "Add-DC2-Domain.ps1"
+          },
+          "function": {
+            "value": "Add-DC2-Domain"
+          },
+          "domainFQDN": {
+            "value": "[parameters('domainFQDN')]"
+          },
+          "adminUsername": {
+            "value": "[parameters('adminUsername')]"
+          },
+          "adminPassword": {
+            "value": "[parameters('adminPassword')]"
+          },
+          "domainUsers": {
+            "value": "[parameters('domainUsers')]"
+          },
+          "location": {
+            "value": "[parameters('location')]"
+          }
+        }
+      }
+    },
+    {
+      "name": "CreateADForest3-Objects",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2019-10-01",
+      "dependsOn": [
+        "CreateADForest2-DCPromo"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[variables('createADTemplateUri')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "vmName": {
+            "value": "[variables('domainController')[0].vmName]"
+          },
+          "createADForestScript": {
+            "value": "[variables('createADForestZip')]"
+          },
+          "script": {
+            "value": "Add-DC3-Objects.ps1"
+          },
+          "function": {
+            "value": "Add-DC3-Objects"
+          },
+          "domainFQDN": {
+            "value": "[parameters('domainFQDN')]"
+          },
+          "adminUsername": {
+            "value": "[parameters('adminUsername')]"
+          },
+          "adminPassword": {
+            "value": "[parameters('adminPassword')]"
+          },
+          "domainUsers": {
+            "value": "[parameters('domainUsers')]"
+          },
+          "location": {
+            "value": "[parameters('location')]"
+          }
+        }
+      }
+    },
+//    {
+//      "name": "CreateADForest",
+//      "type": "Microsoft.Resources/deployments",
+//      "apiVersion": "2019-10-01",
+//      "dependsOn": [
+//        "[resourceId('Microsoft.Compute/virtualMachines/extensions', variables('domainController')[0].vmName, variables('domainController')[0].extensionName)]"
+//      ],
+//      "properties": {
+//        "mode": "Incremental",
+//        "templateLink": {
+//          "uri": "[variables('createADTemplateUri')]",
+//          "contentVersion": "1.0.0.0"
+//        },
+//        "parameters": {
+//          "vmName": {
+//            "value": "[variables('domainController')[0].vmName]"
+//          },
+//          "createADForestScript": {
+//            "value": "[variables('createADForestScript')]"
+//          },
+//          "domainFQDN": {
+//            "value": "[parameters('domainFQDN')]"
+//          },
+//          "adminUsername": {
+//            "value": "[parameters('adminUsername')]"
+//          },
+//          "adminPassword": {
+//            "value": "[parameters('adminPassword')]"
+//          },
+//          "domainUsers": {
+//            "value": "[parameters('domainUsers')]"
+//          },
+//          "location": {
+//            "value": "[parameters('location')]"
+//          }
+//        }
+//      }
+//    },
+    {
       "name": "UpdateVNetDNS",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2019-10-01",
       "dependsOn": [
-        "CreateADForest"
+//        "CreateADForest"
+        "CreateADForest3-Objects"
       ],
       "properties": {
         "mode": "Incremental",

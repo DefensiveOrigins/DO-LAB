@@ -20,6 +20,12 @@
     "domainUsers": {
       "type": "secureObject"
     },
+    "script": {
+      "type": "string"
+    },
+    "function": {
+      "type": "string"
+    },
     "location": {
       "type": "string",
       "metadata": {
@@ -42,8 +48,10 @@
           "wmfVersion": "latest",
           "configuration": {
             "url": "[parameters('createADForestScript')]",
-            "script": "Create-AD.ps1",
-            "function": "Create-AD"
+            "script": "[parameters('script')]",
+            "function": "[parameters('function')]"
+            //"script": "Create-AD.ps1",
+            //"function": "Create-AD"
           },
           "configurationArguments": {
             "DomainFQDN": "[parameters('DomainFQDN')]"
