@@ -30,8 +30,8 @@
       "defaultValue": {
         "array": [
           {
-            "FirstName": "Defensive",
-            "LastName": "Origins",
+            "FirstName": "DOAZ-Environment",
+            "LastName": "Student",
             "SamAccountName": "DOAdmin",
             "Department": "Lab Admin",
             "JobTitle": "Administrator",
