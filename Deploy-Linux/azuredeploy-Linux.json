@@ -93,7 +93,7 @@
     },
     "ubuntuVersion": {
       "type": "string",
-      "defaultValue": "22.04.202410020",
+      "defaultValue": "22.04.202502280",
       "metadata": {
         "description": "C2 image version"
       }
