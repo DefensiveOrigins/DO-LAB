@@ -73,7 +73,7 @@
     "doc2publisher": "Canonical",
     "doc2ubuntuoffer": "0001-com-ubuntu-server-jammy",
     "doc2ubuntusku": "22.04-lts",
-    "doc2ubuntuversion": "22.04.202410020",
+    "doc2ubuntuversion": "22.04.202502280",
     "doworkspaceprefix": "LA-workspace",
     "doremoteaccessmode": "AllowPublicIP",
     "doimmediatePurgeDataOn30Days": true,
