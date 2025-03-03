@@ -77,15 +77,32 @@
         "description": "Size of the virtual machine. Reference: https://docs.microsoft.com/en-us/azure/virtual-machines/sizes-general"
       }
     },
+    "ubuntuPublisher": {
+      "type": "string",
+      "defaultValue": "Canonical",
+      "metadata": {
+        "description": "C2 image Publisher."
+      }
+    },
+    "ubuntuOffer": {
+      "type": "string",
+      "defaultValue": "0001-com-ubuntu-server-jammy",
+      "metadata": {
+        "description": "C2 image offer code."
+      }
+    },
+    "ubuntuVersion": {
+      "type": "string",
+      "defaultValue": "22.04.202410020",
+      "metadata": {
+        "description": "C2 image version"
+      }
+    },
     "ubuntuSKU": {
       "type": "string",
       "defaultValue": "22.04-LTS",
-      "allowedValues": [
-        "22.04",
-        "22.04-lts"
-      ],
       "metadata": {
-        "description": "The Ubuntu version for the VM. This will pick a fully patched image of this given Ubuntu version."
+        "description": "The Ubuntu version for the VM."
       }
     },
     "virtualNetworkName": {
@@ -291,10 +308,10 @@
             "createOption": "fromImage"
           },
           "imageReference": {
-            "publisher": "Canonical",
-            "offer": "0001-com-ubuntu-server-jammy",
-            "sku": "22_04-lts",
-            "version": "22.04.202410020"
+            "publisher": "[parameters('ubuntuPublisher')]",
+            "offer": "[parameters('ubuntuOffer')]",
+            "sku": "[parameters('ubuntuSKU')]",
+            "version": "[parameters('ubuntuVersion')]"
           }
         },
         "networkProfile": {

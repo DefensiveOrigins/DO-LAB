@@ -61,16 +61,19 @@
     "donameprefix": "WS0",
     "doWOffer": "Windows-10",
     "doWSKU": "win10-22h2-pro",
-    "doWVersion": "19045.5247.241206",
+    "doWVersion": "19045.5487.250210",
     // "doWOffer": "Windows-11",
     // "doWSKU": "win11-24h2-pro",
     // "doWVersion": "26100.3194.250210",
     "doServerOffer": "WindowsServer",
     "doServerSKU": "2022-Datacenter",
-    "doServerVersion": "20348.2966.241205",
+    "doServerVersion": "20348.3207.250210",
     "dofqdn": "doazlab.com",
     "doc2": "metasploit",
+    "doc2publisher": "Canonical",
+    "doc2ubuntuoffer": "0001-com-ubuntu-server-jammy",
     "doc2ubuntusku": "22.04-lts",
+    "doc2ubuntuversion": "22.04.202410020",
     "doworkspaceprefix": "LA-workspace",
     "doremoteaccessmode": "AllowPublicIP",
     "doimmediatePurgeDataOn30Days": true,
@@ -214,8 +217,18 @@
           "vmName": {
             "value": "Nux01"
           },
+
+          "ubuntuPublisher": {
+            "value": "[variables('doc2publisher')]"
+          },
+          "ubuntuOffer": {
+            "value": "[variables('doc2ubuntuoffer')]"
+          },
           "ubuntuSKU": {
             "value": "[variables('doc2ubuntusku')]"
+          },
+          "ubuntuVersion": {
+            "value": "[variables('doc2ubuntuversion')]"
           },
           "vmSize": {
             "value": "[parameters('vmSize')]"
