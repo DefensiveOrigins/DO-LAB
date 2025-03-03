@@ -91,18 +91,18 @@
         "description": "C2 image offer code."
       }
     },
+    "ubuntuSKU": {
+      "type": "string",
+      "defaultValue": "22_04-lts",
+      "metadata": {
+        "description": "The Ubuntu version for the VM."
+      }
+    },
     "ubuntuVersion": {
       "type": "string",
       "defaultValue": "22.04.202502280",
       "metadata": {
         "description": "C2 image version"
-      }
-    },
-    "ubuntuSKU": {
-      "type": "string",
-      "defaultValue": "22.04-LTS",
-      "metadata": {
-        "description": "The Ubuntu version for the VM."
       }
     },
     "virtualNetworkName": {
