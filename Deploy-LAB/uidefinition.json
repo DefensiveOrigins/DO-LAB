@@ -12,7 +12,18 @@
           "toolTip": "Location for all resources",
           "resourceTypes": [
             "Microsoft.OperationalInsights"
-          ]
+          ],
+          "allowedValues": [
+          "eastus",
+          "eastus2",
+          "southcentralus",
+          "westus",
+          "westus2",
+          "westus3",
+          "centralus",
+          "northeurope",
+          "westeurope"
+        ]
         }
       }
     },
