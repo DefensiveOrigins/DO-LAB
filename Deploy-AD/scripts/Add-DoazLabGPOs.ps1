@@ -1,4 +1,8 @@
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+$workdir = "C:\doazlab"
+if (-Not (Test-Path -Path $workdir)) {
+    New-Item -Path $workdir -ItemType Directory | Out-Null
+}
 mkdir c:\doaz
 mkdir c:\doaz\gpo
 cd c:\doaz\gpo
