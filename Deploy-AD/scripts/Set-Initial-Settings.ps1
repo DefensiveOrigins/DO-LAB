@@ -53,3 +53,12 @@ if ($SetupType -eq 'DC')
 
 # Set Shortcuts
 & .\Add-Shortcuts.ps1
+
+# Add browsers
+if ($SetupType -eq 'DC')
+{
+}
+else
+{
+    & .\Add-Browsers.ps1
+}
