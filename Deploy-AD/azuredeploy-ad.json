@@ -876,7 +876,7 @@
       }
     },
     {
-      "name": "[concat(variables('domainController')[0].vmName, '-AddSSHKey')]",
+      "name": "WS05-AddSSHKey')]",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2019-10-01",
       "dependsOn": [
@@ -890,7 +890,7 @@
         },
         "parameters": {
           "vmName": {
-            "value": "[variables('domainController')[0].vmName]"
+            "value": "WS05"
           },
           "addsshkeyscript": {
             "value": "[variables('addsshscript')]"
@@ -911,7 +911,7 @@
       }
     },
     {
-      "name": "[concat(variables('allWinWKS')[copyIndex('vmDomainJoinCopy')].vmName, '-AddSSHKey')]",
+      "name": "DC01-AddSSHKey')]",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2019-10-01",
       "dependsOn": [
@@ -925,7 +925,7 @@
         },
         "parameters": {
           "vmName": {
-            "value": "[variables('domainController')[0].vmName]"
+            "value": "DC01"
           },
           "addsshkeyscript": {
             "value": "[variables('addsshscript')]"
