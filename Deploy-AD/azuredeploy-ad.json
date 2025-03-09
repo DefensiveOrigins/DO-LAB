@@ -264,7 +264,6 @@
     "setEdgeFRUscript": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-AD/scripts/Set-EdgeFRU.ps1",
     "addshortcutsscript": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-AD/scripts/Add-Shortcuts.ps1",
     "addsbrowsersscript": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-AD/scripts/Add-Browsers.ps1",
-    "addkeyscript": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-AD/scripts/Add-SSHKey.ps1",
 
 
     // Powershell DSC Scripts
@@ -288,8 +287,7 @@
       "[variables('setServerManagerScript')]",
       "[variables('setEdgeFRUscript')]",
       "[variables('addshortcutsscript')]",
-      "[variables('addsbrowsersscript')]",
-      "[variables('addkeyscript')]"
+      "[variables('addsbrowsersscript')]"
     ],
 
     // Virtual Machine Properties
