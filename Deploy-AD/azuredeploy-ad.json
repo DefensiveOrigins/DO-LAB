@@ -876,7 +876,7 @@
       }
     },
     {
-      "name": "WS05-AddSSHKey')]",
+      "name": "WS05-AddSSHKey",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2019-10-01",
       "dependsOn": [
@@ -911,7 +911,7 @@
       }
     },
     {
-      "name": "DC01-AddSSHKey')]",
+      "name": "DC01-AddSSHKey",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2019-10-01",
       "dependsOn": [
