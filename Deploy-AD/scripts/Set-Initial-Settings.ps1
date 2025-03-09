@@ -62,3 +62,13 @@ else
 {
     & .\Add-Browsers.ps1
 }
+
+# Rmove NEws/Add bar
+if ($SetupType -eq 'DC')
+{
+}
+else
+{
+    reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Windows Feeds" /v "EnableFeeds" /t REG_DWORD /d 0 /f
+    Stop-Process -Name explorer -Force
+}
