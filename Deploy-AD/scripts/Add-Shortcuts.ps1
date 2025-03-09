@@ -35,7 +35,7 @@ $Shortcut.Save()
 Write-Host "Shortcut to ADUC created on Public Desktop successfully."
 
 ### ADD ICONF OR SSH
-$DesktopPath = [System.Environment]::GetFolderPath("Desktop")
+$DesktopPath = "C:\Users\Public\Desktop\"
 $ShortcutPath = "$DesktopPath\SSH-to-C2.lnk"
 $sshCommand = "ssh doadmin@10.0.0.8"
 $WScriptShell = New-Object -ComObject WScript.Shell
