@@ -72,3 +72,10 @@ else
     reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Windows Feeds" /v "EnableFeeds" /t REG_DWORD /d 0 /f
     Stop-Process -Name explorer -Force
 }
+
+# Add the CheckContext.ps1 Script
+New-Item -ItemType Directory -Path "C:\DOAZLab\" -Force > $null
+New-Item -ItemType Directory -Path "C:\DOAZLab\Scripts\" -Force > $null
+Invoke-WebRequest -Uri "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/refs/heads/main/Deploy-AD/resources/CheckContext.ps1" -OutFile "C:\doazlab\Scripts\CheckContext.ps1"
+
+
