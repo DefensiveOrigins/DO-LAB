@@ -63,7 +63,7 @@ else
     & .\Add-Browsers.ps1
 }
 
-# Rmove NEws/Add bar
+# Rmove News/Weasther/Ad bar
 if ($SetupType -eq 'DC')
 {
 }
