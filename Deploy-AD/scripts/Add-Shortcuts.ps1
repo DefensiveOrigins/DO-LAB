@@ -34,7 +34,7 @@ $Shortcut.IconLocation = "C:\Windows\System32\dsa.msc,0"
 $Shortcut.Save()
 Write-Host "Shortcut to ADUC created on Public Desktop successfully."
 
-### ADD ICONF OR SSH
+### ADD ICON OR SSH
 $DesktopPath = "C:\Users\Public\Desktop\"
 $ShortcutPath = "$DesktopPath\SSH-to-C2.lnk"
 $sshCommand = "ssh doadmin@10.0.0.8"
