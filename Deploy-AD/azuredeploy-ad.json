@@ -915,7 +915,8 @@
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2019-10-01",
       "dependsOn": [
-        "DC01-deployADCS"
+        "DC01-deployADCS",
+        "DC01-InstallSysmon"
       ],
       "properties": {
         "mode": "Incremental",
