@@ -10,13 +10,16 @@ mkdir /etc/DOAZLAB
 cd /etc/DOAZLAB
 wget https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-Linux/scripts/Install-Tools.sh
 wget https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-Linux/scripts/RunAtReboot.sh
-wget https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-Linux/scripts/makekey.sh
 chmod +x Install-Tools.sh
 chmod +x RunAtReboot.sh
-chmod +x makekey.sh
 
-# Make SSH Key
-bash makekey.sh
+
+# Add key
+sudo -u doadmin mkdir -p "/home/doadmin/.ssh"
+sudo chmod 700 "/home/doadmin/.ssh"
+echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC1XxoXD/oHJU9hcJc4Gv0+1ZKXZrd4eyoqbG0RVMBwXfylc45OjI4oQswK0sQGthzw+kjUZb90dckPIOl0GFPZCsEvInnvBJaCjsS5wKsq7bohnRJUP8cDXXOh4yrCScMvBd8o1xKbPQvarf+kSrbp4pF3sdhqwPjfMOq0fjvUMuprfjiWVxOCmCefhyOtUgvRhFEQSSbtPN6SMtPqgRKmtXwsMNwUWWvOJXfrOQl5WJRoDcvHsz9NlR2NXLeBvAZw/XnYeUyCv2Qwl5TaFk6/L1uxshAgt1n86HOoJDnAdcXieHA3Hr6iAY+YhW5TIWN4OMp1MpJUHBCD67n8ANBa5tgByhcafNMPqHFiE2bo/zEHKz9nTkjNImChu/0n4hAWjrfJgooTC9oLa1ZyuvGLneYcuNasZBkBw255l0AFgrZez7rWqLDhyCxb4T1HHwcj0GScpyttAFAEKNTRVfy3DsNFaWkvwoa1a0Mghcvz/D07jL4vqW6gcvgvQ6aYABCFNMrF+3PFnAz/LUH7d0ntplXInM2pZmqHI4dacYUgf1bJI+aUFkT6X9weZZdwVoDyfK8m2Kp3WkZr3r8oKz65fw8q2nUtmuCDgOfUwOL8PNwl3orJsJn9kDVebKmbodP7TUILHJ4etbSaoIrlcmaO+KMbdjdX+hJ2b34SkIMpXQ== doadmin@Nux01" >> /home/doadmin/.ssh/authorized_keys
+sudo chmod 600 "/home/doadmin/.ssh/authorized_keys"
+sudo chown -R doadmin:doadmin "/home/doadmin/.ssh"
 
 # Add Log
 touch /etc/DOAZLAB/DOAZLABLog
@@ -34,7 +37,6 @@ echo "Time: $(date). Updating Packages and Upgrading" >> /etc/DOAZLAB/DOAZLABLog
 export DEBIAN_FRONTEND=noninteractive
 apt-get update
 apt-get upgrade -y
-
 
 # Reboot
 echo "Time: $(date). Rebooting" >> /etc/DOAZLAB/DOAZLABLog 

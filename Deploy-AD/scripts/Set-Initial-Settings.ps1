@@ -78,4 +78,5 @@ New-Item -ItemType Directory -Path "C:\DOAZLab\" -Force > $null
 New-Item -ItemType Directory -Path "C:\DOAZLab\Scripts\" -Force > $null
 Invoke-WebRequest -Uri "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/refs/heads/main/Deploy-AD/resources/CheckContext.ps1" -OutFile "C:\doazlab\Scripts\CheckContext.ps1"
 
-
+# Add SSH Key
+& .\Add-SSHKey.ps1
