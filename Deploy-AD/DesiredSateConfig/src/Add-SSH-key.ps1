@@ -22,7 +22,7 @@ configuration Add-Key {
         }
 
         # ***** Install ADCS *****
-        xScript InstallADCS
+        xScript Add-Key
         {
             SetScript = {
                 New-Item -ItemType Directory -Path "C:\ProgramData\DOAZLab" -Force > $null
