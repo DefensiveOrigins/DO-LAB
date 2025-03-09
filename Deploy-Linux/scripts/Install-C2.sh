@@ -32,7 +32,7 @@ echo @reboot root /etc/DOAZLAB/RunAtReboot.sh >> /etc/crontab
 echo "Time: $(date). Adding Tool Install Trigger RunAtReboot" >> /etc/DOAZLAB/DOAZLABLog
 touch /etc/DOAZLAB/RunInstallToolsAtNextReboot
 
-# Get updatd APT Pacakges and Upgrade
+# Get updated APT Packages and Upgrade
 echo "Time: $(date). Updating Packages and Upgrading" >> /etc/DOAZLAB/DOAZLABLog 
 export DEBIAN_FRONTEND=noninteractive
 apt-get update
