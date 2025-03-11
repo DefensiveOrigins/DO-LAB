@@ -262,6 +262,7 @@
     "setWallPaperScript": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-AD/scripts/Set-WallPaper.ps1",
     "setServerManagerScript": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-AD/scripts/Set-ServerManager.ps1",
     "setEdgeFRUscript": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-AD/scripts/Set-EdgeFRU.ps1",
+    "setChromeFRUscript": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-AD/scripts/Set-ChromeFRU.ps1",
     "addshortcutsscript": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-AD/scripts/Add-Shortcuts.ps1",
     "addsbrowsersscript": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-AD/scripts/Add-Browsers.ps1",
 
@@ -286,6 +287,7 @@
       "[variables('setWallPaperScript')]",
       "[variables('setServerManagerScript')]",
       "[variables('setEdgeFRUscript')]",
+      "[variables('setChromeFRUscript')]",
       "[variables('addshortcutsscript')]",
       "[variables('addsbrowsersscript')]"
     ],

@@ -39,8 +39,6 @@ if ($SetupType -eq 'DC')
     & .\Set-ServerManager.ps1
 }
 
-#Set Edge FRU
-& .\Set-EdgeFRU.ps1
 
 # PowerShell Logging
 & .\Enable-PowerShell-Logging.ps1
@@ -63,7 +61,11 @@ else
     & .\Add-Browsers.ps1
 }
 
-# Rmove News/Weasther/Ad bar
+# Quiet Browsers
+& .\Set-EdgeFRU.ps1
+& .\Set-ChromeFRU.ps1
+
+# Remove News/Weather/Ad bar
 if ($SetupType -eq 'DC')
 {
 }
