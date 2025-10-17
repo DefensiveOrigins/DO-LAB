@@ -86,21 +86,21 @@
     },
     "ubuntuOffer": {
       "type": "string",
-      "defaultValue": "0001-com-ubuntu-server-jammy",
+      "defaultValue": "ubuntu-25_10",
       "metadata": {
         "description": "C2 image offer code."
       }
     },
     "ubuntuSKU": {
       "type": "string",
-      "defaultValue": "22_04-lts",
+      "defaultValue": "server",
       "metadata": {
         "description": "The Ubuntu version for the VM."
       }
     },
     "ubuntuVersion": {
       "type": "string",
-      "defaultValue": "22.04.202502280",
+      "defaultValue": "25.10.202510070",
       "metadata": {
         "description": "C2 image version"
       }
