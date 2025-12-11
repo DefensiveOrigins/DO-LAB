@@ -1,4 +1,4 @@
-![](images/APT1.jpg)
+![](images/DOAZLab2025.png)
 
 # Defensive Origins Lab Environment
 The  Defensive Origins Lab (DO-LAB) Environment is used during the Defensive Origins training classes by Defensive Origins, AntiSyphon Training, and Black Hills Information Security.
