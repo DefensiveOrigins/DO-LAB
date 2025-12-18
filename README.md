@@ -20,6 +20,8 @@ The  Defensive Origins Lab (DO-LAB) Environment is used during the Defensive Ori
 
 Click the button below to start the deployment of the Defensive Origins Lab Environment within your Azure account.
 
+## [![Deploy DO-LAB Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/%68%74%74%70%73%3A%2F%2F%72%61%77%2E%67%69%74%68%75%62%75%73%65%72%63%6F%6E%74%65%6E%74%2E%63%6F%6D%2F%44%65%66%65%6E%73%69%76%65%4F%72%69%67%69%6E%73%2F%44%4F%2D%4C%41%42%2F%6D%61%69%6E%2F%44%65%70%6C%6F%79%2D%4C%41%42%2F%61%7A%75%72%65%2D%64%65%70%6C%6F%79%2E%6A%73%6F%6E/createUIDefinitionUri/%68%74%74%70%73%3A%2F%2F%72%61%77%2E%67%69%74%68%75%62%75%73%65%72%63%6F%6E%74%65%6E%74%2E%63%6F%6D%2F%44%65%66%65%6E%73%69%76%65%4F%72%69%67%69%6E%73%2F%44%4F%2D%4C%41%42%2F%6D%61%69%6E%2F%44%65%70%6C%6F%79%2D%4C%41%42%2F%75%69%64%65%66%69%6E%69%74%69%6F%6E%2E%6A%73%6F%6E)
+
 [![Deploy DO-LAB Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/%68%74%74%70%73%3A%2F%2F%72%61%77%2E%67%69%74%68%75%62%75%73%65%72%63%6F%6E%74%65%6E%74%2E%63%6F%6D%2F%44%65%66%65%6E%73%69%76%65%4F%72%69%67%69%6E%73%2F%44%4F%2D%4C%41%42%2F%6D%61%69%6E%2F%44%65%70%6C%6F%79%2D%4C%41%42%2F%61%7A%75%72%65%2D%64%65%70%6C%6F%79%2E%6A%73%6F%6E/createUIDefinitionUri/%68%74%74%70%73%3A%2F%2F%72%61%77%2E%67%69%74%68%75%62%75%73%65%72%63%6F%6E%74%65%6E%74%2E%63%6F%6D%2F%44%65%66%65%6E%73%69%76%65%4F%72%69%67%69%6E%73%2F%44%4F%2D%4C%41%42%2F%6D%61%69%6E%2F%44%65%70%6C%6F%79%2D%4C%41%42%2F%75%69%64%65%66%69%6E%69%74%69%6F%6E%2E%6A%73%6F%6E)
 
 ## Azure Cloud Locations/Regions

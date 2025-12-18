@@ -57,8 +57,8 @@ configuration Deploy-ADCS {
 
                 #Download DOLAB templates 
                 $wc = new-object System.Net.WebClient
-                $wc.DownloadFile('https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-AD/resources/ca_templates/vuln_template1.json', 'C:\ProgramData\vuln_template1.json')
-                $wc.DownloadFile('https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-AD/resources/ca_templates/vuln_template4.json', 'C:\ProgramData\vuln_template4.json')
+                $wc.DownloadFile('https://raw.githubusercontent.com/dpcybuck/DO-LAB/main/Deploy-AD/resources/ca_templates/vuln_template1.json', 'C:\ProgramData\vuln_template1.json')
+                $wc.DownloadFile('https://raw.githubusercontent.com/dpcybuck/DO-LAB/main/Deploy-AD/resources/ca_templates/vuln_template4.json', 'C:\ProgramData\vuln_template4.json')
 
                 #Import DOLAB templates
                 New-ADCSTemplate -DisplayName Vuln_Template1 -JSON (Get-Content C:\ProgramData\vuln_template1.json -Raw) -Publish

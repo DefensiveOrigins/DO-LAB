@@ -196,7 +196,7 @@
       }
     },
 
-    "c2SetupScript": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-Linux/scripts/Install-C2.sh",
+    "c2SetupScript": "https://raw.githubusercontent.com/dpcybuck/DO-LAB/main/Deploy-Linux/scripts/Install-C2.sh",
     "vmName": "[parameters('vmName')]"
   },
   "resources": [
@@ -262,6 +262,9 @@
         "publicIPAllocationMethod": "Static",
         "dnsSettings": {
           "domainNameLabel": "[toLower(concat(variables('vmName'), '-', uniquestring(resourceGroup().id, parameters('utcValue'))))]"
+        },
+        "sku": {
+          "name": "Standard"
         }
       }
     },

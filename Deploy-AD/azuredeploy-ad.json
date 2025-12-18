@@ -245,35 +245,35 @@
     ],
 
     // Nested Templates
-    "updateDNSServerScript": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-AD/templates/vnet-dns-server.json",
-    "sysmonInstallTemplateUri": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-AD/templates/sysmonInstall.json",
-    "createADTemplateUri": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-AD/templates/createADForest.json",
-    "joinDomainTemplateUri": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-AD/templates/joinDomain.json",
-    "deployADCSTemplateURI": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-AD/templates/deployADCS.json",
-    "addsshkeyscripttempateuri": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-AD/templates/AddSSHKey.json",
+    "updateDNSServerScript": "https://raw.githubusercontent.com/dpcybuck/DO-LAB/main/Deploy-AD/templates/vnet-dns-server.json",
+    "sysmonInstallTemplateUri": "https://raw.githubusercontent.com/dpcybuck/DO-LAB/main/Deploy-AD/templates/sysmonInstall.json",
+    "createADTemplateUri": "https://raw.githubusercontent.com/dpcybuck/DO-LAB/main/Deploy-AD/templates/createADForest.json",
+    "joinDomainTemplateUri": "https://raw.githubusercontent.com/dpcybuck/DO-LAB/main/Deploy-AD/templates/joinDomain.json",
+    "deployADCSTemplateURI": "https://raw.githubusercontent.com/dpcybuck/DO-LAB/main/Deploy-AD/templates/deployADCS.json",
+    "addsshkeyscripttempateuri": "https://raw.githubusercontent.com/dpcybuck/DO-LAB/main/Deploy-AD/templates/AddSSHKey.json",
 
     // Custom Scripts
-    "initialSettingsScript": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-AD/scripts/Set-Initial-Settings.ps1",
-    "prepareBoxScript": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-AD/scripts/Prepare-Box.ps1",
-    "setSecurityAuditingScript": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-AD/scripts/Enable-WinAuditCategories.ps1",
-    "setPowerShellLogging": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-AD/scripts/Enable-PowerShell-Logging.ps1",
+    "initialSettingsScript": "https://raw.githubusercontent.com/dpcybuck/DO-LAB/main/Deploy-AD/scripts/Set-Initial-Settings.ps1",
+    "prepareBoxScript": "https://raw.githubusercontent.com/dpcybuck/DO-LAB/main/Deploy-AD/scripts/Prepare-Box.ps1",
+    "setSecurityAuditingScript": "https://raw.githubusercontent.com/dpcybuck/DO-LAB/main/Deploy-AD/scripts/Enable-WinAuditCategories.ps1",
+    "setPowerShellLogging": "https://raw.githubusercontent.com/dpcybuck/DO-LAB/main/Deploy-AD/scripts/Enable-PowerShell-Logging.ps1",
     "saclModule": "https://raw.githubusercontent.com/OTRF/Set-AuditRule/master/Set-AuditRule.ps1",
-    "setSACLScript": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-AD/scripts/Set-SACLs.ps1",
-    "setWallPaperScript": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-AD/scripts/Set-WallPaper.ps1",
-    "setServerManagerScript": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-AD/scripts/Set-ServerManager.ps1",
-    "setEdgeFRUscript": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-AD/scripts/Set-EdgeFRU.ps1",
-    "setChromeFRUscript": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-AD/scripts/Set-ChromeFRU.ps1",
-    "addshortcutsscript": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-AD/scripts/Add-Shortcuts.ps1",
-    "addsbrowsersscript": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-AD/scripts/Add-Browsers.ps1",
+    "setSACLScript": "https://raw.githubusercontent.com/dpcybuck/DO-LAB/main/Deploy-AD/scripts/Set-SACLs.ps1",
+    "setWallPaperScript": "https://raw.githubusercontent.com/dpcybuck/DO-LAB/main/Deploy-AD/scripts/Set-WallPaper.ps1",
+    "setServerManagerScript": "https://raw.githubusercontent.com/dpcybuck/DO-LAB/main/Deploy-AD/scripts/Set-ServerManager.ps1",
+    "setEdgeFRUscript": "https://raw.githubusercontent.com/dpcybuck/DO-LAB/main/Deploy-AD/scripts/Set-EdgeFRU.ps1",
+    "setChromeFRUscript": "https://raw.githubusercontent.com/dpcybuck/DO-LAB/main/Deploy-AD/scripts/Set-ChromeFRU.ps1",
+    "addshortcutsscript": "https://raw.githubusercontent.com/dpcybuck/DO-LAB/main/Deploy-AD/scripts/Add-Shortcuts.ps1",
+    "addsbrowsersscript": "https://raw.githubusercontent.com/dpcybuck/DO-LAB/main/Deploy-AD/scripts/Add-Browsers.ps1",
 
 
     // Powershell DSC Scripts
-    "dscModules": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-AD/scripts/Install-DSC-Modules.ps1",
-    "createADForestZip": "https://github.com/DefensiveOrigins/DO-LAB/raw/main/Deploy-AD/DesiredSateConfig/Create-AD.zip",
-    "joinDomainScript": "https://github.com/DefensiveOrigins/DO-LAB/raw/main/Deploy-AD/DesiredSateConfig/Join-Domain.zip",
-    "installSysmonScript": "https://github.com/DefensiveOrigins/DO-LAB/raw/main/Deploy-AD/DesiredSateConfig/Install-Sysmon.zip",
-    "deployADCSScript": "https://github.com/DefensiveOrigins/DO-LAB/raw/main/Deploy-AD/DesiredSateConfig/Deploy-ADCS.zip",
-    "addsshscript": "https://github.com/DefensiveOrigins/DO-LAB/raw/main/Deploy-AD/DesiredSateConfig/Add-SSH-key.zip",
+    "dscModules": "https://raw.githubusercontent.com/dpcybuck/DO-LAB/main/Deploy-AD/scripts/Install-DSC-Modules.ps1",
+    "createADForestZip": "https://github.com/dpcybuck/DO-LAB/raw/main/Deploy-AD/DesiredSateConfig/Create-AD.zip",
+    "joinDomainScript": "https://github.com/dpcybuck/DO-LAB/raw/main/Deploy-AD/DesiredSateConfig/Join-Domain.zip",
+    "installSysmonScript": "https://github.com/dpcybuck/DO-LAB/raw/main/Deploy-AD/DesiredSateConfig/Install-Sysmon.zip",
+    "deployADCSScript": "https://github.com/dpcybuck/DO-LAB/raw/main/Deploy-AD/DesiredSateConfig/Deploy-ADCS.zip",
+    "addsshscript": "https://github.com/dpcybuck/DO-LAB/raw/main/Deploy-AD/DesiredSateConfig/Add-SSH-key.zip",
 
     // Initial Setup Scripts
     "initialSetUpScripts": [
@@ -404,6 +404,9 @@
         "publicIPAllocationMethod": "Static",
         "dnsSettings": {
           "domainNameLabel": "[toLower(concat(variables('allEndpoints')[copyIndex('vmPublicIpCopy')].vmName, '-', uniquestring(resourceGroup().id, parameters('utcValue'))))]"
+        },
+        "sku": {
+          "name": "Standard"
         }
       }
     },

@@ -6,7 +6,7 @@
     "config": {
       "isWizard": true,
       "basics": {
-        "description": "<img width=450 src=\"https://github.com/DefensiveOrigins/DO-LAB/raw/main/images/DOAZLab2025.png\">\n\n\n Defensive Origins Azure Lab Environment\n https://www.doazlab.com",
+        "description": "<img width=450 src=\"https://github.com/dpcybuck/DO-LAB/raw/main/images/DOAZLab2025.png\">\n\n\n Defensive Origins Azure Lab Environment\n https://www.doazlab.com",
         "location": {
           "label": "Location",
           "toolTip": "Location for all resources",

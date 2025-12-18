@@ -88,7 +88,7 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-Sentinel/azuredeploy-sentinel.json",
+          "uri": "https://raw.githubusercontent.com/dpcybuck/DO-LAB/main/Deploy-Sentinel/azuredeploy-sentinel.json",
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
@@ -116,7 +116,7 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-AD/azuredeploy-ad.json",
+          "uri": "https://raw.githubusercontent.com/dpcybuck/DO-LAB/main/Deploy-AD/azuredeploy-ad.json",
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
@@ -183,7 +183,7 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-AMA/azuredeploy-ama.json",
+          "uri": "https://raw.githubusercontent.com/dpcybuck/DO-LAB/main/Deploy-AMA/azuredeploy-ama.json",
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
@@ -200,7 +200,7 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-Linux/azuredeploy-Linux.json",
+          "uri": "https://raw.githubusercontent.com/dpcybuck/DO-LAB/main/Deploy-Linux/azuredeploy-Linux.json",
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
@@ -251,7 +251,7 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-DCRs/azuredeploy-DCRs.json",
+          "uri": "https://raw.githubusercontent.com/dpcybuck/DO-LAB/main/Deploy-DCRs/azuredeploy-DCRs.json",
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
@@ -275,7 +275,7 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-NetPeering/azuredeploy-netpeering.json",
+          "uri": "https://raw.githubusercontent.com/dpcybuck/DO-LAB/main/Deploy-NetPeering/azuredeploy-netpeering.json",
           "contentVersion": "1.0.0.0"
         },
         "parameters": {

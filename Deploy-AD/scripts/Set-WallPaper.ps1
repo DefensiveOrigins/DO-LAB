@@ -12,11 +12,11 @@ $wc = new-object System.Net.WebClient
 $wc.DownloadFile('http://live.sysinternals.com/bginfo.exe', 'C:\ProgramData\bginfo.exe')
 
 # Copy Wallpaper
-$wc.DownloadFile('https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-AD/resources/APT1.jpg', 'C:\ProgramData\APT1.jpg')
-$wc.DownloadFile('https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-AD/resources/DOLAB.gif', 'C:\ProgramData\DOLAB.gif')
+$wc.DownloadFile('https://raw.githubusercontent.com/dpcybuck/DO-LAB/main/Deploy-AD/resources/APT1.jpg', 'C:\ProgramData\APT1.jpg')
+$wc.DownloadFile('https://raw.githubusercontent.com/dpcybuck/DO-LAB/main/Deploy-AD/resources/DOLAB.gif', 'C:\ProgramData\DOLAB.gif')
 
 # Copy BGInfo config
-$wc.DownloadFile('https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-AD/resources/dolabs.bgi', 'C:\ProgramData\dolabs.bgi')
+$wc.DownloadFile('https://raw.githubusercontent.com/dpcybuck/DO-LAB/main/Deploy-AD/resources/dolabs.bgi', 'C:\ProgramData\dolabs.bgi')
 
 # Set Run Key
 New-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" -Name "BgInfo" -Value "C:\ProgramData\bginfo.exe C:\ProgramData\dolabs.bgi /silent /timer:0 /nolicprompt" -PropertyType "String" -force
