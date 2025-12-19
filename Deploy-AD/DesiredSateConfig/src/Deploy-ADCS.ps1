@@ -65,7 +65,10 @@ configuration Deploy-ADCS {
                 New-ADCSTemplate -DisplayName Vuln_Template4 -JSON (Get-Content C:\ProgramData\vuln_template4.json -Raw) -Publish
 
                 #ESC6 
-                certutil -config "DC01.doazlab.com\doazlab-DC01-CA" -setreg policy\Editflags +EDITF_ATTRIBUTESUBJECTALTNAME2
+                #certutil -config "DC01.doazlab.com\doazlab-DC01-CA" -setreg policy\Editflags +EDITF_ATTRIBUTESUBJECTALTNAME2
+                $localCA  = (Get-ItemProperty 'HKLM:\SYSTEM\CurrentControlSet\Services\CertSvc\Configuration' -Name 'Active' -ErrorAction Stop).Active
+                $caConfig = "$env:COMPUTERNAME.$using:DomainFQDN\$localCA"
+                certutil -config $caConfig -setreg policy\Editflags +EDITF_ATTRIBUTESUBJECTALTNAME2
 
                 #Restart CertSrv
                 Restart-Service -Name CertSvc
