@@ -255,16 +255,14 @@
     },
     {
       "type": "Microsoft.Network/publicIPAddresses",
-      "apiVersion": "2018-11-01",
+      "apiVersion": "2025-03-01",
       "name": "[variables('doc2pipname')]",
       "location": "[parameters('location')]",
+      "sku": { "name": "Standard" },
       "properties": {
         "publicIPAllocationMethod": "Static",
         "dnsSettings": {
           "domainNameLabel": "[toLower(concat(variables('vmName'), '-', uniquestring(resourceGroup().id, parameters('utcValue'))))]"
-        },
-        "sku": {
-          "name": "Standard"
         }
       }
     },

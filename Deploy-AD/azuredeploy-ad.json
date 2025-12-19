@@ -393,20 +393,18 @@
     },
     {
       "type": "Microsoft.Network/publicIPAddresses",
-      "apiVersion": "2018-11-01",
+      "apiVersion": "2025-03-01",
       "name": "[concat('pip-', variables('allEndpoints')[copyIndex('vmPublicIpCopy')].vmName)]",
       "location": "[parameters('location')]",
       "copy": {
         "name": "vmPublicIpCopy",
         "count": "[length(variables('allEndpoints'))]"
       },
+      "sku": { "name": "Standard" },
       "properties": {
         "publicIPAllocationMethod": "Static",
         "dnsSettings": {
           "domainNameLabel": "[toLower(concat(variables('allEndpoints')[copyIndex('vmPublicIpCopy')].vmName, '-', uniquestring(resourceGroup().id, parameters('utcValue'))))]"
-        },
-        "sku": {
-          "name": "Standard"
         }
       }
     },
