@@ -255,9 +255,11 @@
     },
     {
       "type": "Microsoft.Network/publicIPAddresses",
-      "apiVersion": "2018-11-01",
+      //"apiVersion": "2018-11-01", - modified dpcybuck - update apiversion
+      "apiVersion": "2025-03-01",
       "name": "[variables('doc2pipname')]",
       "location": "[parameters('location')]",
+      "sku": { "name": "Standard" }, //modified dpcybuck - adding force to standard pip sku to avoid azure issues with basic pip sku quota
       "properties": {
         "publicIPAllocationMethod": "Static",
         "dnsSettings": {
