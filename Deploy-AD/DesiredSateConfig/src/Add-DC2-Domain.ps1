@@ -18,8 +18,9 @@ configuration Add-DC2-Domain {
     Import-DscResource -ModuleName ActiveDirectoryDsc, NetworkingDsc, xPSDesiredStateConfiguration, xDnsServer, ComputerManagementDsc
     
     [String] $DomainNetbiosName = (Get-NetBIOSName -DomainFQDN $DomainFQDN)
-    [System.Management.Automation.PSCredential]$DomainCreds = New-Object System.Management.Automation.PSCredential ("${DomainNetbiosName}\$($Admincreds.UserName)", $Admincreds.Password)
-
+    # [System.Management.Automation.PSCredential]$DomainCreds = New-Object System.Management.Automation.PSCredential ("${DomainNetbiosName}\$($Admincreds.UserName)", $Admincreds.Password)
+    # modified dpcybuck - fix a timing issue with the Domaincreds so that when the need to make winrm calls comes up the creds are in place
+    [System.Management.Automation.PSCredential]$DomainCreds = $AdminCreds
     $Interface = Get-NetAdapter | Where-Object Name -Like "Ethernet*" | Select-Object -First 1
     $InterfaceAlias = $($Interface.Name)
     $bstr = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($AdminCreds.Password)
