@@ -65,8 +65,12 @@ configuration Deploy-ADCS {
                 New-ADCSTemplate -DisplayName Vuln_Template4 -JSON (Get-Content C:\ProgramData\vuln_template4.json -Raw) -Publish
 
                 #ESC6 
-                certutil -config "DC01.doazlab.com\doazlab-DC01-CA" -setreg policy\Editflags +EDITF_ATTRIBUTESUBJECTALTNAME2
-
+                # certutil -config "DC01.doazlab.com\doazlab-DC01-CA" -setreg policy\Editflags +EDITF_ATTRIBUTESUBJECTALTNAME2
+                # modified dpcybuck - Working to fix a deploy error where the domain creds and calls to WinRM error out, I came across this hardcoded vaule
+                # changing it didnot fix the winrm error but leaving it didn't break anything
+                $localCA  = (Get-ItemProperty 'HKLM:\SYSTEM\CurrentControlSet\Services\CertSvc\Configuration' -Name 'Active' -ErrorAction Stop).Active
+                $caConfig = "$env:COMPUTERNAME.$using:DomainFQDN\$localCA"
+                certutil -config $caConfig -setreg policy\Editflags +EDITF_ATTRIBUTESUBJECTALTNAME2
                 #Restart CertSrv
                 Restart-Service -Name CertSvc
 
