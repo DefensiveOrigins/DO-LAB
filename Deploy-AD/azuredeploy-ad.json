@@ -393,11 +393,10 @@
     },
     {
       "type": "Microsoft.Network/publicIPAddresses",
-      //"apiVersion": "2018-11-01", -modified dpcybuck - update apiversion
       "apiVersion": "2025-03-01",
       "name": "[concat('pip-', variables('allEndpoints')[copyIndex('vmPublicIpCopy')].vmName)]",
       "location": "[parameters('location')]",
-      "sku": { "name": "Standard" }, //modified dpcybuck - adding force to standard pip sku to avoid azure issues with basic pip sku quota
+      "sku": { "name": "Standard" },
       "copy": {
         "name": "vmPublicIpCopy",
         "count": "[length(variables('allEndpoints'))]"
