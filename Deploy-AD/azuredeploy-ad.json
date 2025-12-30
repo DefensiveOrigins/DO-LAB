@@ -393,9 +393,10 @@
     },
     {
       "type": "Microsoft.Network/publicIPAddresses",
-      "apiVersion": "2018-11-01",
+      "apiVersion": "2025-03-01",
       "name": "[concat('pip-', variables('allEndpoints')[copyIndex('vmPublicIpCopy')].vmName)]",
       "location": "[parameters('location')]",
+      "sku": { "name": "Standard" },
       "copy": {
         "name": "vmPublicIpCopy",
         "count": "[length(variables('allEndpoints'))]"
