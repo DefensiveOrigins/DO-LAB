@@ -56,7 +56,7 @@ sed -e '/mibs/ s/^#*/#/' -i /etc/snmp/snmp.conf
 [[ ! -d /opt/pyLAPS ]] && git clone https://github.com/p0dalirius/pyLAPS.git /opt/pyLAPS
 [[ ! -d /opt/PlumHound ]] && git clone https://github.com/PlumHound/PlumHound.git /opt/PlumHound
 [[ ! -d /opt/CrackMapExec ]] && git clone https://github.com/byt3bl33d3r/CrackMapExec.git /opt/CrackMapExec
-[[ ! -d /opt/NetExec ]] && git clone https://github.com/Pennyw0rth/NetExec.git
+[[ ! -d /opt/NetExec ]] && git clone https://github.com/Pennyw0rth/NetExec.git /opt/NetExec
 
 cat << 'EOF' >> "${HOME}/.screenrc"
 termcapinfo * ti@:te@
