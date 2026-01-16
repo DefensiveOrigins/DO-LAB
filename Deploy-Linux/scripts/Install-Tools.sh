@@ -146,11 +146,3 @@ install_pipx() {
 }
 
 install_pipx
-
-#Fix Certipy
-# cd /opt/Certipy
-# source /root/pyenv/Certipy/bin/activate
-# pip3 uninstall pyOpenSSL -y
-# pip3 install pyOpenSSL==24.0.0
-# python3 setup.py install
-# deactivate
