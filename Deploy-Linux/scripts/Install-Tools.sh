@@ -130,6 +130,7 @@ install_with_virtualenv PlumHound
 install_with_virtualenv Certipy
 install_with_virtualenv Coercer
 install_with_virtualenv mitm6
+install_with_virtualenv NetExec
 
 install_pipx() {
     # check if pipx is already installed
