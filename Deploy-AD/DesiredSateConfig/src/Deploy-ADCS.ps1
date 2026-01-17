@@ -59,11 +59,20 @@ configuration Deploy-ADCS {
                 $wc = new-object System.Net.WebClient
                 $wc.DownloadFile('https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-AD/resources/ca_templates/vuln_template1.json', 'C:\ProgramData\vuln_template1.json')
                 $wc.DownloadFile('https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-AD/resources/ca_templates/vuln_template4.json', 'C:\ProgramData\vuln_template4.json')
+                $wc.DownloadFile('https://github.com/DefensiveOrigins/AC-Extras/raw/refs/heads/main/ADCS/DOAZLab_Computer.json', 'C:\DOAZLab\L2007\DOAZLab_Computer.json')
+                $wc.DownloadFile('https://github.com/DefensiveOrigins/AC-Extras/raw/refs/heads/main/ADCS/DOAZLab_User.json', 'C:\DOAZLab\L2007\DOAZLab_User.json')
+                $wc.DownloadFile('https://github.com/DefensiveOrigins/AC-Extras/raw/refs/heads/main/ADCS/DOAZLab_IPSec.json', 'C:\DOAZLab\L2007\DOAZLab_IPSec.json')
 
                 #Import DOLAB templates
                 New-ADCSTemplate -DisplayName Vuln_Template1 -JSON (Get-Content C:\ProgramData\vuln_template1.json -Raw) -Publish
                 New-ADCSTemplate -DisplayName Vuln_Template4 -JSON (Get-Content C:\ProgramData\vuln_template4.json -Raw) -Publish
-
+                New-ADCSTemplate -DisplayName DOAZLab_Computer -JSON (Get-Content c:\DOAZLab\L2007\DOAZLab_Computer.json -Raw) -Publish
+                New-ADCSTemplate -DisplayName DOAZLab_User -JSON (Get-Content c:\DOAZLab\L2007\DOAZLab_User.json -Raw) -Publish
+                New-ADCSTemplate -DisplayName DOAZLab_IPSec -JSON (Get-Content c:\DOAZLab\L2007\DOAZLab_IPSec.json -Raw) -Publish
+                Set-ADCSTemplateACL -DisplayName DOAZLab_Computer  -Enroll -Identity 'DOAZLab\Domain Computers'
+                Set-ADCSTemplateACL -DisplayName DOAZLab_User  -Enroll -Identity 'DOAZLab\Domain Users'
+                Set-ADCSTemplateACL -DisplayName DOAZLab_IPSec -Enroll -Identity 'DOAZLab\Domain Users'
+                
                 #ESC6 
                 certutil -config "DC01.doazlab.com\doazlab-DC01-CA" -setreg policy\Editflags +EDITF_ATTRIBUTESUBJECTALTNAME2
 
