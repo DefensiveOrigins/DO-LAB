@@ -439,7 +439,7 @@
     },
     {
       "type": "Microsoft.Compute/virtualMachines",
-      "apiVersion": "2018-10-01",
+      "apiVersion": "2021-07-01",
       "name": "[variables('allEndpoints')[copyIndex('vmVMCopy')].vmName]",
       "location": "[parameters('location')]",
       "identity": "[variables('identity')]",
@@ -452,6 +452,7 @@
         "count": "[length(variables('allEndpoints'))]"
       },
       "properties": {
+        "hyperVGeneration": "V2",
         "hardwareProfile": {
           "vmSize": "[variables('allEndpoints')[copyIndex('vmVMCopy')].vmSize]"
         },
