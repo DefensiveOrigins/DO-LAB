@@ -72,7 +72,7 @@
     "doc2publisher": "Canonical",
     "doc2ubuntuoffer": "ubuntu-24_04-lts",
     "doc2ubuntusku": "server",
-    "doc2ubuntuversion": "24.04.202510010",
+    "doc2ubuntuversion": "24.04.202512100",
     "doworkspaceprefix": "LA-workspace",
     "doremoteaccessmode": "AllowPublicIP",
     "doimmediatePurgeDataOn30Days": true,
