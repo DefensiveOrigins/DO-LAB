@@ -119,7 +119,7 @@
     },
     "windowsServerSKU": {
       "type": "string",
-      "defaultValue": "2022-Datacenter",
+      "defaultValue": "2022-datacenter-g2",
       "metadata": {
         "description": "The Windows version for the Server VM. This will pick a fully patched image of this given Windows version."
       }

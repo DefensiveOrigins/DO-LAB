@@ -65,7 +65,7 @@
     "doWSKU": "win11-25h2-pro",
     "doWVersion": "26200.6584.250915",
     "doServerOffer": "WindowsServer",
-    "doServerSKU": "2022-Datacenter",
+    "doServerSKU": "2022-datacenter-g2",
     "doServerVersion": "20348.3207.250210",
     "dofqdn": "doazlab.com",
     "doc2": "metasploit",
