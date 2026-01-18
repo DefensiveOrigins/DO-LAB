@@ -452,7 +452,6 @@
         "count": "[length(variables('allEndpoints'))]"
       },
       "properties": {
-        "hyperVGeneration": "V2",
         "hardwareProfile": {
           "vmSize": "[variables('allEndpoints')[copyIndex('vmVMCopy')].vmSize]"
         },
