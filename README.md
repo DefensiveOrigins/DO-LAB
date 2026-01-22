@@ -8,7 +8,6 @@ The  Defensive Origins Lab (DO-LAB) Environment is used during the Defensive Ori
 	* [Azure Cloud Locations/Regions](#azure-cloud-locationsregions)
 	* [Training Course Pre-Requisites](#training-course-pre-requisites)
 * [Lab Environment](#lab-environment)
-* [Upcoming Classes](#upcoming-classes)
 * [Acknowledgments](#acknowledgments)
 * [License](#license)
 
@@ -45,7 +44,7 @@ Applied Purple Teaming:
 * Windows Server 2022 /w Active Directory.
   * Domain: doazlab.com
 * Windows Workstation 
-* Ubuntu 22.04LTS 
+* Ubuntu 24.04LTS 
 * Sysmon Installation on Server and Workstation
 * Microsoft Sentinel & Log Analytics
 
