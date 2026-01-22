@@ -33,11 +33,30 @@ configuration Join-Domain {
             RebootNodeIfNeeded  = $true
         }
 
+        xScript DelayBeforeDNS
+        {
+            SetScript = {
+                # Force a 30 second sleep
+                Start-Sleep -seconds 30
+            }
+
+            GetScript =  
+            {
+                return @{ "Result" = "false" }
+            }
+
+            TestScript = 
+            {
+                return $false
+            }
+        }
+
         DnsServerAddress SetDNS 
         { 
             Address         = $DCIPAddress
             InterfaceAlias  = $InterfaceAlias
             AddressFamily   = 'IPv4'
+            DependsOn       = '[xScript]DelayBeforeDNS'
         }
 
         # ***** Join Domain *****

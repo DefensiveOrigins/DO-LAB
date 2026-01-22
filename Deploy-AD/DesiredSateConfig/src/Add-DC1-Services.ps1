@@ -33,12 +33,31 @@ configuration ADD-DC1-Services {
             ConfigurationMode   = 'ApplyOnly'
             RebootNodeIfNeeded  = $true
         }
+        
+        xScript DelayBeforeDNS
+        {
+            SetScript = {
+                # Force a 30 second sleep
+                Start-Sleep -seconds 30
+            }
+
+            GetScript =  
+            {
+                return @{ "Result" = "false" }
+            }
+
+            TestScript = 
+            {
+                return $false
+            }
+        }
 
         # ***** Add DNS and AD Features *****
         WindowsFeature DNS 
         { 
-            Ensure  = "Present" 
-            Name    = "DNS"		
+            Ensure    = "Present" 
+            Name      = "DNS"		
+            DependsOn = '[xScript]DelayBeforeDNS'
         }
 
         Script EnableDNSDiags
