@@ -21,8 +21,24 @@ configuration Join-Domain {
     [String] $DomainNetbiosName = (Get-NetBIOSName -DomainFQDN $DomainFQDN)
     [System.Management.Automation.PSCredential]$DomainCreds = New-Object System.Management.Automation.PSCredential ("${DomainNetbiosName}\$($Admincreds.UserName)", $Admincreds.Password)
 
-    $Interface = Get-NetAdapter | Where-Object Name -Like "Ethernet*" | Select-Object -First 1
-    $InterfaceAlias = $($Interface.Name)
+    # Handle if there are more than one network adapter.  If there is more than one, use the one named Hyper-V
+    $count = Get-NetAdapter | Where-Object Name -Like "Ethernet*" | Measure-Object | Select-Object -ExpandProperty Count
+    if ($count -gt 1) {
+        # Action if the count is greater than 1
+        Write-Host "There are more than one Ethernet adapters."
+        $Interface = Get-NetAdapter | Where-Object InterfaceDescription -Like  "Microsoft Hyper-V Network Adapter" | Select-Object -First 1
+        Write-Host  $Interface
+        $InterfaceAlias = $($Interface.Name)
+        Write-Host $InterfaceAlias
+    } else {
+        # Action if the count is 1 or less
+        Write-Host "There is one or fewer Ethernet adapters."
+        $Interface = Get-NetAdapter | Where-Object Name -Like "Ethernet*" | Select-Object -First 1
+        Write-Host  $Interface
+        $InterfaceAlias = $($Interface.Name)
+        Write-Host $InterfaceAlias
+    }
+
     $ComputerName = Get-Content env:computername
 
     Node localhost

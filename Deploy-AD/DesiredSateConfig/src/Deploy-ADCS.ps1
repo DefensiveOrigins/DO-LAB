@@ -40,6 +40,7 @@ configuration Deploy-ADCS {
                 #Install-AdcsEnrollmentWebService -Force
                 #Install-AdcsNetworkDeviceEnrollmentService -Force
                 #Install-AdcsOnlineresponder -Force
+		# Add web enrollment
                 Install-AdcsWebEnrollment -Force
 
 
@@ -59,15 +60,15 @@ configuration Deploy-ADCS {
                 $wc = new-object System.Net.WebClient
                 $wc.DownloadFile('https://raw.githubusercontent.com/DefensiveOrigins/AC-Extras/refs/heads/main/ADCS/DOAZLab_Computer.json', 'C:\ProgramData\DOAZLab_Computer.json')
                 $wc.DownloadFile('https://raw.githubusercontent.com/DefensiveOrigins/AC-Extras/refs/heads/main/ADCS/DOAZLab_User.json', 'C:\ProgramData\DOAZLab_User.json')
-   
 
                 #Import DOLAB templates
                 New-ADCSTemplate -DisplayName DOAZLab_Computer -JSON (Get-Content C:\ProgramData\DOAZLab_Computer.json -Raw) -Publish
                 New-ADCSTemplate -DisplayName DOAZLab_User -JSON (Get-Content C:\ProgramData\DOAZLab_User.json -Raw) -Publish
-                Set-ADCSTemplateACL -DisplayName DOAZLab_Computer  -Enroll -Identity 'DOAZLab\Domain Computers'
+
+		# Set Enrollment Rights
+  		Set-ADCSTemplateACL -DisplayName DOAZLab_Computer  -Enroll -Identity 'DOAZLab\Domain Computers'
                 Set-ADCSTemplateACL -DisplayName DOAZLab_User  -Enroll -Identity 'DOAZLab\Domain Users'
-                Set-ADCSTemplateACL -DisplayName DOAZLab_IPSec -Enroll -Identity 'DOAZLab\Domain Users'
-                
+
                 #ESC6 
                 certutil -config "DC01.doazlab.com\doazlab-DC01-CA" -setreg policy\Editflags +EDITF_ATTRIBUTESUBJECTALTNAME2
 
