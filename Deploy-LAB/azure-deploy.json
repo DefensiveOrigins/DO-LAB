@@ -25,20 +25,11 @@
     },
     "vmSize": {
       "type": "string",
-      "defaultValue": "Standard_A2m_v2",
+      "defaultValue": "Standard_D2s_v6",
       "allowedValues": [
-        "Standard_B2ms",
-        "Standard_B2s_v2",
-        "Standard_B2ls_v2",
-        "Standard_B2als_v2",
-        "Standard_B2as_v2",
         "Standard_D2s_v3",
         "Standard_D2s_v4",
-        "Standard_D2s_v5",
-        "Standard_D2s_v6",
-        "Standard_D2as_v7",
-        "Standard_A2m_v2",
-        "Standard_A2_v2"
+        "Standard_D2s_v6"
       ],
       "metadata": {
         "description": "Size of the virtual machine. Reference: https://docs.microsoft.com/en-us/azure/virtual-machines/sizes-general"
@@ -58,9 +49,6 @@
     "dolinuxadminusername": "doadmin",
     "dolinuxadminpassword": "DOLabAdmin1!",
     "donameprefix": "WS0",
-   // "doWOffer": "Windows-10",
-   // "doWSKU": "win10-22h2-pro",
-  // "doWVersion": "19045.5487.250210",
     "doWOffer": "Windows-11",
     "doWSKU": "win11-25h2-pro",
     "doWVersion": "26200.7462.251207",
