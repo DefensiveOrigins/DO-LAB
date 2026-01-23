@@ -25,6 +25,8 @@ apt-get install zsh
 gem install bundler
 apt-get install metasploit-framework -y
 
+apt install docker-compose-v2 -y
+
 # remove outdated packages
 apt-get autoremove -y
 
@@ -57,6 +59,8 @@ sed -e '/mibs/ s/^#*/#/' -i /etc/snmp/snmp.conf
 [[ ! -d /opt/PlumHound ]] && git clone https://github.com/PlumHound/PlumHound.git /opt/PlumHound
 [[ ! -d /opt/CrackMapExec ]] && git clone https://github.com/byt3bl33d3r/CrackMapExec.git /opt/CrackMapExec
 [[ ! -d /opt/NetExec ]] && git clone https://github.com/Pennyw0rth/NetExec.git /opt/NetExec
+[[ ! -d /opt/ADExplorerSnapshot ]] && git clone https://github.com/c3c/ADExplorerSnapshot.git /opt/ADExplorerSnapshot
+[[ ! -d /opt/bofhound ]] && git clone https://github.com/coffeegist/bofhound.git /opt/bofhound
 
 cat << 'EOF' >> "${HOME}/.screenrc"
 termcapinfo * ti@:te@
@@ -131,6 +135,8 @@ install_with_virtualenv Certipy
 install_with_virtualenv Coercer
 install_with_virtualenv mitm6
 install_with_virtualenv NetExec
+install_with_virtualenv ADExplorerSnapshot
+install_with_virtualenv bofhound
 
 install_pipx() {
     # check if pipx is already installed
