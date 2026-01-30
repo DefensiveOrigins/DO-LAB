@@ -14,10 +14,11 @@ apt-get update -y
 apt-get install python3 -y
 apt-get install virtualenv -y
 apt-get install python3-distutils python3-virtualenv libssl-dev libffi-dev python-dev-is-python3 build-essential smbclient libpcap-dev apt-transport-https -y
+# TODO: pretty sure some of these are not getting installed. Need to investigate
 apt-get install vim-nox htop ncat rlwrap golang jq feroxbuster silversearcher-ag testssl.sh nmap masscan proxychains4 -y
 apt-get install python3.11-venv -y
 apt-get install golang-go -y
-apt-get install proxychains -y
+apt-get install proxychains4 -y
 apt-get install onesixtyone snmp-mibs-downloader -y
 apt-get install net-tools
 apt-get install zsh
