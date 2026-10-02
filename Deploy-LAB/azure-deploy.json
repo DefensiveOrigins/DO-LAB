@@ -30,7 +30,8 @@
         "Standard_D2s_v3",
         "Standard_D2s_v4",
         "Standard_D2s_v6",
-        "Standard_D2s_v7"
+        "Standard_D2s_v7",
+        "Standard_D4s_v6"
       ],
       "metadata": {
         "description": "Size of the virtual machine. Reference: https://docs.microsoft.com/en-us/azure/virtual-machines/sizes-general"
@@ -286,6 +287,10 @@
     "DCPublicIP": {
       "type": "string",
       "value": "[reference('Deploy-AD').outputs.DCPublicIP.value]"
+    },
+    "SRVPublicIP": {
+      "type": "string",
+      "value": "[reference('Deploy-AD').outputs.SRVPublicIP.value]"
     },
     "WSPublicIP": {
       "type": "string",

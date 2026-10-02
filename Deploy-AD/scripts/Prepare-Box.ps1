@@ -9,8 +9,9 @@ Get-NetConnectionProfile | Set-NetConnectionProfile -NetworkCategory Private
 
 # Stop Windows Update
 Write-Host "Disabling Windows Updates.."
-Set-Service wuauserv -StartupType Disabled
-Stop-Service wuauserv
+Set-Service wuauserv -StartupType Disabled -ErrorAction SilentlyContinue
+# Best-effort stop: wuauserv can be busy at first boot; it's already disabled and the box reboots during the build.
+Stop-Service wuauserv -Force -ErrorAction SilentlyContinue
 
 # Firewall Changes
 Write-Host "Allow ICMP Traffic through firewall"

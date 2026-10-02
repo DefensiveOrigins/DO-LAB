@@ -41,14 +41,15 @@ Applied Purple Teaming:
 * https://github.com/DefensiveOrigins/APT-PreReqs
 
 ## Lab Environment
-* Windows Server 2022 /w Active Directory.
+* Windows Server 2022 Domain Controller (DC01).
   * Domain: doazlab.com
-* Windows Workstation 
-* Ubuntu 24.04LTS 
-* Sysmon Installation on Server and Workstation
+* Windows Server 2022 member server (SRV01) hosting the ADCS Enterprise Root Certificate Authority.
+* Windows 11 Workstation (WS05).
+* Ubuntu 24.04LTS (Nux01).
+* Sysmon Installation on the servers and workstation.
 * Microsoft Sentinel & Log Analytics
 
-| ![Labenv](images/labenv.png) | 
+| ![Defensive Origins Azure lab topology](images/DO-LAB-DIAGRAM.png) | 
 |----------------------------------------------------------|
 
 

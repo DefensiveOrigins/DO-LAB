@@ -22,7 +22,7 @@ apt-get install python3 -y
 echo "Time: $(date). ---APT: virtualenv Install ---" >> /etc/DOAZLAB/DOAZLABLog
 apt-get install virtualenv -y
 echo "Time: $(date). ---APT: python3 tools, dev, build-essentials, smbclient Install ---" >> /etc/DOAZLAB/DOAZLABLog
-apt-get install python3-distutils python3-virtualenv libssl-dev libffi-dev python-dev-is-python3 build-essential smbclient libpcap-dev apt-transport-https -y
+apt-get install python3-virtualenv libssl-dev libffi-dev python-dev-is-python3 build-essential smbclient libpcap-dev apt-transport-https ldap-utils -y
 echo "Time: $(date). ---APT: proxychains4 ---" >> /etc/DOAZLAB/DOAZLABLog
 apt-get install proxychains4 -y
 echo "Time: $(date). ---APT: nmap Install ---" >> /etc/DOAZLAB/DOAZLABLog
@@ -111,6 +111,8 @@ echo "Time: $(date).---GIT CLONES ---" >> /etc/DOAZLAB/DOAZLABLog
 [[ ! -d /opt/BloodHound.py ]] && git clone https://github.com/fox-it/BloodHound.py.git /opt/BloodHound.py
 [[ ! -d /opt/Certipy ]] && git clone https://github.com/DefensiveOrigins/Certipyv5.git /opt/Certipy
 [[ ! -d /opt/Coercer ]] && git clone https://github.com/p0dalirius/Coercer.git /opt/Coercer
+# PetitPotam has no venv of its own; it depends only on impacket and runs under the impacket pyenv.
+[[ ! -d /opt/PetitPotam ]] && git clone https://github.com/topotam/PetitPotam.git /opt/PetitPotam
 [[ ! -d /opt/mitm6 ]] && git clone https://github.com/dirkjanm/mitm6.git /opt/mitm6
 [[ ! -d /opt/PCredz ]] && git clone https://github.com/lgandx/PCredz.git /opt/PCredz
 [[ ! -d /opt/certsync ]] && git clone https://github.com/zblurx/certsync.git /opt/certsync
@@ -120,6 +122,10 @@ echo "Time: $(date).---GIT CLONES ---" >> /etc/DOAZLAB/DOAZLABLog
 [[ ! -d /opt/NetExec ]] && git clone https://github.com/Pennyw0rth/NetExec.git /opt/NetExec
 [[ ! -d /opt/ADExplorerSnapshot ]] && git clone https://github.com/c3c/ADExplorerSnapshot.git /opt/ADExplorerSnapshot
 [[ ! -d /opt/bofhound ]] && git clone https://github.com/coffeegist/bofhound.git /opt/bofhound
+# SCCM attack tooling (L2017 SCCM lab)
+[[ ! -d /opt/sccmhunter ]] && git clone https://github.com/DefensiveOrigins/sccmhunter.git /opt/sccmhunter
+# GPO abuse tooling (L2019 GPO-Abuse lab)
+[[ ! -d /opt/pyGPOAbuse ]] && git clone https://github.com/Hackndo/pyGPOAbuse.git /opt/pyGPOAbuse
 
 cat << 'EOF' >> "${HOME}/.screenrc"
 termcapinfo * ti@:te@
@@ -202,6 +208,8 @@ install_with_virtualenv mitm6
 install_with_virtualenv NetExec
 install_with_virtualenv ADExplorerSnapshot
 install_with_virtualenv bofhound
+install_with_virtualenv sccmhunter
+install_with_virtualenv pyGPOAbuse
 
 install_pipx() {
     # check if pipx is already installed

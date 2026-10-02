@@ -170,6 +170,67 @@ configuration Add-DC3-Objects {
             }
             DependsOn = "[xScript]CreateOUs"
         }
+
+        # ***** Lab attack paths *****
+        # Teaching setup for the SCCM (L2017), GPO-abuse (L2019) and RBCD (L2018) labs.
+        # Everything here is created early on the DC. The RBCD write is granted at the OU level with
+        # inheritance to child computer objects, so WS05 picks it up when it joins OU=Workstations
+        # (no dependency on WS05 being joined at this point).
+        xScript ConfigureLabAttackPaths
+        {
+            SetScript = {
+                # Verifying ADWS service is running
+                $ServiceName = 'ADWS'
+                $arrService = Get-Service -Name $ServiceName
+                while ($arrService.Status -ne 'Running')
+                {
+                    Start-Service $ServiceName
+                    Start-Sleep -Seconds 5
+                    $arrService.Refresh()
+                }
+
+                # The GroupPolicy module (New-GPO/Set-GPPermission) needs GPMC, which is not installed by
+                # the AD DS role alone. Ensure it before importing (idempotent - no-op if already present).
+                Install-WindowsFeature -Name GPMC -IncludeManagementTools -ErrorAction SilentlyContinue | Out-Null
+                Import-Module GroupPolicy -ErrorAction SilentlyContinue
+
+                $DomainName = $using:domainFQDN
+                $DomainName1,$DomainName2 = $DomainName.split('.')
+                $ParentPath = "DC=$DomainName1,DC=$DomainName2"
+                $WksOU = "OU=Workstations,$ParentPath"
+
+                # --- NAA -> GPO chain (L2017 -> L2019) ---
+                # A GPO linked to the Workstations OU that svc_sccmnaa is delegated rights to EDIT.
+                # svc_sccmnaa is also the SCCM Network Access Account (set in Deploy-SCCM.ps1), so its
+                # cleartext credential is recoverable from SCCM machine policy in L2017; those creds then
+                # allow editing this GPO to run code as SYSTEM on workstations in L2019.
+                $GpoName = 'Workstation Security Baseline'
+                $gpo = Get-GPO -Name $GpoName -ErrorAction SilentlyContinue
+                if ($null -eq $gpo)
+                {
+                    $gpo = New-GPO -Name $GpoName -Comment 'Baseline settings for domain workstations.'
+                }
+                # Link to the Workstations OU (ignore error if the link already exists)
+                try { New-GPLink -Name $GpoName -Target $WksOU -LinkEnabled Yes -ErrorAction Stop } catch { }
+                # Delegate "Edit settings" on the GPO to the SCCM Network Access Account.
+                Set-GPPermission -Name $GpoName -TargetName 'svc_sccmnaa' -TargetType User -PermissionLevel GpoEdit -ErrorAction SilentlyContinue
+
+                # --- RBCD (L2018) ---
+                # Grant lablowpriv GenericWrite over child computer objects in the Workstations OU
+                # (/I:S = child objects only). Inherited to WS05 on join, letting the student write
+                # msDS-AllowedToActOnBehalfOfOtherIdentity for a resource-based constrained delegation attack.
+                & dsacls "$WksOU" /I:S /G "$DomainName1\lablowpriv:GW;;computer" | Out-Null
+            }
+            GetScript =
+            {
+                return @{ "Result" = "false" }
+            }
+            TestScript =
+            {
+                return $false
+            }
+            DependsOn = "[xScript]CreateDomainUsers"
+        }
     }
 }
 

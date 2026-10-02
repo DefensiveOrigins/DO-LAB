@@ -48,6 +48,26 @@
             "Password": "Buggy!112233",
             "Identity": "Users",
             "UserContainer": "DomainUsers"
+          },
+          {
+            "FirstName": "SCCM",
+            "LastName": "NetworkAccess",
+            "SamAccountName": "svc_sccmnaa",
+            "Department": "IT Support",
+            "JobTitle": "SCCM Network Access Account",
+            "Password": "Config#Mgr2026",
+            "Identity": "Users",
+            "UserContainer": "DomainUsers"
+          },
+          {
+            "FirstName": "Lab",
+            "LastName": "LowPriv",
+            "SamAccountName": "lablowpriv",
+            "Department": "Sales",
+            "JobTitle": "Standard User",
+            "Password": "Standard#User2026",
+            "Identity": "Users",
+            "UserContainer": "DomainUsers"
           }
         ]
       }
@@ -135,10 +155,23 @@
             "Standard_D2s_v3",
             "Standard_D2s_v4",
             "Standard_D2s_v6",
-            "Standard_D2s_v7"
+            "Standard_D2s_v7",
+            "Standard_D4s_v6"
         ],
       "metadata": {
         "description": "Size of the virtual machine. Reference: https://docs.microsoft.com/en-us/azure/virtual-machines/sizes-general"
+      }
+    },
+    "memberServerVmSize": {
+      "type": "string",
+      "defaultValue": "Standard_D4s_v6",
+        "allowedValues": [
+            "Standard_D2s_v6",
+            "Standard_D4s_v6",
+            "Standard_D8s_v6"
+        ],
+      "metadata": {
+        "description": "Size of the member server (SRV01). It hosts the SCCM primary site (SQL + ADK + MP/DP/SMS Provider) on top of ADCS, so it needs more memory than the other VMs. Default Standard_D4s_v6 = 4 vCPU / 16 GB. The other VMs use vmSize."
       }
     },
     "identityType": {
@@ -257,6 +290,7 @@
     "setChromeFRUscript": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-AD/scripts/Set-ChromeFRU.ps1",
     "addshortcutsscript": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-AD/scripts/Add-Shortcuts.ps1",
     "addsbrowsersscript": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-AD/scripts/Add-Browsers.ps1",
+    "enableAutoEnrollScript": "https://raw.githubusercontent.com/DefensiveOrigins/DO-LAB/main/Deploy-AD/scripts/Enable-AutoEnrollment.ps1",
 
 
     // Powershell DSC Scripts
@@ -319,11 +353,29 @@
         "extensionName": "SetUpDC"
       }
     ],
+    // Generic domain-joined member server. Currently hosts the ADCS CA (see SRV01-deployADCS),
+    // but is intentionally role-neutral so additional roles can be layered on later.
+    "memberServer": [
+      {
+        "tag": "memberServer",
+        "vmName": "SRV01",
+        "os": "windows",
+        "subnetref": "[variables('subnetRef')]",
+        "ipAddress": "[concat(variables('vmPrivateIPAddresPrefix'),'10')]",
+        "vmSize": "[parameters('memberServerVmSize')]",
+        "publisher": "MicrosoftWindowsServer",
+        "offer": "[parameters('windowsServerOffer')]",
+        "sku": "[parameters('windowsServerSKU')]",
+        "version": "[parameters('windowsServerVersion')]",
+        "extensionName": "SetUpSRV"
+      }
+    ],
 
     // Additional Variables
-    "allEndpoints": "[concat(variables('allWinWKS'), variables('domainController'))]",
+    "allEndpoints": "[concat(variables('allWinWKS'), variables('domainController'), variables('memberServer'))]",
     "domainNameArray": "[split(parameters('domainFQDN'),'.')]",
     "ouPath": "[concat('OU=Workstations; DC=', variables('domainNameArray')[0], '; DC=', variables('domainNameArray')[1])]",
+    "ouPathServers": "[concat('OU=Servers; DC=', variables('domainNameArray')[0], '; DC=', variables('domainNameArray')[1])]",
 
     // Managed Identity
     "identityType": { "type": "[parameters('identityType')]" },
@@ -339,8 +391,10 @@
       "sku": {
         "name": "Standard_LRS"
       },
-      "kind": "Storage",
-      "properties": {}
+      "kind": "StorageV2",
+      "properties": {
+        "accessTier": "Hot"
+      }
     },
     {
       "comments": "Default Network Security Group for Windows endpoints",
@@ -657,50 +711,11 @@
         }
       }
     },
-//    {
-//      "name": "CreateADForest",
-//      "type": "Microsoft.Resources/deployments",
-//      "apiVersion": "2019-10-01",
-//      "dependsOn": [
-//        "[resourceId('Microsoft.Compute/virtualMachines/extensions', variables('domainController')[0].vmName, variables('domainController')[0].extensionName)]"
-//      ],
-//      "properties": {
-//        "mode": "Incremental",
-//        "templateLink": {
-//          "uri": "[variables('createADTemplateUri')]",
-//          "contentVersion": "1.0.0.0"
-//        },
-//        "parameters": {
-//          "vmName": {
-//            "value": "[variables('domainController')[0].vmName]"
-//          },
-//          "createADForestScript": {
-//            "value": "[variables('createADForestScript')]"
-//          },
-//          "domainFQDN": {
-//            "value": "[parameters('domainFQDN')]"
-//          },
-//          "adminUsername": {
-//            "value": "[parameters('adminUsername')]"
-//          },
-//          "adminPassword": {
-//            "value": "[parameters('adminPassword')]"
-//          },
-//          "domainUsers": {
-//            "value": "[parameters('domainUsers')]"
-//          },
-//          "location": {
-//            "value": "[parameters('location')]"
-//          }
-//        }
-//      }
-//    },
     {
       "name": "VNET-UpdateDNS",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2019-10-01",
       "dependsOn": [
-//        "CreateADForest"
         "DC01-CreateADForest3-Objects"
       ],
       "properties": {
@@ -737,7 +752,7 @@
         "dependsOn": [
             "InitialSetUpWKSCopy",
             "VNET-UpdateDNS",
-            "DC01-AddSSHKey"
+            "DC01-CreateADForest3-Objects"
         ],
       "copy": {
         "name": "vmDomainJoinCopy",
@@ -834,12 +849,105 @@
       }
     },
     {
-      "name": "[concat(variables('domainController')[0].vmName, '-deployADCS')]",
+      "comments": "SRV01 (member server) initial setup. Endpoint mode installs RSAT AD tools + the DSC modules ADCS needs.",
+      "name": "[concat(variables('memberServer')[0].vmName, '/', variables('memberServer')[0].extensionName)]",
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      "apiVersion": "2019-12-01",
+      "location": "[parameters('location')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Compute/virtualMachines/', variables('memberServer')[0].vmName)]",
+        "[resourceId('Microsoft.Storage/storageAccounts/', variables('storageAccountName'))]"
+      ],
+      "properties": {
+        "publisher": "Microsoft.Compute",
+        "type": "CustomScriptExtension",
+        "typeHandlerVersion": "1.8",
+        "autoUpgradeMinorVersion": true,
+        "settings": {
+          "fileUris": "[variables('initialSetUpScripts')]",
+          "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File ./Set-Initial-Settings.ps1',' ','-SetupType Endpoint')]"
+        },
+        "protectedSettings": {}
+      }
+    },
+    {
+      "comments": "Domain-join SRV01 into OU=Servers before ADCS. Runs after the DC is fully promoted and DNS repointed.",
+      "name": "SRV01-joinDomain",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2019-10-01",
       "dependsOn": [
+        "[resourceId('Microsoft.Compute/virtualMachines/extensions', variables('memberServer')[0].vmName, variables('memberServer')[0].extensionName)]",
         "VNET-UpdateDNS",
-        "DC01-installSysmon"
+        "DC01-CreateADForest3-Objects"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[variables('joinDomainTemplateUri')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "vmName": {
+            "value": "[variables('memberServer')[0].vmName]"
+          },
+          "joinDomainScript": {
+            "value": "[variables('joinDomainScript')]"
+          },
+          "domainFQDN": {
+            "value": "[parameters('domainFQDN')]"
+          },
+          "adminUsername": {
+            "value": "[parameters('adminUsername')]"
+          },
+          "adminPassword": {
+            "value": "[parameters('adminPassword')]"
+          },
+          "dcIpAddress": {
+            "value": "[variables('domainController')[0].ipAddress]"
+          },
+          "joinOU": {
+            "value": "[variables('ouPathServers')]"
+          },
+          "location": {
+            "value": "[parameters('location')]"
+          }
+        }
+      }
+    },
+    {
+      "name": "SRV01-installSysmon",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2019-10-01",
+      "dependsOn": [
+        "SRV01-joinDomain"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[variables('sysmonInstallTemplateUri')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "vmName": {
+            "value": "[variables('memberServer')[0].vmName]"
+          },
+          "installSysmonScript": {
+            "value": "[variables('installSysmonScript')]"
+          },
+          "location": {
+            "value": "[parameters('location')]"
+          }
+        }
+      }
+    },
+    {
+      "comments": "Install the ADCS Enterprise Root CA on SRV01 (moved off DC01). The Deploy-ADCS DSC runs its AD writes under AdminCreds (PsDscRunAsCredential) because a member server's SYSTEM lacks Enterprise-Admin rights.",
+      "name": "SRV01-deployADCS",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2019-10-01",
+      "dependsOn": [
+        "SRV01-installSysmon",
+        "SRV01-joinDomain"
       ],
       "properties": {
         "mode": "Incremental",
@@ -849,10 +957,46 @@
         },
         "parameters": {
           "vmName": {
-            "value": "[variables('domainController')[0].vmName]"
+            "value": "[variables('memberServer')[0].vmName]"
           },
           "deployadcsscript": {
             "value": "[variables('deployADCSScript')]"
+          },
+          "domainFQDN": {
+            "value": "[parameters('domainFQDN')]"
+          },
+          "adminUsername": {
+            "value": "[parameters('adminUsername')]"
+          },
+          "adminPassword": {
+            "value": "[parameters('adminPassword')]"
+          },
+          "location": {
+            "value": "[parameters('location')]"
+          }
+        }
+      }
+    },
+    {
+      "comments": "SSH key onto SRV01 for parity with DC01/WS05. Runs after SRV01-deployADCS because both reconfigure the same-named PowerShellDSC extension on the VM and must be serialized. NOTE: SCCM is no longer installed by the automatic deploy; add the SCCM primary site to a deployed lab by running Deploy-AD/DesiredSateConfig/Deploy-SCCM-Standalone.ps1 on SRV01 as DOAZLab\\DOAdmin.",
+      "name": "SRV01-AddSSHKey",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2019-10-01",
+      "dependsOn": [
+        "SRV01-deployADCS"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[variables('addsshkeyscripttempateuri')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "vmName": {
+            "value": "[variables('memberServer')[0].vmName]"
+          },
+          "addsshkeyscript": {
+            "value": "[variables('addsshscript')]"
           },
           "domainFQDN": {
             "value": "[parameters('domainFQDN')]"
@@ -909,7 +1053,6 @@
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2019-10-01",
       "dependsOn": [
-        "DC01-deployADCS",
         "DC01-InstallSysmon"
       ],
       "properties": {
@@ -939,6 +1082,25 @@
           }
         }
       }
+    },
+    {
+      "comments": "Enable machine autoenrollment on DC01 and enroll its Kerberos Authentication cert (LDAPS + PKINIT) once the ADCS CA is up on SRV01. Uses a managed Run Command because a Windows VM allows only one Custom Script Extension (DC01 already uses SetUpDC).",
+      "name": "[concat(variables('domainController')[0].vmName, '/AutoEnroll')]",
+      "type": "Microsoft.Compute/virtualMachines/runCommands",
+      "apiVersion": "2023-09-01",
+      "location": "[parameters('location')]",
+      "dependsOn": [
+        "SRV01-deployADCS",
+        "DC01-AddSSHKey"
+      ],
+      "properties": {
+        "source": {
+          "scriptUri": "[variables('enableAutoEnrollScript')]"
+        },
+        "asyncExecution": false,
+        "timeoutInSeconds": 600,
+        "treatFailureAsDeploymentFailure": false
+      }
     }
   ],
   "outputs": {
@@ -961,6 +1123,10 @@
     "WSPublicIP": {
       "type": "string",
       "value": "[reference(resourceId('Microsoft.Network/publicIPAddresses','pip-WS05')).IpAddress]"
+    },
+    "SRVPublicIP": {
+      "type": "string",
+      "value": "[reference(resourceId('Microsoft.Network/publicIPAddresses','pip-SRV01')).IpAddress]"
     }
   }
 }

@@ -98,6 +98,17 @@ else
    echo "Time: $(date). ${REPO_NAME}: venv not found" >> /etc/DOAZLAB/VersionLog
 fi
 
+# Python versions special - PetitPotam (no venv of its own; runs under the impacket venv)
+REPO_NAME="PetitPotam"
+VENV_PATH="${HOME}/pyenv/impacket/bin/activate"
+if [ -f /opt/PetitPotam/PetitPotam.py ] && [ -f "$VENV_PATH" ]; then
+   . "$VENV_PATH"
+   echo "Time: $(date). ${REPO_NAME}: PetitPotam.py present; impacket $(python3 -m pip show impacket 2>/dev/null | grep Version | head -n 1)" >> /etc/DOAZLAB/VersionLog
+   deactivate
+else
+   echo "Time: $(date). ${REPO_NAME}: not found (expected /opt/PetitPotam/PetitPotam.py + impacket venv)" >> /etc/DOAZLAB/VersionLog
+fi
+
 
 echo "Time: $(date).---------------------------------" >> /etc/DOAZLAB/VersionLog
 echo "Time: $(date).END VERSION CHECKS" >> /etc/DOAZLAB/VersionLog

@@ -63,7 +63,8 @@
             "Standard_D2s_v3",
             "Standard_D2s_v4",
             "Standard_D2s_v6",
-            "Standard_D2s_v7"
+            "Standard_D2s_v7",
+            "Standard_D4s_v6"
         ],
       "metadata": {
         "description": "Size of the virtual machine. Reference: https://docs.microsoft.com/en-us/azure/virtual-machines/sizes-general"
@@ -200,8 +201,9 @@
       "sku": {
         "name": "Standard_LRS"
       },
-      "kind": "Storage",
+      "kind": "StorageV2",
       "properties": {
+        "accessTier": "Hot"
       }
     },
     {
@@ -290,7 +292,8 @@
       "location": "[parameters('location')]",
       "identity": { "type": "SystemAssigned" },
       "dependsOn": [
-        "[resourceId('Microsoft.Network/networkInterfaces/', concat('nic-', variables('vmName')))]"
+        "[resourceId('Microsoft.Network/networkInterfaces/', concat('nic-', variables('vmName')))]",
+        "[resourceId('Microsoft.Storage/storageAccounts/', variables('storageAccountName'))]"
       ],
       "properties": {
         "hardwareProfile": {
@@ -319,6 +322,12 @@
           "adminUsername": "[parameters('adminUsername')]",
           "adminPassword": "[parameters('adminPasswordOrKey')]",
           "linuxConfiguration": "[if(equals(parameters('authenticationType'), 'password'), json('null'), variables('linuxConfiguration'))]"
+        },
+        "diagnosticsProfile": {
+          "bootDiagnostics": {
+            "enabled": true,
+            "storageUri": "[reference(resourceId('Microsoft.Storage/storageAccounts/', variables('storageAccountName'))).primaryEndpoints.blob]"
+          }
         }
       }
     },
