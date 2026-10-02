@@ -49,7 +49,7 @@ Applied Purple Teaming:
 * Sysmon Installation on the servers and workstation.
 * Microsoft Sentinel & Log Analytics
 
-| ![Defensive Origins Azure lab topology](images/DO-LAB-DIAGRAM.png) | 
+| ![Defensive Origins Azure lab topology](images/doazlab-topology.png) | 
 |----------------------------------------------------------|
 
 
